@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Changi Airport Group</string>
+
+    <string-array name ="DirectionList">
+        <item>Choose a Direction</item>
+        <item>South</item>
+        <item>North</item>
+    </string-array>
 </resources>
