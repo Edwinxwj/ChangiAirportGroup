@@ -15,14 +15,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.4"
-            android:text="Plane Number: " />
+            android:text="Timing: " />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.70"
-            android:text="SQ1800" />
+            android:layout_weight="0.36"
+            android:text="0000 - 0100 " />
 
     </LinearLayout>
 
@@ -36,20 +36,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
-            android:text="Name Of Plane: " />
+            android:text="LicensePlate:  " />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.40"
-            android:text="AirBus" />
+            android:layout_weight="0.32"
+            android:text="SQK 103" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
@@ -63,8 +63,50 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0.77"
+            android:text="Tigher Air" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvFlightNumAlert"
+            android:layout_width="139dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="Flight Number: " />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.76"
+            android:text="SQ12345" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvLicensePlateAlert"
+            android:layout_width="139dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="Singapore Airline" />
+            android:text="LicensePlate: " />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.78"
+            android:text="S1234G" />
 
     </LinearLayout>
 

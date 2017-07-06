@@ -1,9 +1,20 @@
 <resources>
     <string name="app_name">Changi Airport Group</string>
 
-    <string-array name ="DirectionList">
+    <string-array name="DirectionList">
         <item>Choose a Direction</item>
         <item>South</item>
         <item>North</item>
     </string-array>
+
+
+    <string-array name="spinnerItems">
+        <item> Select a Date </item>
+        <item> 01 Jan 2017 </item>
+        <item> 02 Jan 2017 </item>
+        <item> 03 Jan 2017 </item>
+        <item> 04 Jan 2017 </item>
+    </string-array>
+
 </resources>
+
