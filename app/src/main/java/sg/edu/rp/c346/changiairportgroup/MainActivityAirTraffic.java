@@ -58,6 +58,7 @@ public class MainActivityAirTraffic extends AppCompatActivity {
                     }
                 });
 
+
                 mbuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

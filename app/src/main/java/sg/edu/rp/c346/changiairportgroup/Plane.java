@@ -11,7 +11,6 @@ public class Plane {
         private String flightNum;
         private String airline;
 
-
         public Plane(String timing, String licensePlate, String airline, String flightNum, String toWhere){
             this.licensePlate = licensePlate;
             this.airline = airline;

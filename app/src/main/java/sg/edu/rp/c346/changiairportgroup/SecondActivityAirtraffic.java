@@ -27,7 +27,6 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
     ArrayAdapter aa;
     ArrayList<Plane> planes;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

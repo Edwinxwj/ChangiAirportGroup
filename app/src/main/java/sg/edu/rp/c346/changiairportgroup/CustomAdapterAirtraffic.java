@@ -26,6 +26,7 @@ public class CustomAdapterAirtraffic extends ArrayAdapter<Plane> {
     private  TextView tvFlightnum;
     private ImageView ivColour;
 
+
     public CustomAdapterAirtraffic(Context context, int resource, ArrayList<Plane> objects) {
         super(context, resource, objects);
         // Store the food that is passed to this adapter
