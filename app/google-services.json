@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "789104754879",
+    "firebase_url": "https://changiairportgroup-c55ea.firebaseio.com",
+    "project_id": "changiairportgroup-c55ea",
+    "storage_bucket": "changiairportgroup-c55ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789104754879:android:b638398015bfc3e7",
+        "android_client_info": {
+          "package_name": "sg.edu.rp.c346.changiairportgroup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789104754879-0cla5ciuhoo2ph1qncpghpk603mqsj4o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sg.edu.rp.c346.changiairportgroup",
+            "certificate_hash": "a01320c04056075377558d22e42d37bd6efec201"
+          }
+        },
+        {
+          "client_id": "789104754879-02ova0ho6cs0dtdtnvp9l66bjl426ldb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK3SL7kfq2nkdFZEmBMSqoW29MvZZXXEk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "789104754879-02ova0ho6cs0dtdtnvp9l66bjl426ldb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
