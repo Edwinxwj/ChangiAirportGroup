@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivityAdmin">
+        <activity android:name=".MainActivityAirTraffic">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,6 +19,10 @@
         <activity android:name=".SecondActivityAdmin" />
         <activity android:name=".EditActivity" />
         <activity android:name=".MainActivity"></activity>
+        <activity android:name=".SecondActivityAirtraffic"></activity>
+        <activity android:name=".MainActivityBuggy"></activity>
+        <activity android:name=".MainActivityBuggy2"></activity>
+
     </application>
 
 </manifest>
