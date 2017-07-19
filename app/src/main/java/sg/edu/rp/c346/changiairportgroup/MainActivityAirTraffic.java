@@ -19,6 +19,7 @@ public class MainActivityAirTraffic extends AppCompatActivity {
     ListView lv;
     ArrayAdapter aa;
     ArrayList<String> gates;
+    Spinner Spinner;
 
 
     @Override
@@ -28,6 +29,8 @@ public class MainActivityAirTraffic extends AppCompatActivity {
 
         lv = (ListView) findViewById(R.id.lv);
 
+        Spinner = (Spinner) findViewById(R.id.spinnerTerminal);
+
         gates = new ArrayList<String>();
         gates.add("E63");
         gates.add("E64");
@@ -35,46 +38,20 @@ public class MainActivityAirTraffic extends AppCompatActivity {
         aa = new ArrayAdapter(this, android.R.layout.simple_list_item_1, gates);
         lv.setAdapter(aa);
 
+
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainActivityAirTraffic.this,
+                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.spinnersTerminal));
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner.setAdapter(myAdapter);
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                AlertDialog.Builder mbuilder = new AlertDialog.Builder(
-//                        MainActivityAirTraffic.this);
-//                View mView = getLayoutInflater().inflate(R.layout.activity_alert_airtraffic, null);
-//                mbuilder.setTitle("Plane Information");
-//                final Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
-//
-//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivityAirTraffic.this,
-//                        android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.DirectionList));
-//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                mSpinner.setAdapter(adapter);
-//
-//                mbuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Choose a Direction")){
-//                            Toast.makeText(MainActivityAirTraffic.this,mSpinner.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
-//                            dialogInterface.dismiss();
-//                        }
-//                    }
-//                });
-//
-//
-//                mbuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                    }
-//                });
-//
-//                mbuilder.setView(mView);
-//                AlertDialog dialog = mbuilder.create();
-//                dialog.show();
-                Intent i = new Intent(MainActivityAirTraffic.this ,SecondActivityAirtraffic.class);
-                i.putExtra("gate", gates.get(position));
-                startActivity(i);
+                String selectedGates = gates.get(position).toString();
+                Intent intent = new Intent(getBaseContext(), SecondActivityAirtraffic.class);
+                intent.putExtra("gates", selectedGates.toString());
 
-
-
+                startActivity(intent);
             }
         });
 
