@@ -22,5 +22,5 @@
         <activity android:name=".SecondActivityAirtraffic"></activity>
     </application>
 
-    
+
 </manifest>

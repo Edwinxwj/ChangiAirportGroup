@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:entries="@array/spinnersTerminal"/>
 
+
     <SearchView
         android:id="@+id/SearchId"
         android:layout_width="match_parent"

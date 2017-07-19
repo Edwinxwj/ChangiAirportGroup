@@ -39,6 +39,7 @@ public class MainActivityAirTraffic extends AppCompatActivity {
         lv.setAdapter(aa);
 
 
+
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainActivityAirTraffic.this,
                 android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.spinnersTerminal));
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
