@@ -5,37 +5,71 @@ package sg.edu.rp.c346.changiairportgroup;
  */
 
 public class Plane {
-        private String licensePlate;
-        private String timing;
-        private String toWhere;
-        private String flightNum;
+            private String licensePlate;
+    private Long time;
+    private String destination;
+    private String flightNo;
+    private String direction;
         private String airline;
 
-        public Plane(String timing, String licensePlate, String airline, String flightNum, String toWhere){
-            this.licensePlate = licensePlate;
-            this.airline = airline;
-            this.timing = timing;
-            this.flightNum = flightNum;
-            this.toWhere = toWhere;
+    public Plane() {
 
-        }
-        public String getLicensePlate(){
-            return licensePlate;
-        }
+    }
 
-        public String getFlightNum(){
-        return flightNum;
+    public Plane(String licensePlate, Long time, String destination, String flightNo, String direction, String airline) {
+        this.licensePlate = licensePlate;
+        this.time = time;
+        this.destination = destination;
+        this.flightNo = flightNo;
+        this.direction = direction;
+        this.airline = airline;
     }
-        public String getTiming(){
-        return timing;
+
+    public String getLicensePlate() {
+        return licensePlate;
     }
-        public String getAirline(){
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public String getAirline() {
         return airline;
     }
-        public String getToWhere(){
-        return toWhere;
+
+    public void setAirline(String airline) {
+        this.airline = airline;
     }
 
-
+    public Long getTime() {
+        return time;
     }
 
+    public void setTime(Long time) {
+        this.time = time;
+    }
+
+    public String getFlightNo() {
+        return flightNo;
+    }
+
+    public void setFlightNo(String flightNo) {
+        this.flightNo = flightNo;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+}

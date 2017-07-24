@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Created by 15056215 on 20/6/2017.
  */
 
-public class CustomAdapterAirtraffic extends ArrayAdapter<Plane> {
+public class CustomAdapterAdmin extends ArrayAdapter<Plane> {
 
 
     private Context context;
@@ -27,7 +27,7 @@ public class CustomAdapterAirtraffic extends ArrayAdapter<Plane> {
     private ImageView ivColour;
 
 
-    public CustomAdapterAirtraffic(Context context, int resource, ArrayList<Plane> objects) {
+    public CustomAdapterAdmin(Context context, int resource, ArrayList<Plane> objects) {
         super(context, resource, objects);
         // Store the food that is passed to this adapter
         plans = objects;
@@ -39,7 +39,7 @@ public class CustomAdapterAirtraffic extends ArrayAdapter<Plane> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.row, parent, false);
+        View rowView = inflater.inflate(R.layout.rowadmin, parent, false);
 
         tvLicensePlate = (TextView) rowView.findViewById(R.id.tvLicensePlate);
         tvAirline = (TextView) rowView.findViewById(R.id.tvAirline);

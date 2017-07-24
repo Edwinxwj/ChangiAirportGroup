@@ -7,19 +7,19 @@ import java.io.Serializable;
  */
 
 public class Gate {
-    private String gateNumber;
+    private String gate;
     private String terminal;
 
     public Gate(){
 
     }
 
-    public String getGateNumber() {
-        return gateNumber;
+    public String getGate() {
+        return gate;
     }
 
-    public void setGateNumber(String gateNumber) {
-        this.gateNumber = gateNumber;
+    public void setGate(String gate) {
+        this.gate = gate;
     }
 
     public String getTerminal() {
@@ -30,13 +30,13 @@ public class Gate {
         this.terminal = terminal;
     }
 
-    public Gate(String gateNumber, String terminal) {
-        this.gateNumber = gateNumber;
+    public Gate(String gate, String terminal) {
+        this.gate = gate;
         this.terminal = terminal;
     }
 
     @Override
     public String toString() {
-        return getGateNumber();
+        return getGate();
     }
 }

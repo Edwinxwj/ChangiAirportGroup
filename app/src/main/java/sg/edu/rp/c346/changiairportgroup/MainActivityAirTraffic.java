@@ -16,6 +16,14 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 public class MainActivityAirTraffic extends AppCompatActivity {
@@ -23,8 +31,10 @@ public class MainActivityAirTraffic extends AppCompatActivity {
     ListView lv;
     ArrayAdapter aa;
     ArrayList<String> gates;
+    private String TAG = "a";
+    DatabaseReference databaseRef;
     Spinner Spinner;
-
+    String term;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,38 +46,100 @@ public class MainActivityAirTraffic extends AppCompatActivity {
         Spinner = (Spinner) findViewById(R.id.spinnerTerminal);
 
         gates = new ArrayList<String>();
-        gates.add("E63");
-        gates.add("E64");
-        gates.add("E65");
-        gates.add("E66");
-        gates.add("E67");
-        gates.add("E68");
-        gates.add("E69");
-        gates.add("E70");
-        gates.add("E71");
-        gates.add("E72");
-        gates.add("E73");
-        gates.add("E74");
-        gates.add("E75");
 
 
         aa = new ArrayAdapter(this, android.R.layout.simple_list_item_1, gates);
         lv.setAdapter(aa);
 
+        databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
 
-        //Creating Spinner
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainActivityAirTraffic.this,
-                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.spinnersTerminal));
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner.setAdapter(myAdapter);
+        databaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                final ArrayList<String> terminals = new ArrayList<>();
+
+                for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
+                    Object obj = areaSnapshot.getKey();
+                    terminals.add(obj.toString());
+                }
+
+                Spinner = (Spinner) findViewById(R.id.spinnerTerminal);
+                ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainActivityAirTraffic.this,
+                        android.R.layout.simple_spinner_item, terminals);
+                myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                Spinner.setAdapter(myAdapter);
+
+                Spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        term = (String)parent.getItemAtPosition(position);
+//                        Toast.makeText(getBaseContext(),term,Toast.LENGTH_SHORT).show();
+                        gates.clear();
+                        Query query = databaseRef.child(term).orderByKey();
+                        query.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                String gateNum = dataSnapshot.getKey();
+//                                String gateNumber = gate.toString();
+                                gates.add(gateNum);
+                                aa.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+//
+//        //Creating Spinner
+//        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainActivityAirTraffic.this,
+//                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.spinnersTerminal));
+//        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        Spinner.setAdapter(myAdapter);
+
+
 
         //Create on click for the list view
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedGates = gates.get(position).toString();
+                String selectedGates = gates.get(position);
                 Intent intent = new Intent(getBaseContext(), SecondActivityAirtraffic.class);
-                intent.putExtra("gates", selectedGates.toString());
+                intent.putExtra("gates", selectedGates);
+                intent.putExtra("terminal",term);
 
                 startActivity(intent);
             }

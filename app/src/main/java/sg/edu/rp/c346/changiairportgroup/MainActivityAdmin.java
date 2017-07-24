@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -32,6 +33,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainActivityAdmin extends AppCompatActivity {
 
@@ -40,6 +42,8 @@ public class MainActivityAdmin extends AppCompatActivity {
     ArrayList<String> gates;
     private String TAG = "a";
     DatabaseReference databaseRef;
+    Spinner Spinner;
+    String term;
 
 
 
@@ -51,22 +55,94 @@ public class MainActivityAdmin extends AppCompatActivity {
 
         gates = new ArrayList<String>();
 
-
         aa = new ArrayAdapter(this, android.R.layout.simple_list_item_1, gates);
         lv.setAdapter(aa);
         registerForContextMenu(lv);
 
-        databaseRef = FirebaseDatabase.getInstance().getReference().child("gate");
+        databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
 
         //Ordering the gateNumber in ascending order
-        Query query = databaseRef.orderByChild("gateNumber");
+//        Query query = databaseRef.orderByChild("gateNumber");
 
-        query.addChildEventListener(new ChildEventListener() {
+        databaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                final ArrayList<String> terminals = new ArrayList<>();
+
+                for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
+                    Object obj = areaSnapshot.getKey();
+                    terminals.add(obj.toString());
+                }
+
+                Spinner = (Spinner) findViewById(R.id.spinnerTerminal);
+                ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainActivityAdmin.this,
+                        android.R.layout.simple_spinner_item, terminals);
+                myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                Spinner.setAdapter(myAdapter);
+
+                Spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        term = (String)parent.getItemAtPosition(position);
+//                        Toast.makeText(getBaseContext(),term,Toast.LENGTH_SHORT).show();
+                        gates.clear();
+                        Query query = databaseRef.child(term).orderByKey();
+                        query.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                String gateNum = dataSnapshot.getKey();
+//                                String gateNumber = gate.toString();
+                                gates.add(gateNum);
+                                aa.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        databaseRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Object obj = dataSnapshot.getKey();
-                Gate gate = dataSnapshot.getValue(Gate.class);
-                String gateNumber = gate.toString();
+//                Gate gate = dataSnapshot.getValue(Gate.class);
+//                String gateNumber = gate.toString();
 //                        String flightNo = gate.getFlightNo();
 //                        String date = gate.getDate();
 //                        String timing = gate.getTiming();
@@ -74,26 +150,26 @@ public class MainActivityAdmin extends AppCompatActivity {
 
 //                        String str = gateNumber + flightNo + date + timing + direction;
 //                    String flight = gate.getFlightNo();
-                Toast.makeText(getBaseContext(),obj.toString(),Toast.LENGTH_LONG).show();
-                gates.add(gateNumber);
+//                Toast.makeText(getBaseContext(),obj.toString(),Toast.LENGTH_LONG).show();
+//                gates.add(gateNumber);
 
-                aa.notifyDataSetChanged();
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-//                    Object obj = ds.getKey();
-//                    Gate gate = ds.getValue(Gate.class);
-//                        String gateNumber = gate.toString();
-////                        String flightNo = gate.getFlightNo();
-////                        String date = gate.getDate();
-////                        String timing = gate.getTiming();
-////                        String direction = gate.getDirection();
-//
-////                        String str = gateNumber + flightNo + date + timing + direction;
-////                    String flight = gate.getFlightNo();
-//                    Toast.makeText(getBaseContext(),obj.toString(),Toast.LENGTH_LONG).show();
-//                    gates.add(gateNumber);
-//
-//                    aa.notifyDataSetChanged();
-                }
+//                aa.notifyDataSetChanged();
+//                for(DataSnapshot ds : dataSnapshot.getChildren()){
+////                    Object obj = ds.getKey();
+////                    Gate gate = ds.getValue(Gate.class);
+////                        String gateNumber = gate.toString();
+//////                        String flightNo = gate.getFlightNo();
+//////                        String date = gate.getDate();
+//////                        String timing = gate.getTiming();
+//////                        String direction = gate.getDirection();
+////
+//////                        String str = gateNumber + flightNo + date + timing + direction;
+//////                    String flight = gate.getFlightNo();
+////                    Toast.makeText(getBaseContext(),obj.toString(),Toast.LENGTH_LONG).show();
+////                    gates.add(gateNumber);
+////
+////                    aa.notifyDataSetChanged();
+//                }
 
             }
 
@@ -121,36 +197,12 @@ public class MainActivityAdmin extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog.Builder mbuilder = new AlertDialog.Builder(
-                        MainActivityAdmin.this);
-                View mView = getLayoutInflater().inflate(R.layout.activity_alert_airtraffic, null);
-                mbuilder.setTitle("Plane Information");
-                final Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivityAdmin.this,
-                        android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.DirectionList));
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                mSpinner.setAdapter(adapter);
-
-                mbuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Choose a Direction")){
-                            Toast.makeText(MainActivityAdmin.this,mSpinner.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
-                            dialogInterface.dismiss();
-                        }
-                    }
-                });
-
-                mbuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                });
-
-                mbuilder.setView(mView);
-                AlertDialog dialog = mbuilder.create();
-                dialog.show();
+                Intent i = new Intent(MainActivityAdmin.this ,SecondActivityAdmin.class);
+                i.putExtra("gate", gates.get(position));
+                i.putExtra("terminal",term);
+                Toast.makeText(getBaseContext(),gates.get(position),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(),term,Toast.LENGTH_SHORT).show();
+                startActivity(i);
             }
         });
 

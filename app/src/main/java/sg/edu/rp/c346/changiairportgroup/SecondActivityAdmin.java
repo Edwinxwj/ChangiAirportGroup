@@ -13,6 +13,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 /**
@@ -26,30 +34,117 @@ public class SecondActivityAdmin extends AppCompatActivity {
     Spinner spnDate;
     ArrayAdapter aa;
     ArrayList<Plane> planes;
+    DatabaseReference databaseRef;
+    String selected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second_airtraffic);
+        setContentView(R.layout.activity_second_admin);
 
         tvGateName = (TextView) findViewById(R.id.tvGate);
 
-        spnDate = (Spinner) findViewById(R.id.spinner2);
+//        spnDate = (Spinner) findViewById(R.id.spinner2);
 
         lv = (ListView) this.findViewById(R.id.lvPlane);
         planes = new ArrayList<Plane>();
 
-        aa = new CustomAdapterAirtraffic(this, R.layout.row, planes);
+        aa = new CustomAdapterAdmin(this, R.layout.rowadmin, planes);
         lv.setAdapter(aa);
 
-//        Intent i = getIntent();
-//        String year = i.getStringExtra("gates");
-        Plane plane1 = new Plane("tvTiming", "tvLicensePlate","tvAirline","tvFlightNum","tvLicensePlate");
 
-        planes.add(plane1);
         Intent i = getIntent();
-        String gates = i.getStringExtra("gates");
+        final String gates = i.getStringExtra("gate");
+        final String term = i.getStringExtra("terminal");
         tvGateName.setText(gates);
+
+        databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
+        final Query querydate = databaseRef.child(term).child(gates).orderByKey();
+
+        querydate.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final ArrayList<String> date = new ArrayList<>();
+                for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
+                    Object obj = areaSnapshot.getKey();
+                    date.add(obj.toString());
+                    Toast.makeText(getBaseContext(),obj.toString(),Toast.LENGTH_SHORT).show();
+                }
+
+                spnDate = (Spinner) findViewById(R.id.spinner2);
+                ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(SecondActivityAdmin.this,
+                        android.R.layout.simple_spinner_item, date);
+                myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spnDate.setAdapter(myAdapter);
+
+                spnDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        planes.clear();
+                        selected = (String)parent.getItemAtPosition(position);
+//                        Toast.makeText(getBaseContext(),term,Toast.LENGTH_SHORT).show();
+                        Query query = databaseRef.child(term).child(gates).child(selected).orderByKey();
+                        query.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                                String time = dataSnapshot.getKey();
+                                Plane newPlane = dataSnapshot.getValue(Plane.class);
+                                Toast.makeText(getBaseContext(),"Newplane:"+newPlane.getDirection(),Toast.LENGTH_SHORT).show();
+                                planes.add(newPlane);
+                                aa.notifyDataSetChanged();
+
+//                                for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
+////                                    Plane newPlane = areaSnapshot.getValue(Plane.class);
+//                                    Plane newPlane = areaSnapshot.getValue(Plane.class);
+//                                    Plane a1 = new Plane(newPlane.getTiming(),newPlane.getFlightNum(),newPlane.getDirection());
+//                                    Toast.makeText(getBaseContext(),"Newplane:"+newPlane.toString(),Toast.LENGTH_SHORT).show();
+//                                    planes.add(newPlane);
+//                                    aa.notifyDataSetChanged();
+//                                }
+
+
+
+//                                planes.add(newPlane);
+//                                aa.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -88,25 +183,25 @@ public class SecondActivityAdmin extends AppCompatActivity {
             }
         });
 
-        spnDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                String Text = spnDate.getSelectedItem().toString();
-//                tv.setText(Text);
-                switch (i) {
-                    case 0:
-
-                        break;
-                    case 1:
-                        //Your code for Item 2 select
-                        break;
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        spnDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+////                String Text = spnDate.getSelectedItem().toString();
+////                tv.setText(Text);
+//                switch (i) {
+//                    case 0:
+//
+//                        break;
+//                    case 1:
+//                        //Your code for Item 2 select
+//                        break;
+//                }
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
 
     }
