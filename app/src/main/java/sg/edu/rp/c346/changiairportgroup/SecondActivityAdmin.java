@@ -66,9 +66,10 @@ public class SecondActivityAdmin extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final ArrayList<String> date = new ArrayList<>();
                 for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
-                    Object obj = areaSnapshot.getKey();
-                    date.add(obj.toString());
-                    Toast.makeText(getBaseContext(),obj.toString(),Toast.LENGTH_SHORT).show();
+                    String obj = areaSnapshot.child("date").getValue(String.class);
+                    if(obj != null) {
+                        date.add(obj);
+                    }
                 }
 
                 spnDate = (Spinner) findViewById(R.id.spinner2);
@@ -88,10 +89,15 @@ public class SecondActivityAdmin extends AppCompatActivity {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 //                                String time = dataSnapshot.getKey();
-                                Plane newPlane = dataSnapshot.getValue(Plane.class);
-                                Toast.makeText(getBaseContext(),"Newplane:"+newPlane.getDirection(),Toast.LENGTH_SHORT).show();
-                                planes.add(newPlane);
-                                aa.notifyDataSetChanged();
+                                if(dataSnapshot.hasChildren()){
+                                    Plane newPlane = dataSnapshot.getValue(Plane.class);
+                                    if(newPlane != null) {
+                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
+                                        planes.add(newPlane);
+                                        aa.notifyDataSetChanged();
+                                    }
+                                }
+
 
 //                                for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
 ////                                    Plane newPlane = areaSnapshot.getValue(Plane.class);

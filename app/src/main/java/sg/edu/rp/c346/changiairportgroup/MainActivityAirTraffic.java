@@ -61,7 +61,7 @@ public class MainActivityAirTraffic extends AppCompatActivity {
                 final ArrayList<String> terminals = new ArrayList<>();
 
                 for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
-                    Object obj = areaSnapshot.getKey();
+                    String obj = areaSnapshot.child("terminal").getValue(String.class);
                     terminals.add(obj.toString());
                 }
 
@@ -81,10 +81,12 @@ public class MainActivityAirTraffic extends AppCompatActivity {
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                String gateNum = dataSnapshot.getKey();
-//                                String gateNumber = gate.toString();
-                                gates.add(gateNum);
-                                aa.notifyDataSetChanged();
+                                String gateNum = dataSnapshot.child("gate").getValue(String.class);
+                                if(gateNum != null){
+                                    gates.add(gateNum);
+                                    aa.notifyDataSetChanged();
+                                    Toast.makeText(getBaseContext(),gateNum,Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             @Override
@@ -140,7 +142,6 @@ public class MainActivityAirTraffic extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), SecondActivityAirtraffic.class);
                 intent.putExtra("gates", selectedGates);
                 intent.putExtra("terminal",term);
-
                 startActivity(intent);
             }
         });

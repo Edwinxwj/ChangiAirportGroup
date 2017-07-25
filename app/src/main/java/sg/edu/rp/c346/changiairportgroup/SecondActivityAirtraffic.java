@@ -72,8 +72,10 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final ArrayList<String> date = new ArrayList<>();
                 for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
-                    Object obj = areaSnapshot.getKey();
-                    date.add(obj.toString());
+                    String obj = areaSnapshot.child("date").getValue(String.class);
+                    if(obj != null) {
+                        date.add(obj);
+                    }
                 }
 
                 spnDate = (Spinner) findViewById(R.id.spinner2);
@@ -91,9 +93,14 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                Plane newPlane = dataSnapshot.getValue(Plane.class);
-                                planes.add(newPlane);
-                                aa.notifyDataSetChanged();
+                                if(dataSnapshot.hasChildren()){
+                                    Plane newPlane = dataSnapshot.getValue(Plane.class);
+                                    if(newPlane != null) {
+                                        planes.add(newPlane);
+                                        aa.notifyDataSetChanged();
+                                    }
+                                }
+
                             }
 
                             @Override
