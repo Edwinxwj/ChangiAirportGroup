@@ -389,7 +389,8 @@ public class MainActivityAdmin extends AppCompatActivity {
                         String gate = etGate.getText().toString();
                         String terminal = spnTerm.getSelectedItem().toString();
 //                        Gate newGate = new Gate(gate,terminal);
-                        databaseRef.child(terminal).child(gate).setValue(1);
+                        databaseRef.child(terminal).child(gate).child("date").setValue("today");
+                        databaseRef.child(terminal).child("gate").setValue(null);
 //                        gates.add(gate);
                         aa.notifyDataSetChanged();
                     }
@@ -422,7 +423,7 @@ public class MainActivityAdmin extends AppCompatActivity {
 
                         //Extract the Text entered by the user
                         String newterminal = etTerminal.getText().toString();
-                        databaseRef.child(newterminal).setValue(1);
+                        databaseRef.child(newterminal).child("gate").setValue("EGate");
 //                        gates.add(gate);
                         myAdapter.notifyDataSetChanged();
                     }
