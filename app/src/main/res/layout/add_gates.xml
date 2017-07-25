@@ -13,17 +13,14 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Gate Number:"
+            android:text="Terminal:"
             android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/editTextGate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
+        <Spinner
+            android:id="@+id/spinnerTerm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -33,15 +30,15 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Terminal:"
+            android:text="Gate Number:"
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/editTextTerminal"
+            android:id="@+id/editTextGate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -40,12 +40,13 @@ import java.util.List;
 public class MainActivityAdmin extends AppCompatActivity {
 
     ListView lv;
-    ArrayAdapter aa;
+    ArrayAdapter aa, myAdapter, myAdapter1;
     ArrayList<String> gates;
     private String TAG = "a";
-    DatabaseReference databaseRef;
-    Spinner Spinner;
+    Spinner Spinner, spnTerm;
     String term;
+
+    DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
 
 
 
@@ -60,8 +61,6 @@ public class MainActivityAdmin extends AppCompatActivity {
         aa = new ArrayAdapter(this, android.R.layout.simple_list_item_1, gates);
         lv.setAdapter(aa);
         registerForContextMenu(lv);
-
-        databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
 
         //Ordering the gateNumber in ascending order
 //        Query query = databaseRef.orderByChild("gateNumber");
@@ -79,7 +78,7 @@ public class MainActivityAdmin extends AppCompatActivity {
                 }
 
                 Spinner = (Spinner) findViewById(R.id.spinnerTerminal);
-                ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainActivityAdmin.this,
+                myAdapter = new ArrayAdapter<String>(MainActivityAdmin.this,
                         android.R.layout.simple_spinner_item, terminals);
                 myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 Spinner.setAdapter(myAdapter);
@@ -342,14 +341,39 @@ public class MainActivityAdmin extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.add:
+            case R.id.addGate:
                 LayoutInflater inflater =
                         (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View viewDialog = inflater.inflate(R.layout.add_gates, null);
+                spnTerm = (Spinner) viewDialog.findViewById(R.id.spinnerTerm);
+
+                databaseRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                        final ArrayList<String> term = new ArrayList<>();
+
+                        for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
+                            Object obj = areaSnapshot.getKey();
+                            term.add(obj.toString());
+                        }
+
+                        myAdapter1 = new ArrayAdapter<String>(MainActivityAdmin.this,
+                                android.R.layout.simple_spinner_item, term);
+                        myAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spnTerm.setAdapter(myAdapter1);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
 
                 //obtain the UI component in the input.xml layout
                 final EditText etGate = (EditText)viewDialog.findViewById(R.id.editTextGate);
-                final EditText etTerminal = (EditText)viewDialog.findViewById(R.id.editTextTerminal);
 
                 AlertDialog.Builder myBuilder = new AlertDialog.Builder(MainActivityAdmin.this);
 
@@ -363,9 +387,9 @@ public class MainActivityAdmin extends AppCompatActivity {
 
                         //Extract the Text entered by the user
                         String gate = etGate.getText().toString();
-                        String terminal = etTerminal.getText().toString();
-                        Gate newGate = new Gate(gate,terminal);
-                        databaseRef.push().setValue(newGate);
+                        String terminal = spnTerm.getSelectedItem().toString();
+//                        Gate newGate = new Gate(gate,terminal);
+                        databaseRef.child(terminal).child(gate).setValue(1);
 //                        gates.add(gate);
                         aa.notifyDataSetChanged();
                     }
@@ -375,6 +399,39 @@ public class MainActivityAdmin extends AppCompatActivity {
                 myBuilder.setNegativeButton("Cancel",null);
                 AlertDialog myDialog = myBuilder.create();
                 myDialog.show();
+
+                return true;
+
+            case R.id.addTerminal:
+                LayoutInflater inflater1 =
+                        (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View viewDialog1 = inflater1.inflate(R.layout.add_terminal, null);
+
+                //obtain the UI component in the input.xml layout
+                final EditText etTerminal = (EditText)viewDialog1.findViewById(R.id.editTextTerminal);
+
+                AlertDialog.Builder myBuilder1 = new AlertDialog.Builder(MainActivityAdmin.this);
+
+                //Set the view of the dialog
+                myBuilder1.setView(viewDialog1);
+                myBuilder1.setTitle("Add Terminal");
+
+                myBuilder1.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        //Extract the Text entered by the user
+                        String newterminal = etTerminal.getText().toString();
+                        databaseRef.child(newterminal).setValue(1);
+//                        gates.add(gate);
+                        myAdapter.notifyDataSetChanged();
+                    }
+
+                });
+
+                myBuilder1.setNegativeButton("Cancel",null);
+                AlertDialog myDialog1 = myBuilder1.create();
+                myDialog1.show();
 
                 return true;
 
