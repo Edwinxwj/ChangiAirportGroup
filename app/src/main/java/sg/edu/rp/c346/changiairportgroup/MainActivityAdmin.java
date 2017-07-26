@@ -456,7 +456,7 @@ public class MainActivityAdmin extends AppCompatActivity {
                 spnGate = (Spinner) viewDialog2.findViewById(R.id.spinnerGate);
                 final EditText etAirline = (EditText)viewDialog2.findViewById(R.id.editTextAirline);
                 final EditText etDestination = (EditText)viewDialog2.findViewById(R.id.editTextDestination);
-                final EditText etDirection = (EditText)viewDialog2.findViewById(R.id.editTextDestination);
+                final EditText etDirection = (EditText)viewDialog2.findViewById(R.id.editTextDirection);
                 final EditText etFlightNo = (EditText)viewDialog2.findViewById(R.id.editTextFlightNo);
                 final EditText etLicensePlate = (EditText)viewDialog2.findViewById(R.id.editTextLicensePlate);
                 final EditText etDate= (EditText)viewDialog2.findViewById(R.id.editTextDate);
