@@ -7,9 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class MainActivityBuggy2 extends AppCompatActivity {
+public class SecondActivityBuggy extends AppCompatActivity {
 
-    TextView tvGate;
+    TextView tvGate, tvAirline, tvDestination,tvDirection, tvFlightNumber, tvLicensePlate, tvTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,9 +17,14 @@ public class MainActivityBuggy2 extends AppCompatActivity {
         setContentView(R.layout.activity_buggy);
 
         tvGate = (TextView) findViewById(R.id.textViewGates);
+        tvAirline = (TextView) findViewById(R.id.tvAirline);
+        tvDestination = (TextView) findViewById(R.id.tvDestination);
+        tvDirection = (TextView) findViewById(R.id.tvDirection);
+        tvAirline = (TextView) findViewById(R.id.tvAirline);
+        tvAirline = (TextView) findViewById(R.id.tvAirline);
 
         Intent i = getIntent();
-        tvGate.setText(i.getStringExtra("gate"));
+        tvGate.setText(i.getStringExtra("gates"));
     }
 
     public boolean onCreateOptionsMenu(Menu menu){

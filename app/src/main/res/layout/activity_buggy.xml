@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sg.edu.rp.c346.changiairportgroup.MainActivityBuggy2">
+    tools:context="sg.edu.rp.c346.changiairportgroup.SecondActivityBuggy">
 
 
     <LinearLayout
@@ -55,28 +55,39 @@
                 android:gravity="center">
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/tvAirLine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Plane Name: Airbus" />
+                    android:text="Airline: Tiger Airway" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/tvDestination"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Airline: TigerAirway" />
+                    android:text="Destination: Japan" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/tvDirection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Direction: North" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/tvFlightNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Updated Time: 15:45" />
+                    android:text="Flight Number: SQ711" />
+
+                <TextView
+                    android:id="@+id/tvLicensePlate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="License Plate: SL1234Q" />
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Time of Flight: 1900" />
 
             </LinearLayout>
 
