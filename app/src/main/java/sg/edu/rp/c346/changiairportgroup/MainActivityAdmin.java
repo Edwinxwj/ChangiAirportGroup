@@ -454,6 +454,14 @@ public class MainActivityAdmin extends AppCompatActivity {
                 //obtain the UI component in the input.xml layout
                 spnTerm1 = (Spinner) viewDialog2.findViewById(R.id.spinnerTerm1);
                 spnGate = (Spinner) viewDialog2.findViewById(R.id.spinnerGate);
+                final EditText etAirline = (EditText)viewDialog2.findViewById(R.id.editTextAirline);
+                final EditText etDestination = (EditText)viewDialog2.findViewById(R.id.editTextDestination);
+                final EditText etDirection = (EditText)viewDialog2.findViewById(R.id.editTextDestination);
+                final EditText etFlightNo = (EditText)viewDialog2.findViewById(R.id.editTextFlightNo);
+                final EditText etLicensePlate = (EditText)viewDialog2.findViewById(R.id.editTextLicensePlate);
+                final EditText etDate= (EditText)viewDialog2.findViewById(R.id.editTextDate);
+                final EditText etTime = (EditText)viewDialog2.findViewById(R.id.editTextTime);
+
 
                 myAdapter3 = new ArrayAdapter<String>(MainActivityAdmin.this,
                         android.R.layout.simple_spinner_item, gate);
@@ -538,24 +546,40 @@ public class MainActivityAdmin extends AppCompatActivity {
 
 
 
+
+
                 AlertDialog.Builder myBuilder2 = new AlertDialog.Builder(MainActivityAdmin.this);
 
                 //Set the view of the dialog
                 myBuilder2.setView(viewDialog2);
                 myBuilder2.setTitle("Add Flight Details");
 
-//                myBuilder2.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                        //Extract the Text entered by the user
-////                        String newterminal = etTerminal.getText().toString();
-////                        databaseRef.child(newterminal).child("terminal").setValue(newterminal);
-////                        gates.add(gate);
-////                        myAdapter.notifyDataSetChanged();
-//                    }
-//
-//                });
+                myBuilder2.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        //Extract the Text entered by the user
+                        String Destination = etDestination.getText().toString();
+                        String Airline = etAirline.getText().toString();
+                        String Direction = etDirection.getText().toString();
+                        String LicensePlate = etLicensePlate.getText().toString();
+                        String FlightNo = etFlightNo.getText().toString();
+                        String Date = etDate.getText().toString();
+                        String Time = etTime.getText().toString();
+
+
+                        String terminal = spnTerm1.getSelectedItem().toString();
+                        String Gate = spnGate.getSelectedItem().toString();
+
+                        Plane plane1 = new Plane(LicensePlate,Long.parseLong(Time),Destination,FlightNo,Direction,Airline);
+                        databaseRef.child(terminal).child(Gate).child(Date).child("date").setValue(Date);
+                        databaseRef.child(terminal).child(Gate).child(Date).child(Time).setValue(plane1);
+
+//                        gates.add(gate);
+//                        myAdapter.notifyDataSetChanged();
+                    }
+
+                });
 
                 myBuilder2.setNegativeButton("Cancel",null);
                 AlertDialog myDialog2 = myBuilder2.create();
