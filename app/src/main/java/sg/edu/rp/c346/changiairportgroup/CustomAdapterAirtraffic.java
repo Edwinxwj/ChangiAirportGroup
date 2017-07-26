@@ -25,6 +25,7 @@ public class CustomAdapterAirtraffic extends ArrayAdapter<Plane> {
     private TextView tvFlyToWhere;
     private  TextView tvFlightnum;
     private ImageView ivColour;
+    private TextView tvDir;
 
 
     public CustomAdapterAirtraffic(Context context, int resource, ArrayList<Plane> objects) {
@@ -46,6 +47,7 @@ public class CustomAdapterAirtraffic extends ArrayAdapter<Plane> {
         tvTiming = (TextView) rowView.findViewById(R.id.tvTiming);
         tvFlyToWhere = (TextView) rowView.findViewById(R.id.tvFlyToWhere);
         tvFlightnum = (TextView) rowView.findViewById(R.id.tvFlightNum);
+        tvDir = (TextView)rowView.findViewById(R.id.tvDirection);
 
 
 
@@ -59,6 +61,7 @@ public class CustomAdapterAirtraffic extends ArrayAdapter<Plane> {
         tvAirline.setText(currentPlane.getAirline());
         tvFlyToWhere.setText(currentPlane.getDestination());
         tvFlightnum.setText(currentPlane.getFlightNo());
+        tvDir.setText(currentPlane.getDirection());
 
 //        String img = currentHolidays.getimage();
 //        int holiday = this.context.getResources().getIdentifier(img, "drawable", context.getPackageName());
