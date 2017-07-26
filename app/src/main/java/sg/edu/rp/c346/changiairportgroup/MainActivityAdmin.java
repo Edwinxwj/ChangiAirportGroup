@@ -40,11 +40,13 @@ import java.util.List;
 public class MainActivityAdmin extends AppCompatActivity {
 
     ListView lv;
-    ArrayAdapter aa, myAdapter, myAdapter1;
+    ArrayAdapter aa, myAdapter, myAdapter1,myAdapter2,myAdapter3;
     ArrayList<String> gates;
     private String TAG = "a";
-    Spinner Spinner, spnTerm;
+    Spinner Spinner, spnTerm, spnTerm1, spnGate;
     String term;
+    final ArrayList<String> gate = new ArrayList<>();
+
 
     DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
 
@@ -248,7 +250,7 @@ public class MainActivityAdmin extends AppCompatActivity {
 //                                Toast.makeText(getBaseContext(), terminal.toString(),Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(MainActivityAdmin.this,EditActivity.class);
                                 i.putExtra("gate", lv.getItemAtPosition(selectpos).toString());
-                                i.putExtra("terminal",terminal.toString());
+//                                i.putExtra("terminal",terminal.toString());
                                 i.putExtra("key",postkey);
                                 startActivityForResult(i,1);
                             }
@@ -364,8 +366,8 @@ public class MainActivityAdmin extends AppCompatActivity {
                         final ArrayList<String> term = new ArrayList<>();
 
                         for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
-                            Object obj = areaSnapshot.getKey();
-                            term.add(obj.toString());
+                            String obj = areaSnapshot.child("terminal").getValue(String.class);
+                            term.add(obj);
                         }
 
                         myAdapter1 = new ArrayAdapter<String>(MainActivityAdmin.this,
@@ -398,8 +400,7 @@ public class MainActivityAdmin extends AppCompatActivity {
                         String gate = etGate.getText().toString();
                         String terminal = spnTerm.getSelectedItem().toString();
 //                        Gate newGate = new Gate(gate,terminal);
-                        databaseRef.child(terminal).child(gate).child("date").setValue("today");
-                        databaseRef.child(terminal).child("gate").setValue(null);
+                        databaseRef.child(terminal).child(gate).child("gate").setValue(gate);
 //                        gates.add(gate);
                         aa.notifyDataSetChanged();
                     }
@@ -432,7 +433,7 @@ public class MainActivityAdmin extends AppCompatActivity {
 
                         //Extract the Text entered by the user
                         String newterminal = etTerminal.getText().toString();
-                        databaseRef.child(newterminal).child("gate").setValue("EGate");
+                        databaseRef.child(newterminal).child("terminal").setValue(newterminal);
 //                        gates.add(gate);
                         myAdapter.notifyDataSetChanged();
                     }
@@ -442,6 +443,123 @@ public class MainActivityAdmin extends AppCompatActivity {
                 myBuilder1.setNegativeButton("Cancel",null);
                 AlertDialog myDialog1 = myBuilder1.create();
                 myDialog1.show();
+
+                return true;
+
+            case R.id.addFlight:
+                LayoutInflater inflater2 =
+                        (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View viewDialog2 = inflater2.inflate(R.layout.add_flight, null);
+
+                //obtain the UI component in the input.xml layout
+                spnTerm1 = (Spinner) viewDialog2.findViewById(R.id.spinnerTerm1);
+                spnGate = (Spinner) viewDialog2.findViewById(R.id.spinnerGate);
+
+                myAdapter3 = new ArrayAdapter<String>(MainActivityAdmin.this,
+                        android.R.layout.simple_spinner_item, gate);
+                myAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spnGate.setAdapter(myAdapter3);
+
+                databaseRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                        final ArrayList<String> term1 = new ArrayList<>();
+
+                        for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
+                            String obj = areaSnapshot.child("terminal").getValue(String.class);
+                            term1.add(obj);
+                        }
+
+                        myAdapter2 = new ArrayAdapter<String>(MainActivityAdmin.this,
+                                android.R.layout.simple_spinner_item, term1);
+                        myAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spnTerm1.setAdapter(myAdapter2);
+
+                        spnTerm1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                               String term1 = (String)parent.getItemAtPosition(position);
+                                gate.clear();
+                                Query query = databaseRef.child(term1).orderByKey();
+
+                                query.addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                                            String gateNum = dataSnapshot.child("gate").getValue(String.class);
+                                            if(gateNum != null){
+                                                gate.add(gateNum);
+                                                myAdapter3.notifyDataSetChanged();
+                                            }
+                                        }
+
+
+                                    @Override
+                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
+                AlertDialog.Builder myBuilder2 = new AlertDialog.Builder(MainActivityAdmin.this);
+
+                //Set the view of the dialog
+                myBuilder2.setView(viewDialog2);
+                myBuilder2.setTitle("Add Flight Details");
+
+//                myBuilder2.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                        //Extract the Text entered by the user
+////                        String newterminal = etTerminal.getText().toString();
+////                        databaseRef.child(newterminal).child("terminal").setValue(newterminal);
+////                        gates.add(gate);
+////                        myAdapter.notifyDataSetChanged();
+//                    }
+//
+//                });
+
+                myBuilder2.setNegativeButton("Cancel",null);
+                AlertDialog myDialog2 = myBuilder2.create();
+                myDialog2.show();
 
                 return true;
 

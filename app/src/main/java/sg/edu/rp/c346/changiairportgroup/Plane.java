@@ -5,12 +5,12 @@ package sg.edu.rp.c346.changiairportgroup;
  */
 
 public class Plane {
-            private String licensePlate;
+    private String licensePlate;
     private Long time;
     private String destination;
     private String flightNo;
     private String direction;
-        private String airline;
+    private String airline;
 
     public Plane() {
 
