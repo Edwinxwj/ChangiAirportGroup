@@ -71,9 +71,9 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final ArrayList<String> date = new ArrayList<>();
-                for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                     String obj = areaSnapshot.child("date").getValue(String.class);
-                    if(obj != null) {
+                    if (obj != null) {
                         date.add(obj);
                     }
                 }
@@ -88,14 +88,14 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         planes.clear();
-                        selected = (String)parent.getItemAtPosition(position);
+                        selected = (String) parent.getItemAtPosition(position);
                         Query query = databaseRef.child(term).child(gates).child(selected).orderByKey();
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                if(dataSnapshot.hasChildren()){
+                                if (dataSnapshot.hasChildren()) {
                                     Plane newPlane = dataSnapshot.getValue(Plane.class);
-                                    if(newPlane != null) {
+                                    if (newPlane != null) {
                                         planes.add(newPlane);
                                         aa.notifyDataSetChanged();
                                     }
@@ -147,11 +147,11 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                 View mView = getLayoutInflater().inflate(R.layout.activity_alert_airtraffic, null);
                 mbuilder.setTitle("Plane Information");
                 final Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
-                TextView tvAirline = (TextView)mView.findViewById(R.id.tvAirline);
-                TextView tvDestination = (TextView)mView.findViewById(R.id.tvDestination);
-                TextView tvFlightNo = (TextView)mView.findViewById(R.id.tvFlightNo);
-                TextView tvLicenseNo = (TextView)mView.findViewById(R.id.tvLicensePlate);
-                TextView tvTime = (TextView)mView.findViewById(R.id.tvTime);
+                TextView tvAirline = (TextView) mView.findViewById(R.id.tvAirline);
+                TextView tvDestination = (TextView) mView.findViewById(R.id.tvDestination);
+                TextView tvFlightNo = (TextView) mView.findViewById(R.id.tvFlightNo);
+                TextView tvLicenseNo = (TextView) mView.findViewById(R.id.tvLicensePlate);
+                TextView tvTime = (TextView) mView.findViewById(R.id.tvTime);
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(SecondActivityAirtraffic.this,
                         android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.DirectionList));
@@ -165,11 +165,11 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                 tvFlightNo.setText(currentPlane.getFlightNo());
                 tvTime.setText(currentPlane.getTime().toString());
                 tvLicenseNo.setText(currentPlane.getLicensePlate());
-                if(currentPlane.getDirection().equalsIgnoreCase("North")){
+                if (currentPlane.getDirection().equalsIgnoreCase("North")) {
                     mSpinner.setSelection(2);
-                }else if(currentPlane.getDirection().equalsIgnoreCase("South")){
+                } else if (currentPlane.getDirection().equalsIgnoreCase("South")) {
                     mSpinner.setSelection(1);
-                }else{
+                } else {
                     mSpinner.setSelection(0);
                 }
 
@@ -177,13 +177,13 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                 mbuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Choose a Direction")){
+                        if (!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Choose a Direction")) {
                             final Query q1 = databaseRef.child(term).child(gates).child(selected).orderByChild("licensePlate").equalTo(currentPlane.getLicensePlate());
                             q1.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                    if(dataSnapshot.exists()) {
+                                    if (dataSnapshot.exists()) {
                                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                             String postkey = ds.getRef().getKey();
 //                                            Toast.makeText(SecondActivityAirtraffic.this,postkey,Toast.LENGTH_LONG).show();
@@ -215,6 +215,8 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                 AlertDialog dialog = mbuilder.create();
                 dialog.show();
 
+
+
             }
         });
 
@@ -240,9 +242,6 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
 
 
     }
-
-
-
 
 
 }

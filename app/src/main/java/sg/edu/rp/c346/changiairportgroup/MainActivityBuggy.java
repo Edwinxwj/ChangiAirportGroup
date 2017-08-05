@@ -37,7 +37,7 @@ public class MainActivityBuggy extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_buggy3);
+        setContentView(R.layout.activity_main_buggy_terminal);
 
         lv = (ListView) findViewById(R.id.lv);
 
@@ -137,7 +137,7 @@ public class MainActivityBuggy extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedGates = gates.get(position);
-                Intent intent = new Intent(getBaseContext(), SecondActivityBuggy.class);
+                Intent intent = new Intent(MainActivityBuggy.this, Main2ActivityBuggy.class);
                 intent.putExtra("gates", selectedGates);
                 intent.putExtra("terminal",term);
                 startActivity(intent);

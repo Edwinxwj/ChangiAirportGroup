@@ -34,7 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:outlineProvider="background">
+            android:outlineProvider="background"
+            android:paddingTop="20dp">
 
             <TextView
                 android:id="@+id/textViewGates"
@@ -93,17 +94,12 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="308dp"
-            android:layout_height="215dp"
-            app:srcCompat="@drawable/plane"
-            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="100dp">
 
             <ImageView
                 android:id="@+id/imageView4"
