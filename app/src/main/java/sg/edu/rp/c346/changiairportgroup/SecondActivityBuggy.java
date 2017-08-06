@@ -31,11 +31,12 @@ public class SecondActivityBuggy extends AppCompatActivity {
         final String licensePlate = i.getStringExtra("licensePlate");
 
         tvGate = (TextView) findViewById(R.id.textViewGates);
-        tvAirline = (TextView) findViewById(R.id.tvAirline);
+        tvAirline = (TextView) findViewById(R.id.tvAirLine);
         tvDestination = (TextView) findViewById(R.id.tvDestination);
         tvDirection = (TextView) findViewById(R.id.tvDirection);
-        tvAirline = (TextView) findViewById(R.id.tvAirline);
-        tvAirline = (TextView) findViewById(R.id.tvAirline);
+        tvFlightNumber = (TextView) findViewById(R.id.tvFlightNumber);
+        tvTime = (TextView) findViewById(R.id.tvTime);
+        tvLicensePlate = (TextView)findViewById(R.id.tvLicensePlate);
 
         databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
 
@@ -43,18 +44,19 @@ public class SecondActivityBuggy extends AppCompatActivity {
         q1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String postkey = dataSnapshot.getRef().getKey();
-                Toast.makeText(getBaseContext(),postkey,Toast.LENGTH_LONG).show();
-                String a = dataSnapshot.child(postkey).getValue(String.class);
-                Toast.makeText(getBaseContext(),a,Toast.LENGTH_LONG).show();
+//                String postkey = dataSnapshot.getRef().getKey();
+//                Toast.makeText(getBaseContext(),postkey,Toast.LENGTH_LONG).show();
+
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                        String postkey = ds.getRef().getKey();
-////                                            Toast.makeText(SecondActivityAirtraffic.this,postkey,Toast.LENGTH_LONG).show();
-//
-//                        //get the key of the child node that has to be updated
-////                      databaseRef.child(term).child(gates).child(selectedDate).child(postkey).child("direction");
-//                        String a = ds.child(postkey).getValue(String.class);
-//                        Toast.makeText(getBaseContext(),a,Toast.LENGTH_LONG).show();
+                        Plane a = ds.getValue(Plane.class);
+                        tvAirline.setText("Airline: "+a.getAirline());
+                        tvDestination.setText("Destination: "+a.getDestination());
+                        tvDirection.setText("Direction: "+a.getDirection());
+                        tvFlightNumber.setText("Flight Number: "+a.getFlightNo());
+                        tvGate.setText(gates);
+                        tvLicensePlate.setText("License Plate: "+a.getLicensePlate());
+                        tvTime.setText("Time: "+a.getTime());
+
                     }
 
             }

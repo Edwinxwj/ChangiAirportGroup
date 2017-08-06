@@ -25,7 +25,7 @@ public class CustomAdapterAdmin extends ArrayAdapter<Plane> {
     private TextView tvFlyToWhere;
     private  TextView tvFlightnum;
     private ImageView ivColour;
-
+    private TextView tvDirection;
 
     public CustomAdapterAdmin(Context context, int resource, ArrayList<Plane> objects) {
         super(context, resource, objects);
@@ -46,19 +46,19 @@ public class CustomAdapterAdmin extends ArrayAdapter<Plane> {
         tvTiming = (TextView) rowView.findViewById(R.id.tvTiming);
         tvFlyToWhere = (TextView) rowView.findViewById(R.id.tvFlyToWhere);
         tvFlightnum = (TextView) rowView.findViewById(R.id.tvFlightNum);
+        tvDirection = (TextView)rowView.findViewById(R.id.tvDirection);
 
 
 
         ivColour = (ImageView) rowView.findViewById(R.id.ivColour);
         Plane currentPlane = plans.get(position);
 
-
-
         tvTiming.setText(currentPlane.getTime().toString());
         tvLicensePlate.setText(currentPlane.getLicensePlate());
         tvAirline.setText(currentPlane.getAirline());
         tvFlyToWhere.setText(currentPlane.getDestination());
         tvFlightnum.setText(currentPlane.getFlightNo());
+        tvDirection.setText(currentPlane.getDirection());
 
 //        String img = currentHolidays.getimage();
 //        int holiday = this.context.getResources().getIdentifier(img, "drawable", context.getPackageName());
