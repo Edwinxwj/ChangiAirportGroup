@@ -32,6 +32,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private com.google.firebase.auth.FirebaseAuth mAuth;
 
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+
+
     private ProgressDialog progressDialog;
     private DatabaseReference mDatabaseUsers;
 
@@ -39,6 +43,20 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mAuth = FirebaseAuth.getInstance();
+        // [END initialize_auth]
+
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() != null){
+                   checkUserExist();
+                }
+            }
+        };
+
         mAuth = com.google.firebase.auth.FirebaseAuth.getInstance();
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
 
@@ -71,10 +89,6 @@ public class LoginActivity extends AppCompatActivity {
     private void checkLogin(){
         String email = etEmail.getText().toString().trim();
         String password = etPassWord.getText().toString().trim();
-        databaseRef = FirebaseDatabase.getInstance().getReference("Users");
-        role = databaseRef.getKey();
-
-
         if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
 
             progressDialog.setMessage("Checking login");
@@ -100,9 +114,26 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild(user_id)){
-                    Intent mainIntent = new Intent(LoginActivity.this,MainActivityAdmin.class);
-                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(mainIntent);
+                    String role = dataSnapshot.child(user_id).child("Role").getValue(String.class);
+                    if(role.equals("Admin")){
+                        Toast.makeText(getBaseContext(),"Role: "+role ,Toast.LENGTH_SHORT).show();
+                        Intent mainIntent = new Intent(LoginActivity.this,MainActivityAdmin.class);
+                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(mainIntent);
+                    }else if(role.equals("Buggy Driver")){
+                        Toast.makeText(getBaseContext(),"Role: "+role ,Toast.LENGTH_SHORT).show();
+                        Intent mainIntent = new Intent(LoginActivity.this,MainActivityBuggy.class);
+                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(mainIntent);
+
+                    }else if(role.equals("Airtraffic Controller")){
+                        Toast.makeText(getBaseContext(),"Role: "+role ,Toast.LENGTH_SHORT).show();
+                        Intent mainIntent = new Intent(LoginActivity.this,MainActivityAirTraffic.class);
+                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(mainIntent);
+                    }else {
+                        Toast.makeText(LoginActivity.this, "Invalid role" + role, Toast.LENGTH_LONG).show();
+                    }
 
                 }else{
                     Toast.makeText(LoginActivity.this,"You need setup your account",Toast.LENGTH_LONG).show();

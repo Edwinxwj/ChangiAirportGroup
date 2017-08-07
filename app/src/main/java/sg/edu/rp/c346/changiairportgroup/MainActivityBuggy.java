@@ -2,6 +2,7 @@ package sg.edu.rp.c346.changiairportgroup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +15,7 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,10 +36,33 @@ public class MainActivityBuggy extends AppCompatActivity {
     Spinner Spinner;
     String term;
 
+    // [START declare_auth]
+    private FirebaseAuth mAuth;
+    // [END declare_auth]
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_buggy_terminal);
+
+        // [START initialize_auth]
+        mAuth = FirebaseAuth.getInstance();
+        // [END initialize_auth]
+
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() == null){
+                    Intent LoginIntent = new Intent(MainActivityBuggy.this,LoginActivity.class);
+                    LoginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(LoginIntent);
+                }
+            }
+        };
 
         lv = (ListView) findViewById(R.id.lv);
 
@@ -78,12 +103,12 @@ public class MainActivityBuggy extends AppCompatActivity {
                         Query query = databaseRef.child(term).orderByKey();
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
-                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 String gateNum = dataSnapshot.child("gate").getValue(String.class);
                                 if(gateNum != null){
                                     gates.add(gateNum);
                                     aa.notifyDataSetChanged();
-                                    Toast.makeText(getBaseContext(),gateNum,Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getBaseContext(),gateNum,Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -151,6 +176,7 @@ public class MainActivityBuggy extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
+        inflater.inflate(R.menu.main_logout, menu);
         MenuItem item = menu.findItem(R.id.SearchId);
         SearchView searchView = (SearchView)item.getActionView();
 
@@ -170,4 +196,28 @@ public class MainActivityBuggy extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.logout:
+                logout();
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    private void logout(){
+        mAuth.signOut();
+    }
+
+
 }

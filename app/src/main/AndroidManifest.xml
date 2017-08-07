@@ -13,17 +13,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivityAdmin">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivityAirTraffic" />
+        <activity android:name=".MainActivityBuggy" />
+
         <activity android:name=".EditActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivityAdmin" />
         <activity android:name=".SecondActivityAirtraffic" />
         <activity android:name=".SecondActivityAdmin" />
         <activity android:name=".SecondActivityBuggy" />

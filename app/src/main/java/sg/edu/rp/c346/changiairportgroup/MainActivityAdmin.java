@@ -64,6 +64,9 @@ public class MainActivityAdmin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_admin);
 
+        Toast.makeText(getBaseContext(), "Admin",Toast.LENGTH_SHORT).show();
+
+
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
@@ -126,7 +129,7 @@ public class MainActivityAdmin extends AppCompatActivity {
                                 if(gateNum != null){
                                     gates.add(gateNum);
                                     aa.notifyDataSetChanged();
-                                    Toast.makeText(getBaseContext(),gateNum,Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getBaseContext(),gateNum,Toast.LENGTH_SHORT).show();
                                 }
                             }
 
