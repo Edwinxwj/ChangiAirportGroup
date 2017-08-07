@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,6 +24,7 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,6 +49,11 @@ public class MainActivityAdmin extends AppCompatActivity {
     String term;
     final ArrayList<String> gate = new ArrayList<>();
 
+    // [START declare_auth]
+    private FirebaseAuth mAuth;
+    // [END declare_auth]
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
 
     DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
 
@@ -56,6 +63,22 @@ public class MainActivityAdmin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_admin);
+
+        // [START initialize_auth]
+        mAuth = FirebaseAuth.getInstance();
+        // [END initialize_auth]
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() == null){
+                    Intent LoginIntent = new Intent(MainActivityAdmin.this,LoginActivity.class);
+                    LoginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(LoginIntent);
+                }
+            }
+        };
+
         lv = (ListView) findViewById(R.id.lv);
 
         gates = new ArrayList<String>();
@@ -343,6 +366,12 @@ public class MainActivityAdmin extends AppCompatActivity {
     }//onActivityResult
 
     @Override
+    protected void onStart(){
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.add, menu);
@@ -587,9 +616,19 @@ public class MainActivityAdmin extends AppCompatActivity {
 
                 return true;
 
+            case R.id.logout:
+                logout();
+
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
 
     }
+
+    private void logout(){
+        mAuth.signOut();
+    }
+
 }

@@ -48,8 +48,6 @@ public class SecondActivityBuggy extends AppCompatActivity {
         q1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                String postkey = dataSnapshot.getRef().getKey();
-//                Toast.makeText(getBaseContext(),postkey,Toast.LENGTH_LONG).show();
 
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         Plane a = ds.getValue(Plane.class);

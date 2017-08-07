@@ -73,10 +73,4 @@ public class Plane {
         this.direction = direction;
     }
 
-    @Override
-    public String toString() {
-        return "Plane{" +
-                "airline='" + airline + '\'' +
-                '}';
-    }
 }
