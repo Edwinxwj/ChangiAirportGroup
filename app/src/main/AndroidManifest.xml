@@ -21,6 +21,10 @@
         <activity android:name=".SecondActivityAirtraffic" />
         <activity android:name=".SecondActivityBuggy" />
         <activity android:name=".Main2ActivityBuggy"></activity>
+        <activity android:name=".Chat.Chat"></activity>
+        <activity android:name=".Chat.MainActivity"></activity>
+        <activity android:name=".Chat.SignInActivity"></activity>
+
     </application>
 
 </manifest>

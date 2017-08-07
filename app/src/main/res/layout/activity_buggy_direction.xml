@@ -1,118 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="sg.edu.rp.c346.changiairportgroup.SecondActivityBuggy">
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:outlineProvider="background">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <SearchView
-                android:layout_width="297dp"
-                android:layout_height="match_parent" />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Update" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/textViewGates"
+            android:layout_width="145dp"
+            android:layout_height="126dp"
+            android:background="@android:color/black"
+            android:gravity="center"
+            android:text="E26"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="30sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:outlineProvider="background"
-            android:paddingTop="20dp">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="20dp">
 
             <TextView
-                android:id="@+id/textViewGates"
-                android:layout_width="145dp"
-                android:layout_height="126dp"
-                android:text="E26"
-                android:textAlignment="center"
-                android:textSize="30sp"
-                android:textColor="@android:color/white"
-                android:gravity="center"
-                android:background="@android:color/black"/>
-
-            <LinearLayout
+                android:id="@+id/tvAirLine"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="20dp"
-                android:gravity="center">
+                android:layout_height="wrap_content"
+                android:text="Airline: Tiger Airway" />
 
-                <TextView
-                    android:id="@+id/tvAirLine"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Airline: Tiger Airway" />
-
-                <TextView
-                    android:id="@+id/tvDestination"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Destination: Japan" />
-
-                <TextView
-                    android:id="@+id/tvDirection"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Direction: North" />
-
-                <TextView
-                    android:id="@+id/tvFlightNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Flight Number: SQ711" />
-
-                <TextView
-                    android:id="@+id/tvLicensePlate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="License Plate: SL1234Q" />
-                <TextView
-                    android:id="@+id/tvTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Time of Flight: 1900" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingTop="100dp">
-
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="203dp"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/arrow_left" />
-
-            <ImageView
-                android:id="@+id/imageView3"
+            <TextView
+                android:id="@+id/tvDestination"
                 android:layout_width="match_parent"
-                android:layout_height="125dp"
-                app:srcCompat="@drawable/plane_left" />
+                android:layout_height="wrap_content"
+                android:text="Destination: Japan" />
+
+            <TextView
+                android:id="@+id/tvDirection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Direction: North" />
+
+            <TextView
+                android:id="@+id/tvFlightNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Flight Number: SQ711" />
+
+            <TextView
+                android:id="@+id/tvLicensePlate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="License Plate: SL1234Q" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Time of Flight: 1900" />
+
         </LinearLayout>
 
     </LinearLayout>
-</ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="100dp">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="203dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/arrow_left" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="125dp"
+            app:srcCompat="@drawable/plane_left" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Update" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="@dimen/fab_margin"
+        android:backgroundTint="@android:color/black"
+        android:src="@drawable/ic_action_message" />
+
+
+</LinearLayout>
