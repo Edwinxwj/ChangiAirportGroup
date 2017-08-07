@@ -7,8 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +29,8 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private ProgressDialog mProgress;
+    private Spinner spnRole;
+    private String selected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-        mDatabase.setValue("hello");
         mProgress = new ProgressDialog(this);
 
 
@@ -51,6 +55,30 @@ public class RegisterActivity extends AppCompatActivity {
                 startRegister();
             }
         });
+//
+        spnRole = (Spinner) findViewById(R.id.spinnerRole);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.spinnerRole, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spnRole.setAdapter(adapter);
+
+        spnRole.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selected = (String) parent.getItemAtPosition(position);
+                Toast.makeText(getBaseContext(), selected,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+//
+
 
     }
 
@@ -58,6 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
         final String name = etName.getText().toString().trim();
         final String email = etEmail.getText().toString().trim();
         final String password = etPassword.getText().toString().trim();
+        final String role = selected.trim();
 
         if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
             mProgress.setMessage("Signing up");
@@ -73,6 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         current_user_db.child("Name").setValue(name);
                         current_user_db.child("Image").setValue("default");
+                        current_user_db.child("Role").setValue(role);
 
                         mProgress.dismiss();
 

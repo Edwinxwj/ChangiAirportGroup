@@ -216,7 +216,6 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                 dialog.show();
 
 
-
             }
         });
 

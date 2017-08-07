@@ -27,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etPassWord;
     private Button btnLogin;
     private Button btnCreate;
+    private DatabaseReference databaseRef;
+    private String role;
 
     private com.google.firebase.auth.FirebaseAuth mAuth;
 
@@ -69,6 +71,9 @@ public class LoginActivity extends AppCompatActivity {
     private void checkLogin(){
         String email = etEmail.getText().toString().trim();
         String password = etPassWord.getText().toString().trim();
+        databaseRef = FirebaseDatabase.getInstance().getReference("Users");
+        role = databaseRef.getKey();
+
 
         if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
 
