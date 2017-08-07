@@ -62,9 +62,12 @@ public class PrivateChats extends Fragment {
             protected void populateView(View view, Users u, final int position) {
                 TextView textViewUser = (TextView)view.findViewById(R.id.tvUser);
                 ImageView imageViewUser = (ImageView)view.findViewById(R.id.iVUser);
+                TextView textViewRole = (TextView) view.findViewById(R.id.tvRole);
                 String username = u.getName().toString().trim();
                 String photoUrl = u.getPhotoUrl().toString().trim();
+                String role = u.getRole().toString().trim();
                 textViewUser.setText(username);
+                textViewRole.setText(role);
                 Picasso.with(getActivity().getBaseContext()).load(photoUrl).into(imageViewUser);
 
                 chatUser = firebaseListAdapter.getRef(position).getKey();
@@ -99,13 +102,13 @@ public class PrivateChats extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.idLVPrivateChats);
         listView.setAdapter(firebaseListAdapter);
 
-        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
         return rootView;
     }
 

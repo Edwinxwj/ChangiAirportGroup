@@ -1,5 +1,6 @@
 package sg.edu.rp.c346.changiairportgroup.Chat;
 
+import sg.edu.rp.c346.changiairportgroup.LoginActivity;
 import sg.edu.rp.c346.changiairportgroup.R;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -122,7 +123,7 @@ public class Chat extends AppCompatActivity implements
 
         if (mFirebaseUser == null) {
             // Not signed in, launch the Sign In activity
-            startActivity(new Intent(this, SignInActivity.class));
+            startActivity(new Intent(this, LoginActivity.class));
         } else {
             mUsername = mFirebaseUser.getDisplayName();
             if (mFirebaseUser.getPhotoUrl() != null) {

@@ -16,6 +16,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import sg.edu.rp.c346.changiairportgroup.Chat.*;
+import sg.edu.rp.c346.changiairportgroup.Chat.MainActivity;
 
 public class SecondActivityBuggy extends AppCompatActivity {
 
@@ -74,17 +75,11 @@ public class SecondActivityBuggy extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Click action
-                Intent intent = new Intent(SecondActivityBuggy.this, sg.edu.rp.c346.changiairportgroup.Chat.MainActivity.class);
+                Intent intent = new Intent(SecondActivityBuggy.this, MainActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(SecondActivityBuggy.this, Main2ActivityBuggy.class);
-        startActivity(intent);
-        finish();
-    }
+
 }

@@ -7,12 +7,14 @@ package sg.edu.rp.c346.changiairportgroup.Chat;
 public class Users {
     private String name;
     private String photoUrl;
+    private String role;
 
     public Users () {}
 
-    public Users(String name, String photoUrl) {
+    public Users(String name, String photoUrl, String role) {
         this.name = name;
         this.photoUrl = photoUrl;
+        this.role = role;
     }
 
     public String getName() {
@@ -29,5 +31,13 @@ public class Users {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

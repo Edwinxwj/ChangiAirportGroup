@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -39,6 +41,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+
 public class MainActivityAdmin extends AppCompatActivity {
 
     ListView lv;
@@ -58,13 +61,12 @@ public class MainActivityAdmin extends AppCompatActivity {
     DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_admin);
 
-        Toast.makeText(getBaseContext(), "Admin",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), "Admin", Toast.LENGTH_SHORT).show();
 
 
         // [START initialize_auth]
@@ -74,8 +76,8 @@ public class MainActivityAdmin extends AppCompatActivity {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() == null){
-                    Intent LoginIntent = new Intent(MainActivityAdmin.this,LoginActivity.class);
+                if (firebaseAuth.getCurrentUser() == null) {
+                    Intent LoginIntent = new Intent(MainActivityAdmin.this, LoginActivity.class);
                     LoginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(LoginIntent);
                 }
@@ -117,7 +119,7 @@ public class MainActivityAdmin extends AppCompatActivity {
                 Spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        term = (String)parent.getItemAtPosition(position);
+                        term = (String) parent.getItemAtPosition(position);
 //                        Log.d(TAG,dataSnapshot.getValue().toString());
                         gates.clear();
                         Query query = databaseRef.child(term).orderByKey();
@@ -126,7 +128,7 @@ public class MainActivityAdmin extends AppCompatActivity {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 String gateNum = dataSnapshot.child("gate").getValue(String.class);
-                                if(gateNum != null){
+                                if (gateNum != null) {
                                     gates.add(gateNum);
                                     aa.notifyDataSetChanged();
 //                                    Toast.makeText(getBaseContext(),gateNum,Toast.LENGTH_SHORT).show();
@@ -171,82 +173,19 @@ public class MainActivityAdmin extends AppCompatActivity {
             }
         });
 
-
-
-
-
-//        databaseRef.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                Object obj = dataSnapshot.getKey();
-////                Gate gate = dataSnapshot.getValue(Gate.class);
-////                String gateNumber = gate.toString();
-////                        String flightNo = gate.getFlightNo();
-////                        String date = gate.getDate();
-////                        String timing = gate.getTiming();
-////                        String direction = gate.getDirection();
-//
-////                        String str = gateNumber + flightNo + date + timing + direction;
-////                    String flight = gate.getFlightNo();
-////                Toast.makeText(getBaseContext(),obj.toString(),Toast.LENGTH_LONG).show();
-////                gates.add(gateNumber);
-//
-////                aa.notifyDataSetChanged();
-////                for(DataSnapshot ds : dataSnapshot.getChildren()){
-//////                    Object obj = ds.getKey();
-//////                    Gate gate = ds.getValue(Gate.class);
-//////                        String gateNumber = gate.toString();
-////////                        String flightNo = gate.getFlightNo();
-////////                        String date = gate.getDate();
-////////                        String timing = gate.getTiming();
-////////                        String direction = gate.getDirection();
-//////
-////////                        String str = gateNumber + flightNo + date + timing + direction;
-////////                    String flight = gate.getFlightNo();
-//////                    Toast.makeText(getBaseContext(),obj.toString(),Toast.LENGTH_LONG).show();
-//////                    gates.add(gateNumber);
-//////
-//////                    aa.notifyDataSetChanged();
-////                }
-//
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(MainActivityAdmin.this ,SecondActivityAdmin.class);
+                Intent i = new Intent(MainActivityAdmin.this, SecondActivityAdmin.class);
                 i.putExtra("gate", gates.get(position));
-                i.putExtra("terminal",term);
-                Toast.makeText(getBaseContext(),gates.get(position),Toast.LENGTH_SHORT).show();
-                Toast.makeText(getBaseContext(),term,Toast.LENGTH_SHORT).show();
+                i.putExtra("terminal", term);
+                Toast.makeText(getBaseContext(), gates.get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), term, Toast.LENGTH_SHORT).show();
                 startActivity(i);
             }
         });
-
-
-
     }
+
     @Override
     public void onCreateContextMenu (ContextMenu menu, View
             v, ContextMenu.ContextMenuInfo menuInfo){
@@ -623,6 +562,24 @@ public class MainActivityAdmin extends AppCompatActivity {
                 logout();
 
                 return true;
+
+            case R.id.SearchId:
+                SearchView searchView = (SearchView)item.getActionView();
+
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        aa.getFilter().filter(newText);
+                        return true;
+                    }
+                });
+                return true;
+
 
             default:
                 return super.onOptionsItemSelected(item);
