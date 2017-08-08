@@ -40,7 +40,6 @@ public class SecondActivityAdmin extends AppCompatActivity {
 
     private Toolbar aToolbar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

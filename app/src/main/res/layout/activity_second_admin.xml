@@ -8,6 +8,7 @@
 
     <include layout="@layout/app_bar_layout" android:id="@+id/admin_second_page_toolbar" />
 
+
     <TextView
         android:id="@+id/tvGate"
         android:layout_width="match_parent"

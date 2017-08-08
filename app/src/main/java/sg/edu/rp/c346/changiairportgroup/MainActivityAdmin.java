@@ -63,7 +63,6 @@ public class MainActivityAdmin extends AppCompatActivity {
 
     private Toolbar aToolbar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
