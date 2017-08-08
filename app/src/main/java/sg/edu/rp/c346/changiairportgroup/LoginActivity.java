@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -52,10 +53,16 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private DatabaseReference mDatabaseUsers;
 
+    private Toolbar aToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        aToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
+        setSupportActionBar(aToolbar);
+        getSupportActionBar().setTitle("Login Page");
 
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
