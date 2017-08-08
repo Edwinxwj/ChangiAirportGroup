@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,17 +37,10 @@ public class SecondActivityAdmin extends AppCompatActivity {
     DatabaseReference databaseRef;
     String selected;
 
-    private Toolbar aToolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_admin);
-
-        aToolbar = (Toolbar) findViewById(R.id.admin_second_page_toolbar);
-        setSupportActionBar(aToolbar);
-        getSupportActionBar().setTitle("Admin Flight Page");
-
 
         tvGateName = (TextView) findViewById(R.id.tvGate);
 

@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.database.DatabaseReference;
+
 public class EditActivity extends AppCompatActivity {
 
     EditText editGate,editTerminal;
@@ -33,6 +35,7 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent returnIntent = new Intent();
+
                 returnIntent.putExtra("result",editGate.getText().toString());
                 returnIntent.putExtra("terminal",editTerminal.getText().toString());
                 returnIntent.putExtra("key",key);
