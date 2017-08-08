@@ -8,6 +8,7 @@
 
     <include layout="@layout/app_bar_layout" android:id="@+id/main_page_toolbar" />
 
+
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="wrap_content"

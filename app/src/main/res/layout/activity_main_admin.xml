@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/lavender"
     tools:context="sg.edu.rp.c346.changiairportgroup.MainActivityAdmin">
 
     <include layout="@layout/app_bar_layout" android:id="@+id/admin_page_toolbar" />
@@ -19,7 +20,7 @@
     <ListView
         android:id="@+id/lv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>
