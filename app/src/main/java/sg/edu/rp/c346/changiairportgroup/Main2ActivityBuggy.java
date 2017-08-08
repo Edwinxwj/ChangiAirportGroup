@@ -3,6 +3,7 @@ package sg.edu.rp.c346.changiairportgroup;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,10 +30,17 @@ public class Main2ActivityBuggy extends AppCompatActivity {
     DatabaseReference databaseRef;
     String selectedDate;
 
+    private Toolbar aToolbar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_buggy_flight);
+
+        aToolbar = (Toolbar) findViewById(R.id.buggy_flight_page_toolbar);
+        setSupportActionBar(aToolbar);
+        getSupportActionBar().setTitle("Flight Information Page");
 
         tvGateName = (TextView) findViewById(R.id.tvGate);
 

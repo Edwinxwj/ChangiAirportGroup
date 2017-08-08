@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -43,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseReference databaseRef;
     private String role;
 
+    private Toolbar aToolbar;
+
     private com.google.firebase.auth.FirebaseAuth mAuth;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -59,6 +62,10 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
+
+        aToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
+        setSupportActionBar(aToolbar);
+        getSupportActionBar().setTitle("Login Page");
 
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {

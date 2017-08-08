@@ -56,7 +56,7 @@ public class PrivateChats extends Fragment {
         mdatabaseReference = databaseReference.child("Users");
         firebaseListAdapter = new FirebaseListAdapter<Users>(getActivity(),
                 Users.class,
-                R.layout.row,
+                R.layout.row_chat,
                 mdatabaseReference) {
             @Override
             protected void populateView(View view, Users u, final int position) {
@@ -64,7 +64,7 @@ public class PrivateChats extends Fragment {
                 ImageView imageViewUser = (ImageView)view.findViewById(R.id.iVUser);
                 TextView textViewRole = (TextView) view.findViewById(R.id.tvRole);
                 String username = u.getName().toString().trim();
-                String photoUrl = u.getPhotoUrl().toString().trim();
+                String photoUrl = u.getImage().toString().trim();
                 String role = u.getRole().toString().trim();
                 textViewUser.setText(username);
                 textViewRole.setText(role);

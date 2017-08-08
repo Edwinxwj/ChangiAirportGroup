@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,12 +42,16 @@ public class MainActivityBuggy extends AppCompatActivity {
     // [END declare_auth]
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-
+    private Toolbar aToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_buggy_terminal);
+
+        aToolbar = (Toolbar) findViewById(R.id.buggy_terminal_page_toolbar);
+        setSupportActionBar(aToolbar);
+        getSupportActionBar().setTitle("Gates Page");
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();

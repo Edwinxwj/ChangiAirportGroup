@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/lavender"
     tools:context="sg.edu.rp.c346.changiairportgroup.SecondActivityBuggy">
 
+    <include layout="@layout/app_bar_layout" android:id="@+id/buggy_direction_page_toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +20,7 @@
             android:id="@+id/textViewGates"
             android:layout_width="145dp"
             android:layout_height="126dp"
-            android:background="@android:color/black"
+            android:background="@color/colorAccent"
             android:gravity="center"
             android:text="E26"
             android:textAlignment="center"
@@ -30,43 +32,62 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingLeft="20dp">
+            android:paddingLeft="10dp"
+            android:background="@color/light_grey">
 
             <TextView
                 android:id="@+id/tvAirLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Airline: Tiger Airway" />
+                android:fontFamily="monospace"
+                android:text="Airline: Tiger Airway"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvDestination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Destination: Japan" />
+                android:fontFamily="monospace"
+                android:text="Destination: Japan"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvDirection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Direction: North" />
+                android:fontFamily="monospace"
+                android:text="Direction: North"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvFlightNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Flight Number: SQ711" />
+                android:fontFamily="monospace"
+                android:text="Flight Number: SQ711"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvLicensePlate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="License Plate: SL1234Q" />
+                android:fontFamily="monospace"
+                android:text="License Plate: SL1234Q"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Time of Flight: 1900" />
+                android:fontFamily="monospace"
+                android:text="Time of Flight: 1900"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -77,18 +98,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="100dp">
+        android:paddingTop="40dp">
 
         <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="203dp"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/arrow_left" />
-
-        <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/imageViewFirst"
             android:layout_width="match_parent"
-            android:layout_height="125dp"
+            android:layout_height="180dp"
+            android:layout_weight="0.5"
+            app:srcCompat="@drawable/ic_left" />
+
+        <ImageView
+            android:id="@+id/imageViewSecond"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_weight="0.5"
             app:srcCompat="@drawable/plane_left" />
     </LinearLayout>
 
@@ -97,17 +120,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Update" />
+        android:text="Update"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/dark_olive_green"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:backgroundTint="@android:color/black"
-        android:src="@drawable/ic_action_message"
-        />
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_gravity="bottom|end"-->
+        <!--android:layout_margin="@dimen/fab_margin"-->
+        <!--android:backgroundTint="@android:color/black"-->
+        <!--android:src="@drawable/ic_action_message"-->
+        <!--/>-->
 
 </LinearLayout>

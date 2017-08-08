@@ -1,19 +1,35 @@
 package sg.edu.rp.c346.changiairportgroup;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import sg.edu.rp.c346.changiairportgroup.Chat.*;
 import sg.edu.rp.c346.changiairportgroup.Chat.MainActivity;
@@ -24,10 +40,17 @@ public class SecondActivityBuggy extends AppCompatActivity {
     DatabaseReference databaseRef;
     Plane planes;
 
+    private Toolbar aToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buggy_direction);
+
+        aToolbar = (Toolbar) findViewById(R.id.buggy_direction_page_toolbar);
+        setSupportActionBar(aToolbar);
+        getSupportActionBar().setTitle("Direction Page");
+
 
         Intent i = getIntent();
         final String term = i.getStringExtra("terminal");
@@ -70,15 +93,38 @@ public class SecondActivityBuggy extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Click action
+
+
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Click action
+//                Intent intent = new Intent(SecondActivityBuggy.this, MainActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.chat, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.chat:
                 Intent intent = new Intent(SecondActivityBuggy.this, MainActivity.class);
                 startActivity(intent);
-            }
-        });
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
 

@@ -5,39 +5,39 @@ package sg.edu.rp.c346.changiairportgroup.Chat;
  */
 
 public class Users {
-    private String name;
-    private String photoUrl;
-    private String role;
+    private String Name;
+    private String Image;
+    private String Role;
 
     public Users () {}
 
     public Users(String name, String photoUrl, String role) {
-        this.name = name;
-        this.photoUrl = photoUrl;
-        this.role = role;
+        this.Name = name;
+        this.Image = photoUrl;
+        this.Role = role;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.Name = name;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
+    public String getImage() {
+        return Image;
     }
 
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
+    public void setImage(String photoUrl) {
+        this.Image = photoUrl;
     }
 
     public String getRole() {
-        return role;
+        return Role;
     }
 
     public void setRole(String role) {
-        this.role = role;
+        this.Role = role;
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -43,12 +44,17 @@ public class MainActivityAirTraffic extends AppCompatActivity {
     // [END declare_auth]
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    private Toolbar aToolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_airtraffic);
+
+        aToolbar = (Toolbar) findViewById(R.id.airtraffic_terminal_page_toolbar);
+        setSupportActionBar(aToolbar);
+        getSupportActionBar().setTitle("Airtraffic Controller");
 
         Toast.makeText(getBaseContext(), "Air Traffic Controller",Toast.LENGTH_SHORT).show();
 
