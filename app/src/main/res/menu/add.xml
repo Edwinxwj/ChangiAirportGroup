@@ -16,6 +16,8 @@
 
     <item android:id="@+id/addFlight"
         android:title="Add Flight" ></item>
+    <item android:id="@+id/addUser"
+        android:title="Add User" ></item>
     <item android:id="@+id/logout"
         android:title="Logout" />
 

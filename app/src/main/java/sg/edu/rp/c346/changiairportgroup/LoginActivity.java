@@ -1,9 +1,11 @@
 package sg.edu.rp.c346.changiairportgroup;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -40,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etEmail;
     private EditText etPassWord;
     private Button btnLogin;
-    private Button btnCreate;
+    private Button btnForget;
     private DatabaseReference databaseRef;
     private String role;
 
@@ -87,13 +89,28 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin = (Button)findViewById(R.id.buttonLogin);
 
-        btnCreate = (Button)findViewById(R.id.buttonNewAccount);
+        btnForget = (Button)findViewById(R.id.buttonForgetPW);
 
-        btnCreate.setOnClickListener(new View.OnClickListener() {
+        btnForget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signupIntent = new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(signupIntent);
+                AlertDialog.Builder myBuilder = new AlertDialog.Builder(LoginActivity.this);
+
+                myBuilder.setTitle("Reset Password");
+                myBuilder.setMessage("An email will be sent to you!");
+                myBuilder.setCancelable(false);
+                myBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                        mAuth.sendPasswordResetEmail(user.getEmail());
+                    }
+                });
+                myBuilder.setNegativeButton("Cancel", null);
+
+                AlertDialog myDialog = myBuilder.create();
+                myDialog.show();
             }
         });
 
@@ -157,7 +174,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                 }else{
-                    Toast.makeText(LoginActivity.this,"You need setup your account",Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this,"Contact admin to setup your account",Toast.LENGTH_LONG).show();
                 }
             }
 

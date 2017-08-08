@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="24hr format"
-            android:inputType="text" />
+            android:inputType="number" />
 
     </LinearLayout>
 
