@@ -9,6 +9,7 @@
 
     <include layout="@layout/app_bar_layout" android:id="@+id/admin_page_toolbar" />
 
+
     <Spinner
         android:id="@+id/spinnerTerminal"
         android:layout_width="match_parent"
