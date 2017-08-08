@@ -15,7 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,7 +40,9 @@ public class SecondActivityBuggy extends AppCompatActivity {
 
     TextView tvGate, tvAirline, tvDestination, tvDirection, tvFlightNumber, tvLicensePlate, tvTime;
     DatabaseReference databaseRef;
-    Plane planes;
+    ImageView iv1, iv2;
+    String direction = "";
+    Button btnUpdate;
 
     private Toolbar aToolbar;
 
@@ -66,6 +70,10 @@ public class SecondActivityBuggy extends AppCompatActivity {
         tvTime = (TextView) findViewById(R.id.tvTime);
         tvLicensePlate = (TextView)findViewById(R.id.tvLicensePlate);
 
+        btnUpdate = (Button) findViewById(R.id.buttonUpdate);
+        iv1 = (ImageView) findViewById(R.id.imageViewFirst);
+        iv2 = (ImageView) findViewById(R.id.imageViewSecond);
+
         databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
 
         final Query q1 = databaseRef.child(term).child(gates).child(selectedDate).orderByChild("licensePlate").equalTo(licensePlate);
@@ -74,6 +82,7 @@ public class SecondActivityBuggy extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
                         Plane a = ds.getValue(Plane.class);
                         tvAirline.setText("Airline: "+a.getAirline());
                         tvDestination.setText("Destination: "+a.getDestination());
@@ -83,6 +92,10 @@ public class SecondActivityBuggy extends AppCompatActivity {
                         tvLicensePlate.setText("License Plate: "+a.getLicensePlate());
                         tvTime.setText("Time: "+a.getTime());
 
+                        if(a.getDirection().equals("North")){
+                            iv1.setImageResource(R.drawable.ic_left);
+                            iv2.setImageResource(R.drawable.plane_left);
+                        }
                     }
 
             }
@@ -93,17 +106,17 @@ public class SecondActivityBuggy extends AppCompatActivity {
             }
         });
 
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(SecondActivityBuggy.this, Main2ActivityBuggy.class);
+                startActivity(i);
+            }
+        });
 
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Click action
-//                Intent intent = new Intent(SecondActivityBuggy.this, MainActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+
+
     }
 
     @Override

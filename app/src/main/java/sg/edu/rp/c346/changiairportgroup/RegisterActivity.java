@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,10 +33,17 @@ public class RegisterActivity extends AppCompatActivity {
     private Spinner spnRole;
     private String selected;
 
+
+    private Toolbar aToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        aToolbar = (Toolbar) findViewById(R.id.register_page_toolbar);
+        setSupportActionBar(aToolbar);
+        getSupportActionBar().setTitle("Registration Page");
 
         mAuth = FirebaseAuth.getInstance();
 

@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        aToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
+        aToolbar = (Toolbar) findViewById(R.id.login_page_toolbar);
         setSupportActionBar(aToolbar);
         getSupportActionBar().setTitle("Login Page");
 

@@ -32,7 +32,6 @@
         <activity android:name=".Main2ActivityBuggy" />
         <activity android:name=".Chat.Chat" />
         <activity android:name=".Chat.MainActivity" />
-        <activity android:name=".Chat.SignInActivity" />
         <activity android:name=".Fragment.MainActivityFragmentAirtraffic"></activity>
     </application>
 

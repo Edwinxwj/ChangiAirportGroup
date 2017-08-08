@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/lavender"
     tools:context="sg.edu.rp.c346.changiairportgroup.MainActivityAirTraffic">
 
     <include layout="@layout/app_bar_layout" android:id="@+id/buggy_terminal_page_toolbar" />

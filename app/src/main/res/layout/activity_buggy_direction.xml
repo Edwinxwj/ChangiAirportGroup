@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/lavender"
     tools:context="sg.edu.rp.c346.changiairportgroup.SecondActivityBuggy">
 
     <include layout="@layout/app_bar_layout" android:id="@+id/buggy_direction_page_toolbar" />
@@ -105,18 +104,18 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_weight="0.5"
-            app:srcCompat="@drawable/ic_left" />
+            android:src="@drawable/plane_right"/>
 
         <ImageView
             android:id="@+id/imageViewSecond"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_weight="0.5"
-            app:srcCompat="@drawable/plane_left" />
+            android:src="@drawable/ic_right"/>
     </LinearLayout>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

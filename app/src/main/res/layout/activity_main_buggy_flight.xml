@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/lavender">
 
     <include layout="@layout/app_bar_layout" android:id="@+id/buggy_flight_page_toolbar" />
 
@@ -21,13 +22,6 @@
         android:layout_height="wrap_content"
         android:entries="@array/spinnerItems"/>
 
-
-
-    <TextView
-        android:id="@+id/tvUpdatedTiming"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
 
     <ListView
         android:id="@+id/lvPlane"
