@@ -52,6 +52,7 @@ public class MainActivityAdmin extends AppCompatActivity {
     Spinner Spinner, spnTerm, spnTerm1, spnGate;
     String term;
     String termKey;
+    String key;
     final ArrayList<String> gate = new ArrayList<>();
 
     // [START declare_auth]
@@ -107,8 +108,8 @@ public class MainActivityAdmin extends AppCompatActivity {
         databaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-
                 final ArrayList<String> terminals = new ArrayList<>();
+
 
                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                     String obj = areaSnapshot.child("terminal").getValue(String.class);
@@ -209,91 +210,91 @@ public class MainActivityAdmin extends AppCompatActivity {
         });
     }
 //
-//    @Override
-//    public void onCreateContextMenu (ContextMenu menu, View
-//            v, ContextMenu.ContextMenuInfo menuInfo){
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//        //Context menu
-//        menu.add(Menu.NONE, 1, Menu.NONE, "Edit");
-//        menu.add(Menu.NONE, 2, Menu.NONE, "Delete");
-//    }
-//    @Override
-//    public boolean onContextItemSelected (MenuItem item){
-//        // TODO Auto-generated method stub
-//        AdapterView.AdapterContextMenuInfo menuinfo = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-//        long selectid = menuinfo.id; //_id from database in this case
-//        final int selectpos = menuinfo.position; //position in the adapter
-//        switch (item.getItemId()) {
-//            case 1: {
-//                final Query q1 = databaseRef.child(term).orderByKey().equalTo(lv.getItemAtPosition(selectpos).toString());
-//                q1.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        if(dataSnapshot.exists()) {
-//                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                                //get the key of the child node that has to be updated
-//                                String postkey = ds.getRef().getKey();
-//                                Object terminal = ds.child("terminal").getValue();
-////                                Toast.makeText(getBaseContext(), terminal.toString(),Toast.LENGTH_SHORT).show();
-//                                Intent i = new Intent(MainActivityAdmin.this,EditActivity.class);
-//                                i.putExtra("gate", lv.getItemAtPosition(selectpos).toString());
-//                                i.putExtra("terminal",term);
-//                                i.putExtra("key",postkey);
-//                                startActivityForResult(i,1);
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-////                Intent i = new Intent(MainActivityAdmin.this,EditActivity.class);
-////                i.putExtra("gate", lv.getItemAtPosition(selectpos).toString());
-////                startActivityForResult(i,1);
-//            }
-//            break;
-//            case 2: {
-//
-//                Toast.makeText(getBaseContext(),lv.getItemAtPosition(selectpos).toString(),Toast.LENGTH_LONG).show();
-//                final Query applesQuery = databaseRef.orderByChild("gateNumber").equalTo(lv.getItemAtPosition(selectpos).toString());
-//                applesQuery.addChildEventListener(new ChildEventListener() {
-//                    @Override
-//                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                        dataSnapshot.getRef().setValue(null);
-//                        gates.remove(selectpos);
-//                        aa.notifyDataSetChanged();
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-//
-//            }
-//            break;
-//        }
-//        return super.onContextItemSelected(item);
-//    }
+    @Override
+    public void onCreateContextMenu (ContextMenu menu, View
+            v, ContextMenu.ContextMenuInfo menuInfo){
+        super.onCreateContextMenu(menu, v, menuInfo);
+        //Context menu
+        menu.add(Menu.NONE, 1, Menu.NONE, "Edit");
+        menu.add(Menu.NONE, 2, Menu.NONE, "Delete");
+    }
+    @Override
+    public boolean onContextItemSelected (MenuItem item){
+        // TODO Auto-generated method stub
+        AdapterView.AdapterContextMenuInfo menuinfo = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        long selectid = menuinfo.id; //_id from database in this case
+        final int selectpos = menuinfo.position; //position in the adapter
+        switch (item.getItemId()) {
+            case 1: {
+                final Query q1 = databaseRef.child(term).orderByKey().equalTo(lv.getItemAtPosition(selectpos).toString());
+                q1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()) {
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                //get the key of the child node that has to be updated
+                                String postkey = ds.getRef().getKey();
+                                Object terminal = ds.child("terminal").getValue();
+//                                Toast.makeText(getBaseContext(), terminal.toString(),Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(MainActivityAdmin.this,EditActivity.class);
+                                i.putExtra("gate", lv.getItemAtPosition(selectpos).toString());
+                                i.putExtra("terminal",term);
+                                i.putExtra("key",postkey);
+                                startActivityForResult(i,1);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+//                Intent i = new Intent(MainActivityAdmin.this,EditActivity.class);
+//                i.putExtra("gate", lv.getItemAtPosition(selectpos).toString());
+//                startActivityForResult(i,1);
+            }
+            break;
+            case 2: {
+
+                Toast.makeText(getBaseContext(),lv.getItemAtPosition(selectpos).toString(),Toast.LENGTH_LONG).show();
+                final Query applesQuery = databaseRef.orderByChild("gateNumber").equalTo(lv.getItemAtPosition(selectpos).toString());
+                applesQuery.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        dataSnapshot.getRef().setValue(null);
+                        gates.remove(selectpos);
+                        aa.notifyDataSetChanged();
+
+
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+            break;
+        }
+        return super.onContextItemSelected(item);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -357,7 +358,6 @@ public class MainActivityAdmin extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-
                         final ArrayList<String> term = new ArrayList<>();
 
                         for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
@@ -390,14 +390,39 @@ public class MainActivityAdmin extends AppCompatActivity {
                 myBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        //Extract the Text entered by the user
-                        String gate = etGate.getText().toString();
                         String terminal = spnTerm.getSelectedItem().toString();
-//                        Gate newGate = new Gate(gate,terminal);
-                        databaseRef.child(terminal).child(gate).child("gate").setValue(gate);
-//                        gates.add(gate);
-                        aa.notifyDataSetChanged();
+                        Query queryAdd = databaseRef.orderByChild("terminal").equalTo(terminal);
+
+                        queryAdd.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                String newTermKey = dataSnapshot.getKey().toString();
+                                String gate = etGate.getText().toString();
+                                databaseRef.child(newTermKey).push().child("gate").setValue(gate);
+                                gates.add(gate);
+                                aa.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }
 
                 });
@@ -428,7 +453,7 @@ public class MainActivityAdmin extends AppCompatActivity {
 
                         //Extract the Text entered by the user
                         String newterminal = etTerminal.getText().toString();
-                        databaseRef.child(newterminal).child("terminal").setValue(newterminal);
+                        databaseRef.push().child("terminal").setValue(newterminal);
 //                        gates.add(gate);
                         myAdapter.notifyDataSetChanged();
                     }
@@ -485,19 +510,24 @@ public class MainActivityAdmin extends AppCompatActivity {
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                String term1 = (String)parent.getItemAtPosition(position);
                                 gate.clear();
-                                Query query = databaseRef.child(term1).orderByKey();
+                                Query query = databaseRef.orderByChild("terminal").equalTo(term1);
 
                                 query.addChildEventListener(new ChildEventListener() {
                                     @Override
                                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                        key = dataSnapshot.getKey().toString(); //TERMKEY
+                                        Toast.makeText(getBaseContext(),"Key: "+key,Toast.LENGTH_SHORT).show();
 
-                                            String gateNum = dataSnapshot.child("gate").getValue(String.class);
-                                            if(gateNum != null){
+                                        for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+                                            String gateNum = areaSnapshot.child("gate").getValue(String.class);
+                                            if (gateNum != null) {
                                                 gate.add(gateNum);
                                                 myAdapter3.notifyDataSetChanged();
+//                                        Toast.makeText(getBaseContext(),gateNum,Toast.LENGTH_SHORT).show();
                                             }
-                                        }
 
+                                        }
+                                    }
 
                                     @Override
                                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -553,25 +583,52 @@ public class MainActivityAdmin extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        //Extract the Text entered by the user
-                        String Destination = etDestination.getText().toString();
-                        String Airline = etAirline.getText().toString();
-                        String Direction = etDirection.getText().toString();
-                        String LicensePlate = etLicensePlate.getText().toString();
-                        String FlightNo = etFlightNo.getText().toString();
-                        String Date = etDate.getText().toString();
-                        String Time = etTime.getText().toString();
+                        Query queryAdd = databaseRef.child(key).orderByChild("gate").equalTo(spnGate.getSelectedItem().toString());
+                        queryAdd.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                String newgateK = dataSnapshot.getKey().toString();
+                               Toast.makeText(getBaseContext(),"new gateK:" +newgateK,Toast.LENGTH_SHORT).show();
+                                String Destination = etDestination.getText().toString();
+                                String Airline = etAirline.getText().toString();
+                            String Direction = etDirection.getText().toString();
+                            String LicensePlate = etLicensePlate.getText().toString();
+                            String FlightNo = etFlightNo.getText().toString();
+                            String Date = etDate.getText().toString();
+                                Long Time = Long.parseLong(etTime.getText().toString());
+                                Plane plane1 = new Plane(LicensePlate,Time,Destination,FlightNo,Direction,Airline);
+
+                                String uID = databaseRef.child(key).child(newgateK).push().getKey().toString();
+                                databaseRef.child(key).child(newgateK).child(uID).child("date").setValue(Date);
+                                databaseRef.child(key).child(newgateK).child(uID).child(Time.toString()).setValue(plane1);
 
 
-                        String terminal = spnTerm1.getSelectedItem().toString();
-                        String Gate = spnGate.getSelectedItem().toString();
 
-                        Plane plane1 = new Plane(LicensePlate,Long.parseLong(Time),Destination,FlightNo,Direction,Airline);
-                        databaseRef.child(terminal).child(Gate).child(Date).child("date").setValue(Date);
-                        databaseRef.child(terminal).child(Gate).child(Date).child(Time).setValue(plane1);
 
-//                        gates.add(gate);
-//                        myAdapter.notifyDataSetChanged();
+
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
                     }
 
                 });

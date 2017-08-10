@@ -113,20 +113,7 @@ public class SecondActivityAdmin extends AppCompatActivity {
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                                String time = dataSnapshot.getKey().toString();
-//                                Toast.makeText(getBaseContext(), "Time:" + time, Toast.LENGTH_SHORT).show();
-////                                if (dataSnapshot.hasChildren()) {
-//                                    Plane newPlane = dataSnapshot.getValue(Plane.class);
-//                                    if (newPlane != null) {
-//                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
-//                                        planes.add(newPlane);
-//                                        aa.notifyDataSetChanged();
-//                                    }
-//                                }
-
                                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
-//                                        String time = areaSnapshot.getKey().toString();
-//                                        Toast.makeText(getBaseContext(), "Time:" + time, Toast.LENGTH_SHORT).show();
                                     if (areaSnapshot.hasChildren()) {
                                         Plane newPlane = areaSnapshot.getValue(Plane.class);
                                         if (newPlane != null) {
@@ -137,14 +124,21 @@ public class SecondActivityAdmin extends AppCompatActivity {
                                     }
                                 }
 
-
-//                                planes.add(newPlane);
-//                                aa.notifyDataSetChanged();
                             }
 
                             @Override
                             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                                planes.clear();
+                                for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+                                    if (areaSnapshot.hasChildren()) {
+                                        Plane newPlane = areaSnapshot.getValue(Plane.class);
+                                        if (newPlane != null) {
+//                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
+                                            planes.add(newPlane);
+                                            aa.notifyDataSetChanged();
+                                        }
+                                    }
+                                }
                             }
 
                             @Override
