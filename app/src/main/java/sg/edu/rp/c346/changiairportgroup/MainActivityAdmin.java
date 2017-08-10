@@ -51,6 +51,7 @@ public class MainActivityAdmin extends AppCompatActivity {
     private String TAG = "a";
     Spinner Spinner, spnTerm, spnTerm1, spnGate;
     String term;
+    String termKey;
     final ArrayList<String> gate = new ArrayList<>();
 
     // [START declare_auth]
@@ -107,13 +108,11 @@ public class MainActivityAdmin extends AppCompatActivity {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
 
-
                 final ArrayList<String> terminals = new ArrayList<>();
 
                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                     String obj = areaSnapshot.child("terminal").getValue(String.class);
 //                    Toast.makeText(getBaseContext(), obj, Toast.LENGTH_SHORT).show();
-
                     terminals.add(obj);
                 }
 
@@ -127,19 +126,34 @@ public class MainActivityAdmin extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         term = (String) parent.getItemAtPosition(position);
+//                        Toast.makeText(getBaseContext(), term, Toast.LENGTH_SHORT).show();
+
 //                        Log.d(TAG,dataSnapshot.getValue().toString());
                         gates.clear();
-                        Query query = databaseRef.child(term).orderByKey();
+                        Query query = databaseRef.orderByChild("terminal").equalTo(term);
 
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                String gateNum = dataSnapshot.child("gate").getValue(String.class);
-                                if (gateNum != null) {
-                                    gates.add(gateNum);
-                                    aa.notifyDataSetChanged();
-//                                    Toast.makeText(getBaseContext(),gateNum,Toast.LENGTH_SHORT).show();
+                                termKey = dataSnapshot.getKey().toString();
+                                for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+                                    String gateNum = areaSnapshot.child("gate").getValue(String.class);
+                                    if (gateNum != null) {
+                                        gates.add(gateNum);
+                                        aa.notifyDataSetChanged();
+//                                        Toast.makeText(getBaseContext(),gateNum,Toast.LENGTH_SHORT).show();
+                                    }
+
                                 }
+//                                String gateNum = dataSnapshot.getKey().toString();
+////                                String gateNum = dataSnapshot.child("gate").getValue(String.class);
+//                                Toast.makeText(getBaseContext(),gateNum,Toast.LENGTH_SHORT).show();
+//
+//                                if (gateNum != null) {
+//                                    gates.add(gateNum);
+//                                    aa.notifyDataSetChanged();
+////                                    Toast.makeText(getBaseContext(),gateNum,Toast.LENGTH_SHORT).show();
+//                                }
                             }
 
                             @Override
@@ -186,6 +200,8 @@ public class MainActivityAdmin extends AppCompatActivity {
                 Intent i = new Intent(MainActivityAdmin.this, SecondActivityAdmin.class);
                 i.putExtra("gate", gates.get(position));
                 i.putExtra("terminal", term);
+                i.putExtra("termKey", termKey);
+                Toast.makeText(getBaseContext(), termKey, Toast.LENGTH_SHORT).show();
                 Toast.makeText(getBaseContext(), gates.get(position), Toast.LENGTH_SHORT).show();
                 Toast.makeText(getBaseContext(), term, Toast.LENGTH_SHORT).show();
                 startActivity(i);

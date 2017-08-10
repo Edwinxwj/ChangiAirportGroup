@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,6 +31,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static sg.edu.rp.c346.changiairportgroup.R.id.parent;
+
 /**
  * Created by 15056215 on 20/6/2017.
  */
@@ -41,13 +44,13 @@ public class SecondActivityAdmin extends AppCompatActivity {
     Spinner spnDate, spnGate, spnTerm1;
     ArrayAdapter aa,myAdapter2,myAdapter3;
     ArrayList<Plane> planes;
-    DatabaseReference databaseRef;
     String selected;
-    String term;
+    String term,termKey, gateKey;
     final ArrayList<String> gate = new ArrayList<>();
 
 
     private Toolbar aToolbar;
+    DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,18 +76,23 @@ public class SecondActivityAdmin extends AppCompatActivity {
         Intent i = getIntent();
         final String gates = i.getStringExtra("gate");
         term = i.getStringExtra("terminal");
+        termKey = i.getStringExtra("termKey");
         tvGateName.setText(gates);
 
-        databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
-        final Query querydate = databaseRef.child(term).child(gates).orderByKey();
 
-        querydate.addValueEventListener(new ValueEventListener() {
+        final Query querydate = databaseRef.child(termKey).orderByChild("gate").equalTo(gates);
+
+        querydate.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                gateKey = dataSnapshot.getKey().toString(); //gate1/gate2 etc
+//                Toast.makeText(getBaseContext(), "gateKey:" + gateKey, Toast.LENGTH_SHORT).show();
                 final ArrayList<String> date = new ArrayList<>();
-                for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
+
+                for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                     String obj = areaSnapshot.child("date").getValue(String.class);
-                    if(obj != null) {
+//                    Toast.makeText(getBaseContext(), "date:" + obj, Toast.LENGTH_SHORT).show();
+                    if (obj != null) {
                         date.add(obj);
                     }
                 }
@@ -99,32 +107,35 @@ public class SecondActivityAdmin extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         planes.clear();
-                        selected = (String)parent.getItemAtPosition(position);
-//                        Toast.makeText(getBaseContext(),term,Toast.LENGTH_SHORT).show();
-                        Query query = databaseRef.child(term).child(gates).child(selected).orderByKey();
+                        selected = (String) parent.getItemAtPosition(position);
+                        Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
+                        Query query = databaseRef.child(termKey).child(gateKey).orderByChild("date").equalTo(selected);
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                                String time = dataSnapshot.getKey();
-                                if(dataSnapshot.hasChildren()){
-                                    Plane newPlane = dataSnapshot.getValue(Plane.class);
-                                    if(newPlane != null) {
-                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
-                                        planes.add(newPlane);
-                                        aa.notifyDataSetChanged();
-                                    }
-                                }
-
-
-//                                for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
-////                                    Plane newPlane = areaSnapshot.getValue(Plane.class);
-//                                    Plane newPlane = areaSnapshot.getValue(Plane.class);
-//                                    Plane a1 = new Plane(newPlane.getTiming(),newPlane.getFlightNum(),newPlane.getDirection());
-//                                    Toast.makeText(getBaseContext(),"Newplane:"+newPlane.toString(),Toast.LENGTH_SHORT).show();
-//                                    planes.add(newPlane);
-//                                    aa.notifyDataSetChanged();
+//                                String time = dataSnapshot.getKey().toString();
+//                                Toast.makeText(getBaseContext(), "Time:" + time, Toast.LENGTH_SHORT).show();
+////                                if (dataSnapshot.hasChildren()) {
+//                                    Plane newPlane = dataSnapshot.getValue(Plane.class);
+//                                    if (newPlane != null) {
+//                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
+//                                        planes.add(newPlane);
+//                                        aa.notifyDataSetChanged();
+//                                    }
 //                                }
 
+                                for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+//                                        String time = areaSnapshot.getKey().toString();
+//                                        Toast.makeText(getBaseContext(), "Time:" + time, Toast.LENGTH_SHORT).show();
+                                    if (areaSnapshot.hasChildren()) {
+                                        Plane newPlane = areaSnapshot.getValue(Plane.class);
+                                        if (newPlane != null) {
+//                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
+                                            planes.add(newPlane);
+                                            aa.notifyDataSetChanged();
+                                        }
+                                    }
+                                }
 
 
 //                                planes.add(newPlane);
@@ -152,7 +163,6 @@ public class SecondActivityAdmin extends AppCompatActivity {
                             }
                         });
 
-
                     }
 
                     @Override
@@ -163,10 +173,228 @@ public class SecondActivityAdmin extends AppCompatActivity {
             }
 
             @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+    }
+//        querydate.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                String gateKey = dataSnapshot.getKey().toString();
+//                Toast.makeText(getBaseContext(), "gateKey:"+gateKey, Toast.LENGTH_SHORT).show();
+//
+//                final ArrayList<String> date = new ArrayList<>();
+//                for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+//                    String obj = areaSnapshot.child("date").getValue(String.class);
+//                    if (obj != null) {
+//                        date.add(obj);
+//                    }
+//                }
+//
+//                spnDate = (Spinner) findViewById(R.id.spinner2);
+//                ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(SecondActivityAdmin.this,
+//                        android.R.layout.simple_spinner_item, date);
+//                myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spnDate.setAdapter(myAdapter);
+//
+//                spnDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                        planes.clear();
+//                        selected = (String) parent.getItemAtPosition(position);
+////                        Toast.makeText(getBaseContext(),term,Toast.LENGTH_SHORT).show();
+//                        Query query = databaseRef.child(term).child(gates).child(selected).orderByKey();
+//                        query.addChildEventListener(new ChildEventListener() {
+//                            @Override
+//                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+////                                String time = dataSnapshot.getKey();
+//                                if (dataSnapshot.hasChildren()) {
+//                                    Plane newPlane = dataSnapshot.getValue(Plane.class);
+//                                    if (newPlane != null) {
+//                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
+//                                        planes.add(newPlane);
+//                                        aa.notifyDataSetChanged();
+//                                    }
+//                                }
+//
+//
+////                                for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
+//////                                    Plane newPlane = areaSnapshot.getValue(Plane.class);
+////                                    Plane newPlane = areaSnapshot.getValue(Plane.class);
+////                                    Plane a1 = new Plane(newPlane.getTiming(),newPlane.getFlightNum(),newPlane.getDirection());
+////                                    Toast.makeText(getBaseContext(),"Newplane:"+newPlane.toString(),Toast.LENGTH_SHORT).show();
+////                                    planes.add(newPlane);
+////                                    aa.notifyDataSetChanged();
+////                                }
+//
+//
+////                                planes.add(newPlane);
+////                                aa.notifyDataSetChanged();
+//                            }
+//
+//                            @Override
+//                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(DatabaseError databaseError) {
+//
+//                            }
+//                        });
+//
+//                    }
+//
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> parent) {
+//
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
+
+
+//        querydate.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                String Key = dataSnapshot.getRef().getKey().toString();
+//                        Toast.makeText(getBaseContext(), "key:"+Key, Toast.LENGTH_SHORT).show();
+//
+//                final ArrayList<String> date = new ArrayList<>();
+//                for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+//                    for (DataSnapshot aSnapshot : areaSnapshot.getChildren()) {
+//                        String gateKey = aSnapshot.getKey().toString();
+////                        Toast.makeText(getBaseContext(), "d:"+gateKey, Toast.LENGTH_SHORT).show();
+//                        String obj = aSnapshot.child("date").getValue(String.class);
+////                        Toast.makeText(getBaseContext(), "date:"+obj, Toast.LENGTH_SHORT).show();
+//
+//                        if (obj != null) {
+//                            date.add(obj);
+//                        }
+//                    }
+////                    String d = areaSnapshot.getKey().toString();
+////                    Toast.makeText(getBaseContext(), "d:"+d, Toast.LENGTH_SHORT).show();
+////                    String obj = areaSnapshot.child("date").getValue(String.class);
+////                    Toast.makeText(getBaseContext(), "date:"+obj, Toast.LENGTH_SHORT).show();
+////
+////                    if (obj != null) {
+////                        date.add(obj);
+////                    }
+//                }
+//
+//                spnDate = (Spinner) findViewById(R.id.spinner2);
+//                ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(SecondActivityAdmin.this,
+//                        android.R.layout.simple_spinner_item, date);
+//                myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spnDate.setAdapter(myAdapter);
+//
+//                spnDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                        planes.clear();
+//                        selected = (String) parent.getItemAtPosition(position);
+//                        Toast.makeText(getBaseContext(),selected,Toast.LENGTH_SHORT).show();
+//                        Query query = databaseRef.child(termKey).orderByValue().equalTo(gates);
+//                        query.addChildEventListener(new ChildEventListener() {
+//                            @Override
+//                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                                String time = dataSnapshot.getKey().toString();
+//                                Toast.makeText(getBaseContext(), "time:"+time, Toast.LENGTH_SHORT).show();
+//
+////                                if (dataSnapshot.hasChildren()) {
+////                                    Plane newPlane = dataSnapshot.getValue(Plane.class);
+////                                    if (newPlane != null) {
+////                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
+////                                        planes.add(newPlane);
+////                                        aa.notifyDataSetChanged();
+////                                    }
+////                                }
+//
+//
+////                                for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
+//////                                    Plane newPlane = areaSnapshot.getValue(Plane.class);
+////                                    Plane newPlane = areaSnapshot.getValue(Plane.class);
+////                                    Plane a1 = new Plane(newPlane.getTiming(),newPlane.getFlightNum(),newPlane.getDirection());
+////                                    Toast.makeText(getBaseContext(),"Newplane:"+newPlane.toString(),Toast.LENGTH_SHORT).show();
+////                                    planes.add(newPlane);
+////                                    aa.notifyDataSetChanged();
+////                                }
+//
+//
+////                                planes.add(newPlane);
+////                                aa.notifyDataSetChanged();
+//                            }
+//
+//                            @Override
+//                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(DatabaseError databaseError) {
+//
+//                            }
+//                        });
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> parent) {
+//
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
+
 
 
 
@@ -206,29 +434,6 @@ public class SecondActivityAdmin extends AppCompatActivity {
 //            }
 //        });
 
-//        spnDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-////                String Text = spnDate.getSelectedItem().toString();
-////                tv.setText(Text);
-//                switch (i) {
-//                    case 0:
-//
-//                        break;
-//                    case 1:
-//                        //Your code for Item 2 select
-//                        break;
-//                }
-//            }
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-
-
-    }
-//
 //    @Override
 //    public void onCreateContextMenu (ContextMenu menu, View
 //            v, ContextMenu.ContextMenuInfo menuInfo){

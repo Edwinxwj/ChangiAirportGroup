@@ -41,8 +41,11 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
     Spinner spnDate;
     ArrayAdapter aa;
     ArrayList<Plane> planes;
-    DatabaseReference databaseRef;
+    DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
+
     String selected;
+    String term,termKey, gateKey, timeKey, dateKey;
+
 
     private Toolbar aToolbar;
 
@@ -72,18 +75,23 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
 //        planes.add(plane1);
         Intent i = getIntent();
         final String gates = i.getStringExtra("gates");
-        final String term = i.getStringExtra("terminal");
+        term = i.getStringExtra("terminal");
+        termKey = i.getStringExtra("termKey");
         tvGateName.setText(gates);
 
-        databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
-        final Query querydate = databaseRef.child(term).child(gates).orderByKey();
+        final Query querydate = databaseRef.child(termKey).orderByChild("gate").equalTo(gates);
 
-        querydate.addValueEventListener(new ValueEventListener() {
+
+        querydate.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                gateKey = dataSnapshot.getKey().toString(); //gate1/gate2 etc
+//                Toast.makeText(getBaseContext(), "gateKey:" + gateKey, Toast.LENGTH_SHORT).show();
                 final ArrayList<String> date = new ArrayList<>();
+
                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                     String obj = areaSnapshot.child("date").getValue(String.class);
+//                    Toast.makeText(getBaseContext(), "date:" + obj, Toast.LENGTH_SHORT).show();
                     if (obj != null) {
                         date.add(obj);
                     }
@@ -100,15 +108,23 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         planes.clear();
                         selected = (String) parent.getItemAtPosition(position);
-                        Query query = databaseRef.child(term).child(gates).child(selected).orderByKey();
+                        Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
+                        Query query = databaseRef.child(termKey).child(gateKey).orderByChild("date").equalTo(selected);
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                if (dataSnapshot.hasChildren()) {
-                                    Plane newPlane = dataSnapshot.getValue(Plane.class);
-                                    if (newPlane != null) {
-                                        planes.add(newPlane);
-                                        aa.notifyDataSetChanged();
+                                dateKey = dataSnapshot.getKey().toString();
+                                Toast.makeText(getBaseContext(), "datekey: " + dateKey, Toast.LENGTH_SHORT).show();
+                                for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+                                    if (areaSnapshot.hasChildren()) {
+                                        timeKey = areaSnapshot.getKey().toString();
+                                        Toast.makeText(getBaseContext(), "TimeKey:" + timeKey, Toast.LENGTH_SHORT).show();
+                                        Plane newPlane = areaSnapshot.getValue(Plane.class);
+                                        if (newPlane != null) {
+//                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
+                                            planes.add(newPlane);
+                                            aa.notifyDataSetChanged();
+                                        }
                                     }
                                 }
 
@@ -116,7 +132,22 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
 
                             @Override
                             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                                planes.clear();
+                                dateKey = dataSnapshot.getKey().toString();
+                                Toast.makeText(getBaseContext(), "datekey: " + dateKey, Toast.LENGTH_SHORT).show();
+                                for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+                                    if (areaSnapshot.hasChildren()) {
+                                        timeKey = areaSnapshot.getKey().toString();
+                                        Toast.makeText(getBaseContext(), "TimeKey:" + timeKey, Toast.LENGTH_SHORT).show();
+                                        Plane newPlane = areaSnapshot.getValue(Plane.class);
+                                        if (newPlane != null) {
+//                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
+                                            planes.add(newPlane);
+                                            aa.notifyDataSetChanged();
+                                        }
+                                    }
+                                }
+                                aa.notifyDataSetChanged();
                             }
 
                             @Override
@@ -135,7 +166,6 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                             }
                         });
 
-
                     }
 
                     @Override
@@ -146,10 +176,26 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
             }
 
             @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -164,7 +210,7 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                 TextView tvLicenseNo = (TextView) mView.findViewById(R.id.tvLicensePlate);
                 TextView tvTime = (TextView) mView.findViewById(R.id.tvTime);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(SecondActivityAirtraffic.this,
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(SecondActivityAirtraffic.this,
                         android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.DirectionList));
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 mSpinner.setAdapter(adapter);
@@ -189,20 +235,15 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Choose a Direction")) {
-                            final Query q1 = databaseRef.child(term).child(gates).child(selected).orderByChild("licensePlate").equalTo(currentPlane.getLicensePlate());
-                            q1.addListenerForSingleValueEvent(new ValueEventListener() {
+                            final Query q1 = databaseRef.child(termKey).child(gateKey).child(timeKey).orderByChild("licensePlate").equalTo(currentPlane.getLicensePlate());
+                            q1.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
+                                    String obj = dataSnapshot.getKey().toString(); //same as timeKey
 
-                                    if (dataSnapshot.exists()) {
-                                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                            String postkey = ds.getRef().getKey();
-//                                            Toast.makeText(SecondActivityAirtraffic.this,postkey,Toast.LENGTH_LONG).show();
+                                    databaseRef.child(termKey).child(gateKey).child(dateKey).child(obj).child("direction").setValue(mSpinner.getSelectedItem().toString());
+                                    aa.notifyDataSetChanged();
 
-                                            //get the key of the child node that has to be updated
-                                            databaseRef.child(term).child(gates).child(selected).child(postkey).child("direction").setValue(mSpinner.getSelectedItem().toString());
-                                        }
-                                    }
                                 }
 
                                 @Override
