@@ -25,7 +25,7 @@
 
         <activity android:name=".EditActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivityAdmin" />
         <activity android:name=".SecondActivityAirtraffic" />
         <activity android:name=".SecondActivityAdmin" />
         <activity android:name=".SecondActivityBuggy" />
