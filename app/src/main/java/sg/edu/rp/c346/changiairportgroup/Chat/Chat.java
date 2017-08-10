@@ -225,14 +225,14 @@ public class Chat extends AppCompatActivity implements
                             .load(friendlyMessage.getPhotoUrl())
                             .into(viewHolder.messengerImageView);
                 }
-
-                if (friendlyMessage.getText() != null) {
-                    // write this message to the on-device index
-                    FirebaseAppIndex.getInstance().update(getMessageIndexable(friendlyMessage));
-                }
+//
+//                if (friendlyMessage.getText() != null) {
+//                    // write this message to the on-device index
+//                    FirebaseAppIndex.getInstance().update(getMessageIndexable(friendlyMessage));
+//                }
 
                 // log a view action on it
-                FirebaseUserActions.getInstance().end(getMessageViewAction(friendlyMessage));
+//                FirebaseUserActions.getInstance().end(getMessageViewAction(friendlyMessage));
             }
         };
 
@@ -347,32 +347,32 @@ public class Chat extends AppCompatActivity implements
         }
     }
 
-    private Action getMessageViewAction(FriendlyMessage friendlyMessage) {
-        return new Action.Builder(Action.Builder.VIEW_ACTION)
-                .setObject(friendlyMessage.getName(), MESSAGE_URL.concat(friendlyMessage.getId()))
-                .setMetadata(new Action.Metadata.Builder().setUpload(false))
-                .build();
-    }
+//    private Action getMessageViewAction(FriendlyMessage friendlyMessage) {
+//        return new Action.Builder(Action.Builder.VIEW_ACTION)
+//                .setObject(friendlyMessage.getName(), MESSAGE_URL.concat(friendlyMessage.getId()))
+//                .setMetadata(new Action.Metadata.Builder().setUpload(false))
+//                .build();
+//    }
 
-    private Indexable getMessageIndexable(FriendlyMessage friendlyMessage) {
-        PersonBuilder sender = Indexables.personBuilder()
-                .setIsSelf(mUsername.equals(friendlyMessage.getName()))
-                .setName(friendlyMessage.getName())
-                .setUrl(MESSAGE_URL.concat(friendlyMessage.getId() + "/sender"));
-
-        PersonBuilder recipient = Indexables.personBuilder()
-                .setName(mUsername)
-                .setUrl(MESSAGE_URL.concat(friendlyMessage.getId() + "/recipient"));
-
-        Indexable messageToIndex = Indexables.messageBuilder()
-                .setName(friendlyMessage.getText())
-                .setUrl(MESSAGE_URL.concat(friendlyMessage.getId()))
-                .setSender(sender)
-                .setRecipient(recipient)
-                .build();
-
-        return messageToIndex;
-    }
+//    private Indexable getMessageIndexable(FriendlyMessage friendlyMessage) {
+//        PersonBuilder sender = Indexables.personBuilder()
+//                .setIsSelf(mUsername.equals(friendlyMessage.getName()))
+//                .setName(friendlyMessage.getName())
+//                .setUrl(MESSAGE_URL.concat(friendlyMessage.getId() + "/sender"));
+//
+//        PersonBuilder recipient = Indexables.personBuilder()
+//                .setName(mUsername)
+//                .setUrl(MESSAGE_URL.concat(friendlyMessage.getId() + "/recipient"));
+//
+//        Indexable messageToIndex = Indexables.messageBuilder()
+//                .setName(friendlyMessage.getText())
+//                .setUrl(MESSAGE_URL.concat(friendlyMessage.getId()))
+//                .setSender(sender)
+//                .setRecipient(recipient)
+//                .build();
+//
+//        return messageToIndex;
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
