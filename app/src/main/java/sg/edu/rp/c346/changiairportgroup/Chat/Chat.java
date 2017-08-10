@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -87,7 +88,9 @@ public class Chat extends AppCompatActivity implements
     private EditText mMessageEditText;
     private ImageView mAddMessageImageView;
 
-    String itemKey;
+    String itemKey, username;
+
+    private Toolbar aToolbar;
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         TextView messageTextView;
@@ -110,12 +113,21 @@ public class Chat extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mUsername = ANONYMOUS;
 
         Intent i = getIntent();
         itemKey = i.getStringExtra("key");
-        Toast.makeText(Chat.this, itemKey, Toast.LENGTH_SHORT).show();
+        username = i.getStringExtra("username");
+
+
+        aToolbar = (Toolbar) findViewById(R.id.chat_page_toolbar);
+        setSupportActionBar(aToolbar);
+        getSupportActionBar().setTitle(username);
+
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mUsername = ANONYMOUS;
+
+
 
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();

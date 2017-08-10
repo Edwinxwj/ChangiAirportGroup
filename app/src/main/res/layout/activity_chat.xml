@@ -6,12 +6,17 @@
     android:layout_height="match_parent"
     tools:context="sg.edu.rp.c346.changiairportgroup.Chat.Chat">
 
+    <include layout="@layout/app_bar_layout" android:id="@+id/chat_page_toolbar" />
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/messageRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout"
-        android:layout_below="@+id/adView"/>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/chat_page_toolbar" />
 
     <LinearLayout
         android:orientation="horizontal"

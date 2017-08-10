@@ -63,7 +63,7 @@ public class PrivateChats extends Fragment {
                 TextView textViewUser = (TextView)view.findViewById(R.id.tvUser);
                 ImageView imageViewUser = (ImageView)view.findViewById(R.id.iVUser);
                 TextView textViewRole = (TextView) view.findViewById(R.id.tvRole);
-                String username = u.getName().toString().trim();
+                final String username = u.getName().toString().trim();
                 String photoUrl = u.getImage().toString().trim();
                 String role = u.getRole().toString().trim();
                 textViewUser.setText(username);
@@ -94,6 +94,7 @@ public class PrivateChats extends Fragment {
                         Intent intent = new Intent(getActivity(), Chat.class);
                         String itemKey = String.valueOf(firebaseListAdapter.getRef(position).getKey());
                         intent.putExtra("key", itemKey);
+                        intent.putExtra("username", username);
                         startActivity(intent);
                     }
                 });
