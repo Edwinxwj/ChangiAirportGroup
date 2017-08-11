@@ -591,10 +591,10 @@ public class MainActivityAdmin extends AppCompatActivity {
                                Toast.makeText(getBaseContext(),"new gateK:" +newgateK,Toast.LENGTH_SHORT).show();
                                 String Destination = etDestination.getText().toString();
                                 String Airline = etAirline.getText().toString();
-                            String Direction = etDirection.getText().toString();
-                            String LicensePlate = etLicensePlate.getText().toString();
-                            String FlightNo = etFlightNo.getText().toString();
-                            String Date = etDate.getText().toString();
+                                String Direction = etDirection.getText().toString();
+                                String LicensePlate = etLicensePlate.getText().toString();
+                                String FlightNo = etFlightNo.getText().toString();
+                                String Date = etDate.getText().toString();
                                 Long Time = Long.parseLong(etTime.getText().toString());
                                 Plane plane1 = new Plane(LicensePlate,Time,Destination,FlightNo,Direction,Airline);
 
