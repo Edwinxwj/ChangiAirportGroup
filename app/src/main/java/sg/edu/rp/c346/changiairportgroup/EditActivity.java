@@ -26,8 +26,6 @@ public class EditActivity extends AppCompatActivity {
 
     EditText editTerminal;
     Button btnUpdate, btnDelete;
-    Spinner Spinner;
-    ArrayAdapter myAdapter;
     String term;
 
     DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
@@ -45,49 +43,21 @@ public class EditActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String terminal = intent.getStringExtra("termKey");
 
-
-        databaseRef.child(terminal).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(final DataSnapshot dataSnapshot) {
-                final ArrayList<String> terminals = new ArrayList<>();
-                String obj = dataSnapshot.child("terminal").getValue(String.class);
-                Toast.makeText(getBaseContext(), obj, Toast.LENGTH_SHORT).show();
-                terminals.add(obj);
-//                for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
-//                    String obj = areaSnapshot.child("terminal").getValue(String.class);
-////                    Toast.makeText(getBaseContext(), obj, Toast.LENGTH_SHORT).show();
-//                    terminals.add(obj);
-//                }
-
-                Spinner = (Spinner) findViewById(R.id.spinnerOldTem);
-                myAdapter = new ArrayAdapter<String>(EditActivity.this,
-                        android.R.layout.simple_spinner_item, terminals);
-                myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                Spinner.setAdapter(myAdapter);
+        editTerminal.setText(terminal);
 
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Query q1 = databaseRef.orderByChild("terminal").equalTo(Spinner.getSelectedItem().toString());
-                q1.addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseRef.orderByChild("terminal").equalTo(terminal).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(DataSnapshot ds : dataSnapshot.getChildren()){
-                            String a = ds.getKey().toString();
-                            Toast.makeText(getBaseContext(), a, Toast.LENGTH_SHORT).show();
-                            databaseRef.child(a).child("terminal").setValue(editTerminal.getText().toString());
-
+                        for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+                            String obj = areaSnapshot.getKey().toString();
+                            Toast.makeText(getBaseContext(), obj, Toast.LENGTH_SHORT).show();
+                            databaseRef.child(obj).child("terminal").setValue(editTerminal.getText().toString());
                         }
-
                     }
 
                     @Override
@@ -95,9 +65,31 @@ public class EditActivity extends AppCompatActivity {
 
                     }
                 });
-
                 finish();
+//
+            }
+        });
 
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                databaseRef.orderByChild("terminal").equalTo(terminal).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            String a = ds.getKey().toString();
+//                            Toast.makeText(getBaseContext(),"query"+a,Toast.LENGTH_LONG).show();
+                            databaseRef.child(a).removeValue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+finish();
             }
         });
 

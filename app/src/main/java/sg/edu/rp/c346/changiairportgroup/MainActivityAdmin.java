@@ -702,10 +702,6 @@ public void onCreateContextMenu (ContextMenu menu, View
                                 databaseRef.child(key).child(newgateK).child(uID).child("date").setValue(Date);
                                 databaseRef.child(key).child(newgateK).child(uID).child(Time.toString()).setValue(plane1);
 
-
-
-
-
                             }
 
                             @Override
@@ -768,7 +764,7 @@ public void onCreateContextMenu (ContextMenu menu, View
 
             case R.id.editTerm:
                 Intent intent = new Intent(MainActivityAdmin.this,EditActivity.class);
-                intent.putExtra("termKey",termKey);
+                intent.putExtra("termKey",term);
                 startActivity(intent);
                 return true;
             default:
