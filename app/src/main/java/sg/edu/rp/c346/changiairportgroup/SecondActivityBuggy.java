@@ -41,7 +41,6 @@ public class SecondActivityBuggy extends AppCompatActivity {
     TextView tvGate, tvAirline, tvDestination, tvDirection, tvFlightNumber, tvLicensePlate, tvTime;
     DatabaseReference databaseRef;
     ImageView iv1, iv2;
-    String direction = "";
     Button btnUpdate;
 
     private Toolbar aToolbar;
@@ -53,14 +52,17 @@ public class SecondActivityBuggy extends AppCompatActivity {
 
         aToolbar = (Toolbar) findViewById(R.id.buggy_direction_page_toolbar);
         setSupportActionBar(aToolbar);
-        getSupportActionBar().setTitle("Direction Page");
+        getSupportActionBar().setTitle("Flight Information");
 
 
         Intent i = getIntent();
-        final String term = i.getStringExtra("terminal");
-        final String gates = i.getStringExtra("gates");
-        final String selectedDate = i.getStringExtra("date");
+        final String termKey = i.getStringExtra("termKey");
+        final String gateKey = i.getStringExtra("gateKey");
+        final String dateKey = i.getStringExtra("dateKey");
+        final String timeKey = i.getStringExtra("timeKey");
+        final String gate = i.getStringExtra("gate");
         final String licensePlate = i.getStringExtra("licensePlate");
+
 
         tvGate = (TextView) findViewById(R.id.textViewGates);
         tvAirline = (TextView) findViewById(R.id.tvAirLine);
@@ -76,7 +78,10 @@ public class SecondActivityBuggy extends AppCompatActivity {
 
         databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
 
-        final Query q1 = databaseRef.child(term).child(gates).child(selectedDate).orderByChild("licensePlate").equalTo(licensePlate);
+
+        final Query q1 = databaseRef.child(termKey).child(gateKey).child(dateKey).child(timeKey).orderByChild("licensePlate").equalTo(licensePlate);
+
+//        final Query q1 = databaseRef.child(term).child(gates).child(selectedDate).orderByChild("licensePlate").equalTo(licensePlate);
         q1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -88,7 +93,7 @@ public class SecondActivityBuggy extends AppCompatActivity {
                         tvDestination.setText("Destination: "+a.getDestination());
                         tvDirection.setText("Direction: "+a.getDirection());
                         tvFlightNumber.setText("Flight Number: "+a.getFlightNo());
-                        tvGate.setText(gates);
+                        tvGate.setText(gate);
                         tvLicensePlate.setText("License Plate: "+a.getLicensePlate());
                         tvTime.setText("Time: "+a.getTime());
 

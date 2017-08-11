@@ -36,6 +36,7 @@ public class MainActivityBuggy extends AppCompatActivity {
     DatabaseReference databaseRef;
     Spinner Spinner;
     String term;
+    String termKey;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -44,6 +45,7 @@ public class MainActivityBuggy extends AppCompatActivity {
 
     private Toolbar aToolbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +53,9 @@ public class MainActivityBuggy extends AppCompatActivity {
 
         aToolbar = (Toolbar) findViewById(R.id.buggy_terminal_page_toolbar);
         setSupportActionBar(aToolbar);
-        getSupportActionBar().setTitle("Gates Page");
+        getSupportActionBar().setTitle("Buggy Driver Page");
+
+//        Toast.makeText(getBaseContext(), "Buggy Driver",Toast.LENGTH_SHORT).show();
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
@@ -105,15 +109,19 @@ public class MainActivityBuggy extends AppCompatActivity {
                         term = (String)parent.getItemAtPosition(position);
 //                        Toast.makeText(getBaseContext(),term,Toast.LENGTH_SHORT).show();
                         gates.clear();
-                        Query query = databaseRef.child(term).orderByKey();
+                        Query query = databaseRef.orderByChild("terminal").equalTo(term);
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                String gateNum = dataSnapshot.child("gate").getValue(String.class);
-                                if(gateNum != null){
-                                    gates.add(gateNum);
-                                    aa.notifyDataSetChanged();
-//                                    Toast.makeText(getBaseContext(),gateNum,Toast.LENGTH_SHORT).show();
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                termKey = dataSnapshot.getKey().toString();
+                                for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+                                    String gateNum = areaSnapshot.child("gate").getValue(String.class);
+                                    if (gateNum != null) {
+                                        gates.add(gateNum);
+                                        aa.notifyDataSetChanged();
+//                                        Toast.makeText(getBaseContext(),gateNum,Toast.LENGTH_SHORT).show();
+                                    }
+
                                 }
                             }
 
@@ -167,8 +175,9 @@ public class MainActivityBuggy extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedGates = gates.get(position);
-                Intent intent = new Intent(MainActivityBuggy.this, Main2ActivityBuggy.class);
-                intent.putExtra("gates", selectedGates);
+                Intent intent = new Intent(getBaseContext(), Main2ActivityBuggy.class);
+                intent.putExtra("gate", selectedGates);
+                intent.putExtra("termKey", termKey);
                 intent.putExtra("terminal",term);
                 startActivity(intent);
             }
@@ -180,8 +189,9 @@ public class MainActivityBuggy extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_search, menu);
         inflater.inflate(R.menu.main_logout, menu);
+
+        inflater.inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.SearchId);
         SearchView searchView = (SearchView)item.getActionView();
 
@@ -201,11 +211,13 @@ public class MainActivityBuggy extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     protected void onStart(){
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
+
 
     public boolean onOptionsItemSelected(MenuItem item) {
 

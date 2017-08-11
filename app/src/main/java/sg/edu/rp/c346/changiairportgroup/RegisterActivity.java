@@ -44,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         aToolbar = (Toolbar) findViewById(R.id.register_page_toolbar);
         setSupportActionBar(aToolbar);
-        getSupportActionBar().setTitle("Registration Page");
+        getSupportActionBar().setTitle("Account Registration");
 
         mAuth = FirebaseAuth.getInstance();
 

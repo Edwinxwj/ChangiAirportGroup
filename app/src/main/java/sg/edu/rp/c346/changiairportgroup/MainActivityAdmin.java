@@ -447,6 +447,12 @@ public void onCreateContextMenu (ContextMenu menu, View
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+
+            case R.id.chat:
+                Intent intent = new Intent(MainActivityAdmin.this, MainActivity.class);
+                startActivity(intent);
+                return true;
+
             case R.id.addGate:
                 LayoutInflater inflater =
                         (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
