@@ -122,11 +122,9 @@ public class Main2ActivityBuggy extends AppCompatActivity {
                             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                                 planes.clear();
                                 dateKey = dataSnapshot.getKey().toString();
-                                Toast.makeText(getBaseContext(), "datekey: " + dateKey, Toast.LENGTH_SHORT).show();
                                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                                     if (areaSnapshot.hasChildren()) {
                                         timeKey = areaSnapshot.getKey().toString();
-                                        Toast.makeText(getBaseContext(), "TimeKey:" + timeKey, Toast.LENGTH_SHORT).show();
                                         Plane newPlane = areaSnapshot.getValue(Plane.class);
                                         if (newPlane != null) {
                                             planes.add(newPlane);
@@ -212,26 +210,6 @@ public class Main2ActivityBuggy extends AppCompatActivity {
 
             }
         });
-
-//        spnDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-////                String Text = spnDate.getSelectedItem().toString();
-////                tv.setText(Text);
-//                switch (i) {
-//                    case 0:
-//
-//                        break;
-//                    case 1:
-//                        //Your code for Item 2 select
-//                        break;
-//                }
-//            }
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
 
 
     }
