@@ -230,7 +230,6 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                     mSpinner.setSelection(0);
                 }
 
-
                 mbuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

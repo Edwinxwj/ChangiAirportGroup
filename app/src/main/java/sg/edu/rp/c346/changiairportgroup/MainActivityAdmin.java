@@ -218,6 +218,7 @@ public class MainActivityAdmin extends AppCompatActivity {
         menu.add(Menu.NONE, 1, Menu.NONE, "Edit");
         menu.add(Menu.NONE, 2, Menu.NONE, "Delete");
     }
+
     @Override
     public boolean onContextItemSelected (MenuItem item){
         // TODO Auto-generated method stub
