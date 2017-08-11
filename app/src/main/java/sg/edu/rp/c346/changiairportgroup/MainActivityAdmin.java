@@ -319,120 +319,6 @@ public void onCreateContextMenu (ContextMenu menu, View
 
     }
 
-//    @Override
-//    public boolean onContextItemSelected (MenuItem item){
-//        // TODO Auto-generated method stub
-//        AdapterView.AdapterContextMenuInfo menuinfo = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-//        long selectid = menuinfo.id; //_id from database in this case
-//        final int selectpos = menuinfo.position; //position in the adapter
-//        switch (item.getItemId()) {
-//            case 1: {
-//                final Query q1 = databaseRef.child(term).orderByKey().equalTo(lv.getItemAtPosition(selectpos).toString());
-//                q1.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        if(dataSnapshot.exists()) {
-//                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                                //get the key of the child node that has to be updated
-//                                String postkey = ds.getRef().getKey();
-//                                Object terminal = ds.child("terminal").getValue();
-////                                Toast.makeText(getBaseContext(), terminal.toString(),Toast.LENGTH_SHORT).show();
-//                                Intent i = new Intent(MainActivityAdmin.this,EditActivity.class);
-//                                i.putExtra("gate", lv.getItemAtPosition(selectpos).toString());
-//                                i.putExtra("terminal",term);
-//                                i.putExtra("key",postkey);
-//                                startActivityForResult(i,1);
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-////                Intent i = new Intent(MainActivityAdmin.this,EditActivity.class);
-////                i.putExtra("gate", lv.getItemAtPosition(selectpos).toString());
-////                startActivityForResult(i,1);
-//            }
-//            break;
-//            case 2: {
-//
-//                Toast.makeText(getBaseContext(),lv.getItemAtPosition(selectpos).toString(),Toast.LENGTH_LONG).show();
-//                final Query applesQuery = databaseRef.orderByChild("gateNumber").equalTo(lv.getItemAtPosition(selectpos).toString());
-//                applesQuery.addChildEventListener(new ChildEventListener() {
-//                    @Override
-//                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                        dataSnapshot.getRef().setValue(null);
-//                        gates.remove(selectpos);
-//                        aa.notifyDataSetChanged();
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-//
-//            }
-//            break;
-//        }
-//        return super.onContextItemSelected(item);
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//
-//        if (requestCode == 1) {
-//            if(resultCode == Activity.RESULT_OK){
-//                final String result = data.getStringExtra("result");
-//                final String terminal = data.getStringExtra("terminal");
-//                final String key = data.getStringExtra("key");
-//                final Query q1 = databaseRef.child(terminal).orderByKey().equalTo(key);
-//                q1.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        if(dataSnapshot.exists()) {
-//                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                                String a = ds.getKey();
-//                                databaseRef.child(terminal).child(key).child("gate").setValue(result);
-//                                Toast.makeText(getBaseContext(),a,Toast.LENGTH_SHORT).show();
-//                                //get the key of the child node that has to be updated
-////                                databaseRef.child(key).child("gateNumber").setValue(result);
-////                                databaseRef.child(key).child("terminal").setValue(terminal);
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-//
-//            }
-//            if (resultCode == Activity.RESULT_CANCELED) {
-//            }
-//        }
-//    }//onActivityResult
-
     @Override
     protected void onStart(){
         super.onStart();
@@ -630,7 +516,7 @@ public void onCreateContextMenu (ContextMenu menu, View
                                     @Override
                                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                         key = dataSnapshot.getKey().toString(); //TERMKEY
-                                        Toast.makeText(getBaseContext(),"Key: "+key,Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(getBaseContext(),"Key: "+key,Toast.LENGTH_SHORT).show();
 
                                         for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                                             String gateNum = areaSnapshot.child("gate").getValue(String.class);
@@ -702,7 +588,7 @@ public void onCreateContextMenu (ContextMenu menu, View
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 String newgateK = dataSnapshot.getKey().toString();
-                               Toast.makeText(getBaseContext(),"new gateK:" +newgateK,Toast.LENGTH_SHORT).show();
+//                               Toast.makeText(getBaseContext(),"new gateK:" +newgateK,Toast.LENGTH_SHORT).show();
                                 String Destination = etDestination.getText().toString();
                                 String Airline = etAirline.getText().toString();
                                 String Direction = etDirection.getText().toString();

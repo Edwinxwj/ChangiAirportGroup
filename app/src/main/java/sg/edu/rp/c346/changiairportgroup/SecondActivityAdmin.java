@@ -66,7 +66,7 @@ public class SecondActivityAdmin extends AppCompatActivity {
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         final String formattedDate = df.format(c.getTime());
         // formattedDate have current date/time
-        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
 
 //        Calendar yesterday = Calendar.getInstance();
 //        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
@@ -123,17 +123,17 @@ public class SecondActivityAdmin extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         planes.clear();
                         selected = (String) parent.getItemAtPosition(position);
-                        Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
                         Query query = databaseRef.child(termKey).child(gateKey).orderByChild("date").equalTo(selected);
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 dateKey = dataSnapshot.getKey().toString();
-                                Toast.makeText(getBaseContext(), "datekey: " + dateKey, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getBaseContext(), "datekey: " + dateKey, Toast.LENGTH_SHORT).show();
                                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                                     if (areaSnapshot.hasChildren()) {
                                         timeKey = areaSnapshot.getKey().toString();
-                                        Toast.makeText(getBaseContext(), "TimeKey:" + timeKey, Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(getBaseContext(), "TimeKey:" + timeKey, Toast.LENGTH_SHORT).show();
                                         Plane newPlane = areaSnapshot.getValue(Plane.class);
                                         if (newPlane != null) {
                                             planes.add(newPlane);
@@ -275,7 +275,7 @@ public class SecondActivityAdmin extends AppCompatActivity {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 String obj = dataSnapshot.getKey().toString(); //same as timeKey
-                                Toast.makeText(SecondActivityAdmin.this,"obj: "+obj,Toast.LENGTH_LONG).show();
+//                                Toast.makeText(SecondActivityAdmin.this,"obj: "+obj,Toast.LENGTH_LONG).show();
                                 String Destination = etDestination.getText().toString();
                                 String Airline = etAirline.getText().toString();
                                 String LicensePlate = etLicensePlate.getText().toString();
@@ -316,7 +316,7 @@ public class SecondActivityAdmin extends AppCompatActivity {
             break;
 
             case 2: {
-                Toast.makeText(getBaseContext(),planes.get(selectpos).getLicensePlate().toString(),Toast.LENGTH_LONG).show();
+//                Toast.makeText(getBaseContext(),planes.get(selectpos).getLicensePlate().toString(),Toast.LENGTH_LONG).show();
 
                 final Query q1 = databaseRef.child(termKey).child(gateKey).child(dateKey).orderByChild("licensePlate").equalTo(planes.get(selectpos).getLicensePlate().toString());
                 q1.addValueEventListener(new ValueEventListener() {
@@ -324,7 +324,7 @@ public class SecondActivityAdmin extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds : dataSnapshot.getChildren()){
                             String a = ds.getKey().toString();
-                            Toast.makeText(getBaseContext(),"query"+a,Toast.LENGTH_LONG).show();
+//                            Toast.makeText(getBaseContext(),"query"+a,Toast.LENGTH_LONG).show();
                             databaseRef.child(termKey).child(gateKey).child(dateKey).child(a).removeValue();
                             aa.notifyDataSetChanged();
 
