@@ -173,6 +173,8 @@ public class Chat extends AppCompatActivity implements
 
             }
         });
+
+        //populating the message recycler view
         mFirebaseAdapter = new FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>(
                 FriendlyMessage.class,
                 R.layout.item_message_chat,
@@ -196,7 +198,9 @@ public class Chat extends AppCompatActivity implements
                 if (friendlyMessage.getText() != null) {
                     viewHolder.messageTextView.setText(friendlyMessage.getText());
                     viewHolder.textViewTime.setText(friendlyMessage.getTimeStamp());
+                    viewHolder.messengerTextView.setText("You");
                     viewHolder.messageTextView.setVisibility(TextView.VISIBLE);
+                    viewHolder.messengerTextView.setVisibility(TextView.VISIBLE);
                     viewHolder.messageImageView.setVisibility(ImageView.GONE);
                 } else {
                     String imageUrl = friendlyMessage.getImageUrl();
