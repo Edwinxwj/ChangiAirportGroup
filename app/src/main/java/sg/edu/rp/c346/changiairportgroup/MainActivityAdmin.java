@@ -388,6 +388,7 @@ public class MainActivityAdmin extends AppCompatActivity {
                 myBuilder.setView(viewDialog);
                 myBuilder.setTitle("Add Gate");
 
+
                 myBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -366,6 +366,7 @@ public class SecondActivityAdmin extends AppCompatActivity {
                 dialog.show();
             }
             break;
+            
             case 2: {
                 Toast.makeText(getBaseContext(),planes.get(selectpos).getLicensePlate().toString(),Toast.LENGTH_LONG).show();
                 final Query q1 = databaseRef.child(termKey).child(gateKey).child(dateKey).child(timeKey).orderByChild("licensePlate").equalTo(planes.get(selectpos).getLicensePlate().toString());
