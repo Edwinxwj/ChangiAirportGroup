@@ -127,6 +127,7 @@ public class SecondActivityAdmin extends AppCompatActivity {
                                             aa.notifyDataSetChanged();
                                         }
                                     }
+                                    aa.notifyDataSetChanged();
                                 }
 
                             }
@@ -143,11 +144,27 @@ public class SecondActivityAdmin extends AppCompatActivity {
                                             aa.notifyDataSetChanged();
                                         }
                                     }
+                                    aa.notifyDataSetChanged();
+
                                 }
                             }
 
                             @Override
                             public void onChildRemoved(DataSnapshot dataSnapshot) {
+                                planes.clear();
+                                for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+                                    if (areaSnapshot.hasChildren()) {
+                                        Plane newPlane = areaSnapshot.getValue(Plane.class);
+                                        if (newPlane != null) {
+//                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
+                                            planes.add(newPlane);
+                                            aa.notifyDataSetChanged();
+                                        }
+                                    }
+                                    aa.notifyDataSetChanged();
+                                }
+
+
 
                             }
 
@@ -279,8 +296,8 @@ public class SecondActivityAdmin extends AppCompatActivity {
             v, ContextMenu.ContextMenuInfo menuInfo){
         super.onCreateContextMenu(menu, v, menuInfo);
         //Context menu
-        menu.add(Menu.NONE, 1, Menu.NONE, "Edit");
-        menu.add(Menu.NONE, 2, Menu.NONE, "Delete");
+        menu.add(Menu.NONE, 1, Menu.NONE, "Edit Flight");
+        menu.add(Menu.NONE, 2, Menu.NONE, "Delete Flight");
     }
 
     @Override
@@ -322,7 +339,7 @@ public class SecondActivityAdmin extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        final Query q1 = databaseRef.child(termKey).child(gateKey).child(dateKey).child(timeKey).orderByChild("licensePlate").equalTo(currentPlane.getLicensePlate());
+                        final Query q1 = databaseRef.child(termKey).child(gateKey).child(dateKey).orderByChild("licensePlate").equalTo(currentPlane.getLicensePlate());
                         q1.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -366,36 +383,21 @@ public class SecondActivityAdmin extends AppCompatActivity {
                 dialog.show();
             }
             break;
-            
+
             case 2: {
                 Toast.makeText(getBaseContext(),planes.get(selectpos).getLicensePlate().toString(),Toast.LENGTH_LONG).show();
-                final Query q1 = databaseRef.child(termKey).child(gateKey).child(dateKey).child(timeKey).orderByChild("licensePlate").equalTo(planes.get(selectpos).getLicensePlate().toString());
-                q1.addChildEventListener(new ChildEventListener() {
+
+                final Query q1 = databaseRef.child(termKey).child(gateKey).child(dateKey).orderByChild("licensePlate").equalTo(planes.get(selectpos).getLicensePlate().toString());
+                q1.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Toast.makeText(getBaseContext(),"query",Toast.LENGTH_LONG).show();
-                        if(dataSnapshot.hasChildren()) {
-                            dataSnapshot.getRef().setValue(null);
-                            planes.remove(selectpos);
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()){
+                            String a = ds.getKey().toString();
+                            Toast.makeText(getBaseContext(),"query"+a,Toast.LENGTH_LONG).show();
+                            databaseRef.child(termKey).child(gateKey).child(dateKey).child(a).removeValue();
                             aa.notifyDataSetChanged();
+
                         }
-
-
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
                     }
 
                     @Override
@@ -403,6 +405,39 @@ public class SecondActivityAdmin extends AppCompatActivity {
 
                     }
                 });
+//                q1.addChildEventListener(new ChildEventListener() {
+//                    @Override
+//                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                        Toast.makeText(getBaseContext(),"query",Toast.LENGTH_LONG).show();
+//                        if(dataSnapshot.hasChildren()) {
+//                            dataSnapshot.getRef().setValue(null);
+//                            planes.remove(selectpos);
+//                            aa.notifyDataSetChanged();
+//                        }
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
 
             }
             break;
