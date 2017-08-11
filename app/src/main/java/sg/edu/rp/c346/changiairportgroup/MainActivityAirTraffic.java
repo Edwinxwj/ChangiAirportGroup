@@ -38,6 +38,7 @@ public class MainActivityAirTraffic extends AppCompatActivity {
     DatabaseReference databaseRef;
     Spinner Spinner;
     String term;
+    String termKey;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -110,15 +111,19 @@ public class MainActivityAirTraffic extends AppCompatActivity {
                         term = (String)parent.getItemAtPosition(position);
 //                        Toast.makeText(getBaseContext(),term,Toast.LENGTH_SHORT).show();
                         gates.clear();
-                        Query query = databaseRef.child(term).orderByKey();
+                        Query query = databaseRef.orderByChild("terminal").equalTo(term);
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                String gateNum = dataSnapshot.child("gate").getValue(String.class);
-                                if(gateNum != null){
-                                    gates.add(gateNum);
-                                    aa.notifyDataSetChanged();
-//                                    Toast.makeText(getBaseContext(),gateNum,Toast.LENGTH_SHORT).show();
+                                termKey = dataSnapshot.getKey().toString();
+                                for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+                                    String gateNum = areaSnapshot.child("gate").getValue(String.class);
+                                    if (gateNum != null) {
+                                        gates.add(gateNum);
+                                        aa.notifyDataSetChanged();
+//                                        Toast.makeText(getBaseContext(),gateNum,Toast.LENGTH_SHORT).show();
+                                    }
+
                                 }
                             }
 
@@ -174,6 +179,7 @@ public class MainActivityAirTraffic extends AppCompatActivity {
                 String selectedGates = gates.get(position);
                 Intent intent = new Intent(getBaseContext(), SecondActivityAirtraffic.class);
                 intent.putExtra("gates", selectedGates);
+                intent.putExtra("termKey", termKey);
                 intent.putExtra("terminal",term);
                 startActivity(intent);
             }

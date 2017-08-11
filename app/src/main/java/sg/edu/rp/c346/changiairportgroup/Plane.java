@@ -25,6 +25,7 @@ public class Plane {
         this.airline = airline;
     }
 
+
     public String getLicensePlate() {
         return licensePlate;
     }
