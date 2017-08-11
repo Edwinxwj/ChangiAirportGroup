@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:weightSum="1"
     android:padding="10dp"
-    android:background="@color/lavender">
+    android:background="@color/colorAccent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,8 +16,11 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
             android:text="Terminal:"
-            android:textSize="18sp" />
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/spinnerTerm1"
@@ -36,8 +39,11 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
             android:text="Gate Number:"
-            android:textSize="18sp" />
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/spinnerGate"
@@ -56,8 +62,11 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
             android:text="Date:"
-            android:textSize="18sp" />
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextDate"
@@ -78,8 +87,11 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
             android:text="Timeslot:"
-            android:textSize="18sp" />
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextTime"
@@ -92,14 +104,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
             android:text="FLIGHT DETAILS:"
             android:textAlignment="center"
+            android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -113,8 +128,11 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
             android:text="Flight Airline:"
-            android:textSize="18sp" />
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextAirline"
@@ -135,8 +153,11 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
             android:text="Flight Destination:"
-            android:textSize="18sp" />
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextDestination"
@@ -152,12 +173,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
             android:text="Flight Direction:"
-            android:textSize="18sp" />
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/editTextDirection"
@@ -179,8 +204,11 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
             android:text="Flight Number:"
-            android:textSize="18sp" />
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextFlightNo"
@@ -201,8 +229,11 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="serif-monospace"
             android:text="Flight LicensePlate:"
-            android:textSize="18sp" />
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextLicensePlate"

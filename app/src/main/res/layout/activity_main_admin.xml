@@ -14,13 +14,18 @@
     <Spinner
         android:id="@+id/spinnerTerminal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="30dp"
+        android:entries="@array/spinnersTerminal"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"/>
 
 
     <ListView
         android:id="@+id/lv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"/>
 
 
 </LinearLayout>

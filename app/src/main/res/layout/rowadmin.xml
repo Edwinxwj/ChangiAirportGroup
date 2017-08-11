@@ -4,14 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="5dp"
+    android:padding="10dp"
+    android:background="@color/lavender"
     android:weightSum="1">
 
 
     <LinearLayout
-        android:layout_width="133dp"
+        android:layout_width="match_parent"
         android:layout_height="188dp"
         android:orientation="vertical"
+        android:layout_weight="0.33"
         android:weightSum="1">
 
         <TextView
@@ -19,22 +21,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="TextView" />
+            android:fontFamily="monospace"
+            android:text="TextView"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvFlyToWhere"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:fontFamily="monospace"
             android:text="TextView"
-            android:textSize="14sp"
-            android:layout_weight="0.5"/>
+            android:textSize="13sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="153dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_weight="0.33"
         android:weightSum="1">
 
         <TextView
@@ -42,27 +50,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.33"
-            android:text="TextView" />
+            android:fontFamily="monospace"
+            android:text="TextView"
+            android:textSize="13sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvFlightNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:layout_weight="0.33"
-            />
+            android:fontFamily="monospace"
+            android:text="TextView"
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/tvLicensePlate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.33"
-            android:text="TextView" />
+            android:fontFamily="monospace"
+            android:text="TextView"
+            android:textSize="13sp"
+            android:textStyle="italic" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="0.33"
         android:orientation="vertical">
 
         <ImageView
@@ -77,8 +93,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="TextView" />
-
+            android:layout_marginTop="30dp"
+            android:fontFamily="serif-monospace"
+            android:text="TextView"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

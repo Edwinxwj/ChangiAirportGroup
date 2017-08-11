@@ -24,7 +24,8 @@
             android:text="E26"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -102,14 +103,14 @@
         <ImageView
             android:id="@+id/imageViewFirst"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="250dp"
             android:layout_weight="0.5"
             android:src="@drawable/plane_right"/>
 
         <ImageView
             android:id="@+id/imageViewSecond"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="250dp"
             android:layout_weight="0.5"
             android:src="@drawable/ic_right"/>
     </LinearLayout>
@@ -118,21 +119,10 @@
         android:id="@+id/buttonUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center|bottom"
         android:text="Update"
         android:textColor="@android:color/white"
-        android:layout_marginTop="50dp"
         android:backgroundTint="@color/dark_olive_green"/>
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--android:backgroundTint="@android:color/black"-->
-        <!--android:src="@drawable/ic_action_message"-->
-        <!--/>-->
 
 </LinearLayout>

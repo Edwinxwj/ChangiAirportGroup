@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp"
-    android:background="@color/lavender">
+    android:background="@color/colorAccent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,19 +13,21 @@
 
         <TextView
             android:id="@+id/tvPlaneNumber"
-            android:layout_width="wrap_content"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.4"
             android:fontFamily="serif-monospace"
-            android:text="Timing: " />
+            android:text="Timing: "
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvTime"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.36"
             android:fontFamily="serif-monospace"
-            android:text="0000 - 0100 " />
+            android:layout_marginLeft="5dp"
+            android:text="0000 - 0100 "
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 
@@ -36,18 +38,22 @@
 
         <TextView
             android:id="@+id/tvNameOfPlane"
-            android:layout_width="wrap_content"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:text="LicensePlate:  " />
+            android:fontFamily="serif-monospace"
+            android:text="LicensePlate:  "
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
 
 
         <TextView
             android:id="@+id/tvLicensePlate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.32"
-            android:text="SQK 103" />
+            android:fontFamily="serif-monospace"
+            android:layout_marginLeft="5dp"
+            android:text="SQK 103"
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 
@@ -58,17 +64,21 @@
 
         <TextView
             android:id="@+id/tv"
-            android:layout_width="139dp"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:text="Airline: " />
+            android:fontFamily="serif-monospace"
+            android:text="Airline: "
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvAirline"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.77"
-            android:text="Tigher Air" />
+            android:fontFamily="serif-monospace"
+            android:layout_marginLeft="5dp"
+            android:text="Tigher Air"
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 
@@ -79,17 +89,21 @@
 
         <TextView
             android:id="@+id/tvFlightNumAlert"
-            android:layout_width="139dp"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:text="Flight Number: " />
+            android:fontFamily="serif-monospace"
+            android:text="Flight Number: "
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvFlightNo"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.76"
-            android:text="SQ12345" />
+            android:fontFamily="serif-monospace"
+            android:layout_marginLeft="5dp"
+            android:text="SQ12345"
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 
@@ -100,17 +114,21 @@
 
         <TextView
             android:id="@+id/tvLicensePlateAlert"
-            android:layout_width="139dp"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="Destination:" />
+            android:fontFamily="serif-monospace"
+            android:text="Destination:"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvDestination"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.78"
-            android:text="S1234G" />
+            android:fontFamily="serif-monospace"
+            android:layout_marginLeft="5dp"
+            android:text="S1234G"
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 
@@ -122,15 +140,19 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="69dp"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
-            android:text="Direction" />
+            android:fontFamily="serif-monospace"
+            android:text="Direction"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.7" />
+            android:layout_marginLeft="5dp" />
+
     </LinearLayout>
 
 </LinearLayout>

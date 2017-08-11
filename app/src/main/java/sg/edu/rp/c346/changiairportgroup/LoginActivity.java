@@ -3,7 +3,9 @@ package sg.edu.rp.c346.changiairportgroup;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -125,10 +127,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void checkLogin(){
-        String email = etEmail.getText().toString().trim();
-        String password = etPassWord.getText().toString().trim();
-        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        final SharedPreferences.Editor editor = settings.edit();
 
+        final String email = etEmail.getText().toString().trim();
+        final String password = etPassWord.getText().toString().trim();
+        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
             progressDialog.setMessage("Checking login");
             progressDialog.show();
             mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -136,6 +140,9 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
                         checkUserExist();
+                        editor.putString("email", email);
+                        editor.putString("password", password);
+                        editor.commit();
 
                     }else{
                         progressDialog.dismiss();
@@ -185,4 +192,17 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String email = pref.getString("email", "");
+        String password = pref.getString("password", "");
+
+        etEmail.setText(email);
+        etPassWord.setText(password);
+
+    }
 }

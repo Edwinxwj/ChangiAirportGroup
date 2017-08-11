@@ -14,17 +14,23 @@
         android:text="TextView"
         android:textColor="@android:color/black"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"/>
 
     <Spinner
         android:id="@+id/spinner2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinnerItems"/>
+        android:layout_height="30dp"
+        android:entries="@array/spinnerItems"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"/>
 
 
     <ListView
         android:id="@+id/lvPlane"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"/>
 </LinearLayout>
