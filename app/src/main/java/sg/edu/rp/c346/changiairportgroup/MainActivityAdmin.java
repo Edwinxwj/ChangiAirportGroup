@@ -39,8 +39,10 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -576,6 +578,11 @@ public void onCreateContextMenu (ContextMenu menu, View
                 LayoutInflater inflater2 =
                         (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View viewDialog2 = inflater2.inflate(R.layout.add_flight, null);
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                String formattedDate = df.format(c.getTime());
+                // formattedDate have current date/time
+//                Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
 
                 //obtain the UI component in the input.xml layout
                 spnTerm1 = (Spinner) viewDialog2.findViewById(R.id.spinnerTerm1);
@@ -588,6 +595,7 @@ public void onCreateContextMenu (ContextMenu menu, View
                 final EditText etDate= (EditText)viewDialog2.findViewById(R.id.editTextDate);
                 final EditText etTime = (EditText)viewDialog2.findViewById(R.id.editTextTime);
 
+                etDate.setText(formattedDate);
 
                 myAdapter3 = new ArrayAdapter<String>(MainActivityAdmin.this,
                         android.R.layout.simple_spinner_item, gate);
@@ -769,9 +777,9 @@ public void onCreateContextMenu (ContextMenu menu, View
                 return true;
 
             case R.id.editTerm:
-                Intent intent = new Intent(MainActivityAdmin.this,EditActivity.class);
-                intent.putExtra("termKey",term);
-                startActivity(intent);
+                Intent intent1 = new Intent(MainActivityAdmin.this,EditActivity.class);
+                intent1.putExtra("termKey",term);
+                startActivity(intent1);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

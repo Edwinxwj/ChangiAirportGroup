@@ -20,7 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import sg.edu.rp.c346.changiairportgroup.Chat.MainActivity;
 
@@ -54,14 +56,13 @@ public class Main2ActivityBuggy extends AppCompatActivity {
         lv = (ListView) this.findViewById(R.id.lvPlane);
         planes = new ArrayList<Plane>();
 
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        final String formattedDate = df.format(c.getTime());
+
         aa = new CustomAdapterAirtraffic(this, R.layout.row, planes);
         lv.setAdapter(aa);
 
-//        Intent i = getIntent();
-//        String year = i.getStringExtra("gates");
-//        Plane plane1 = new Plane("tvTiming", "tvLicensePlate","tvAirline","tvFlightNum","tvLicensePlate");
-//
-//        planes.add(plane1);
         Intent i = getIntent();
         final String gate = i.getStringExtra("gate");
         term = i.getStringExtra("terminal");
@@ -75,14 +76,14 @@ public class Main2ActivityBuggy extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 gateKey = dataSnapshot.getKey().toString(); //gate1/gate2 etc
-//                Toast.makeText(getBaseContext(), "gateKey:" + gateKey, Toast.LENGTH_SHORT).show();
                 final ArrayList<String> date = new ArrayList<>();
 
                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                     String obj = areaSnapshot.child("date").getValue(String.class);
-//                    Toast.makeText(getBaseContext(), "date:" + obj, Toast.LENGTH_SHORT).show();
                     if (obj != null) {
-                        date.add(obj);
+                        if(obj.equals(formattedDate)) {
+                            date.add(obj);
+                        }
                     }
                 }
 
@@ -97,24 +98,22 @@ public class Main2ActivityBuggy extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         planes.clear();
                         selectedDate = (String) parent.getItemAtPosition(position);
-                        Toast.makeText(getBaseContext(), selectedDate, Toast.LENGTH_SHORT).show();
                         Query query = databaseRef.child(termKey).child(gateKey).orderByChild("date").equalTo(selectedDate);
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 dateKey = dataSnapshot.getKey().toString();
-                                Toast.makeText(getBaseContext(), "datekey: " + dateKey, Toast.LENGTH_SHORT).show();
                                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                                     if (areaSnapshot.hasChildren()) {
                                         timeKey = areaSnapshot.getKey().toString();
-                                        Toast.makeText(getBaseContext(), "TimeKey:" + timeKey, Toast.LENGTH_SHORT).show();
                                         Plane newPlane = areaSnapshot.getValue(Plane.class);
                                         if (newPlane != null) {
-//                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
                                             planes.add(newPlane);
                                             aa.notifyDataSetChanged();
                                         }
                                     }
+                                    aa.notifyDataSetChanged();
+
                                 }
 
                             }
@@ -130,7 +129,6 @@ public class Main2ActivityBuggy extends AppCompatActivity {
                                         Toast.makeText(getBaseContext(), "TimeKey:" + timeKey, Toast.LENGTH_SHORT).show();
                                         Plane newPlane = areaSnapshot.getValue(Plane.class);
                                         if (newPlane != null) {
-//                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
                                             planes.add(newPlane);
                                             aa.notifyDataSetChanged();
                                         }
@@ -141,6 +139,17 @@ public class Main2ActivityBuggy extends AppCompatActivity {
 
                             @Override
                             public void onChildRemoved(DataSnapshot dataSnapshot) {
+                                planes.clear();
+                                for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+                                    if (areaSnapshot.hasChildren()) {
+                                        Plane newPlane = areaSnapshot.getValue(Plane.class);
+                                        if (newPlane != null) {
+                                            planes.add(newPlane);
+                                            aa.notifyDataSetChanged();
+                                        }
+                                    }
+                                    aa.notifyDataSetChanged();
+                                }
 
                             }
 

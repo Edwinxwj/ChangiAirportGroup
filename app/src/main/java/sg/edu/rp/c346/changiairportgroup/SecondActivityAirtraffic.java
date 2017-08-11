@@ -68,11 +68,6 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
         aa = new CustomAdapterAirtraffic(this, R.layout.row, planes);
         lv.setAdapter(aa);
 
-//        Intent i = getIntent();
-//        String year = i.getStringExtra("gates");
-//        Plane plane1 = new Plane("tvTiming", "tvLicensePlate","tvAirline","tvFlightNum","tvLicensePlate");
-//
-//        planes.add(plane1);
         Intent i = getIntent();
         final String gates = i.getStringExtra("gates");
         term = i.getStringExtra("terminal");
@@ -108,24 +103,25 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         planes.clear();
                         selected = (String) parent.getItemAtPosition(position);
-                        Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
                         Query query = databaseRef.child(termKey).child(gateKey).orderByChild("date").equalTo(selected);
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 dateKey = dataSnapshot.getKey().toString();
-                                Toast.makeText(getBaseContext(), "datekey: " + dateKey, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getBaseContext(), "datekey: " + dateKey, Toast.LENGTH_SHORT).show();
                                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                                     if (areaSnapshot.hasChildren()) {
                                         timeKey = areaSnapshot.getKey().toString();
-                                        Toast.makeText(getBaseContext(), "TimeKey:" + timeKey, Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(getBaseContext(), "TimeKey:" + timeKey, Toast.LENGTH_SHORT).show();
                                         Plane newPlane = areaSnapshot.getValue(Plane.class);
                                         if (newPlane != null) {
-//                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
                                             planes.add(newPlane);
                                             aa.notifyDataSetChanged();
                                         }
                                     }
+                                    aa.notifyDataSetChanged();
+
                                 }
 
                             }
@@ -134,14 +130,13 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                                 planes.clear();
                                 dateKey = dataSnapshot.getKey().toString();
-                                Toast.makeText(getBaseContext(), "datekey: " + dateKey, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getBaseContext(), "datekey: " + dateKey, Toast.LENGTH_SHORT).show();
                                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                                     if (areaSnapshot.hasChildren()) {
                                         timeKey = areaSnapshot.getKey().toString();
-                                        Toast.makeText(getBaseContext(), "TimeKey:" + timeKey, Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(getBaseContext(), "TimeKey:" + timeKey, Toast.LENGTH_SHORT).show();
                                         Plane newPlane = areaSnapshot.getValue(Plane.class);
                                         if (newPlane != null) {
-//                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
                                             planes.add(newPlane);
                                             aa.notifyDataSetChanged();
                                         }
@@ -152,6 +147,17 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
 
                             @Override
                             public void onChildRemoved(DataSnapshot dataSnapshot) {
+                                planes.clear();
+                                for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+                                    if (areaSnapshot.hasChildren()) {
+                                        Plane newPlane = areaSnapshot.getValue(Plane.class);
+                                        if (newPlane != null) {
+                                            planes.add(newPlane);
+                                            aa.notifyDataSetChanged();
+                                        }
+                                    }
+                                    aa.notifyDataSetChanged();
+                                }
 
                             }
 
@@ -216,7 +222,6 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                 mSpinner.setAdapter(adapter);
 
                 final Plane currentPlane = planes.get(position);
-//                Toast.makeText(SecondActivityAirtraffic.this,currentPlane.getAirline(),Toast.LENGTH_LONG).show();
                 tvAirline.setText(currentPlane.getAirline());
                 tvDestination.setText(currentPlane.getDestination());
                 tvFlightNo.setText(currentPlane.getFlightNo());

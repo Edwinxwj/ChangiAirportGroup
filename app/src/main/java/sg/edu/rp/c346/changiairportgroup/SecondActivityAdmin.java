@@ -30,7 +30,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static sg.edu.rp.c346.changiairportgroup.R.id.parent;
 
@@ -62,6 +64,18 @@ public class SecondActivityAdmin extends AppCompatActivity {
         setSupportActionBar(aToolbar);
         getSupportActionBar().setTitle("Admin Flight Page");
 
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        final String formattedDate = df.format(c.getTime());
+        // formattedDate have current date/time
+        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
+
+//        Calendar yesterday = Calendar.getInstance();
+//        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+//        yesterday.add(Calendar.DATE, -1);
+//        Toast.makeText(this, yesterday, Toast.LENGTH_SHORT).show();
+
+
         tvGateName = (TextView) findViewById(R.id.tvGate);
 
 //        spnDate = (Spinner) findViewById(R.id.spinner2);
@@ -81,6 +95,8 @@ public class SecondActivityAdmin extends AppCompatActivity {
         tvGateName.setText(gates);
 
 
+
+
         final Query querydate = databaseRef.child(termKey).orderByChild("gate").equalTo(gates);
 
         querydate.addChildEventListener(new ChildEventListener() {
@@ -94,7 +110,7 @@ public class SecondActivityAdmin extends AppCompatActivity {
                     String obj = areaSnapshot.child("date").getValue(String.class);
 //                    Toast.makeText(getBaseContext(), "date:" + obj, Toast.LENGTH_SHORT).show();
                     if (obj != null) {
-                        date.add(obj);
+                            date.add(obj);
                     }
                 }
 
@@ -122,7 +138,6 @@ public class SecondActivityAdmin extends AppCompatActivity {
                                         Toast.makeText(getBaseContext(), "TimeKey:" + timeKey, Toast.LENGTH_SHORT).show();
                                         Plane newPlane = areaSnapshot.getValue(Plane.class);
                                         if (newPlane != null) {
-//                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
                                             planes.add(newPlane);
                                             aa.notifyDataSetChanged();
                                         }
@@ -139,7 +154,6 @@ public class SecondActivityAdmin extends AppCompatActivity {
                                     if (areaSnapshot.hasChildren()) {
                                         Plane newPlane = areaSnapshot.getValue(Plane.class);
                                         if (newPlane != null) {
-//                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
                                             planes.add(newPlane);
                                             aa.notifyDataSetChanged();
                                         }
@@ -156,7 +170,6 @@ public class SecondActivityAdmin extends AppCompatActivity {
                                     if (areaSnapshot.hasChildren()) {
                                         Plane newPlane = areaSnapshot.getValue(Plane.class);
                                         if (newPlane != null) {
-//                                        Toast.makeText(getBaseContext(), "Newplane:" + newPlane.getDirection(), Toast.LENGTH_SHORT).show();
                                             planes.add(newPlane);
                                             aa.notifyDataSetChanged();
                                         }

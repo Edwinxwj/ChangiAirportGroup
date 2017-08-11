@@ -79,9 +79,8 @@ public class SecondActivityBuggy extends AppCompatActivity {
         databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
 
 
-        final Query q1 = databaseRef.child(termKey).child(gateKey).child(dateKey).child(timeKey).orderByChild("licensePlate").equalTo(licensePlate);
+        final Query q1 = databaseRef.child(termKey).child(gateKey).child(dateKey).orderByChild("licensePlate").equalTo(licensePlate);
 
-//        final Query q1 = databaseRef.child(term).child(gates).child(selectedDate).orderByChild("licensePlate").equalTo(licensePlate);
         q1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
