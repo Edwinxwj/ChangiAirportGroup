@@ -108,6 +108,7 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                planes.clear();
                                 dateKey = dataSnapshot.getKey().toString();
 //                                Toast.makeText(getBaseContext(), "datekey: " + dateKey, Toast.LENGTH_SHORT).show();
                                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
@@ -246,6 +247,7 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                                     String obj = dataSnapshot.getKey().toString(); //same as timeKey
 
                                     databaseRef.child(termKey).child(gateKey).child(dateKey).child(obj).child("direction").setValue(mSpinner.getSelectedItem().toString());
+                                    databaseRef.child(termKey).child(gateKey).child(dateKey).child(obj).child("dirStatus").setValue("Updated");
                                     aa.notifyDataSetChanged();
 
                                 }

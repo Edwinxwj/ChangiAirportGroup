@@ -42,6 +42,7 @@ public class SecondActivityBuggy extends AppCompatActivity {
     DatabaseReference databaseRef;
     ImageView iv1, iv2;
     Button btnUpdate;
+    String currentKey;
 
     private Toolbar aToolbar;
 
@@ -80,28 +81,24 @@ public class SecondActivityBuggy extends AppCompatActivity {
 
 
         final Query q1 = databaseRef.child(termKey).child(gateKey).child(dateKey).orderByChild("licensePlate").equalTo(licensePlate);
-
-        q1.addListenerForSingleValueEvent(new ValueEventListener() {
+        q1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Plane a = ds.getValue(Plane.class);
+                    tvAirline.setText("Airline: "+a.getAirline());
+                    tvDestination.setText("Destination: "+a.getDestination());
+                    tvDirection.setText("Direction: "+a.getDirection());
+                    tvFlightNumber.setText("Flight Number: "+a.getFlightNo());
+                    tvGate.setText(gate);
+                    tvLicensePlate.setText("License Plate: "+a.getLicensePlate());
+                    tvTime.setText("Time: "+a.getTime());
 
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                        Plane a = ds.getValue(Plane.class);
-                        tvAirline.setText("Airline: "+a.getAirline());
-                        tvDestination.setText("Destination: "+a.getDestination());
-                        tvDirection.setText("Direction: "+a.getDirection());
-                        tvFlightNumber.setText("Flight Number: "+a.getFlightNo());
-                        tvGate.setText(gate);
-                        tvLicensePlate.setText("License Plate: "+a.getLicensePlate());
-                        tvTime.setText("Time: "+a.getTime());
-
-                        if(a.getDirection().equals("North")){
-                            iv1.setImageResource(R.drawable.ic_left);
-                            iv2.setImageResource(R.drawable.plane_left);
-                        }
+                    if(a.getDirection().equals("North")){
+                        iv1.setImageResource(R.drawable.ic_left);
+                        iv2.setImageResource(R.drawable.plane_left);
                     }
-
+                }
             }
 
             @Override
@@ -110,11 +107,25 @@ public class SecondActivityBuggy extends AppCompatActivity {
             }
         });
 
+
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(SecondActivityBuggy.this, Main2ActivityBuggy.class);
-                startActivity(i);
+                final Query q1 = databaseRef.child(termKey).child(gateKey).child(dateKey).orderByChild("licensePlate").equalTo(licensePlate);
+                q1.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                            databaseRef.child(termKey).child(gateKey).child(dateKey).child(timeKey).child("pbStatus").setValue("Updated");
+                            finish();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+//                Intent i = new Intent(SecondActivityBuggy.this, Main2ActivityBuggy.class);
+//                startActivity(i);
             }
         });
 

@@ -56,9 +56,9 @@ public class Main2ActivityBuggy extends AppCompatActivity {
         lv = (ListView) this.findViewById(R.id.lvPlane);
         planes = new ArrayList<Plane>();
 
-//        Calendar c = Calendar.getInstance();
-//        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-//        final String formattedDate = df.format(c.getTime());
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        final String formattedDate = df.format(c.getTime());
 
         aa = new CustomAdapterAirtraffic(this, R.layout.row, planes);
         lv.setAdapter(aa);
@@ -81,8 +81,10 @@ public class Main2ActivityBuggy extends AppCompatActivity {
                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                     String obj = areaSnapshot.child("date").getValue(String.class);
                     if (obj != null) {
+                        if(obj.equals(formattedDate)) {
                             date.add(obj);
                         }
+                    }
                 }
 
                 spnDate = (Spinner) findViewById(R.id.spinner2);
@@ -100,6 +102,8 @@ public class Main2ActivityBuggy extends AppCompatActivity {
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                planes.clear();
+
                                 dateKey = dataSnapshot.getKey().toString();
                                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                                     if (areaSnapshot.hasChildren()) {

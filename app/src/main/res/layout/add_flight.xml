@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -71,6 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
+            android:editable="false"
             android:hint="dd-mm-yyyy"
             android:inputType="text" />
 
@@ -96,7 +98,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="24hr format"
-            android:inputType="number" />
+            android:inputType="time"
+            android:selectAllOnFocus="false" />
 
     </LinearLayout>
 

@@ -15,14 +15,13 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:fontFamily="serif-monospace"
             android:text="Terminal:"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <EditText
+        <Spinner
             android:id="@+id/editTextEditTerminal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,31 +29,6 @@
             android:ems="10"
             android:inputType="textPersonName" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <Button
-            android:id="@+id/buttonUpdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:background="@color/dark_olive_green"
-            android:text="Update"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/buttonDel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:background="@color/dark_olive_green"
-            android:text="Delete"
-            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </LinearLayout>

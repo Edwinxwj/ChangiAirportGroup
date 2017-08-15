@@ -1,6 +1,8 @@
 package sg.edu.rp.c346.changiairportgroup;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ public class CustomAdapterAdmin extends ArrayAdapter<Plane> {
     private  TextView tvFlightnum;
     private ImageView ivColour;
     private TextView tvDirection;
+    private TextView tvPBStatus;
 
     public CustomAdapterAdmin(Context context, int resource, ArrayList<Plane> objects) {
         super(context, resource, objects);
@@ -47,6 +50,7 @@ public class CustomAdapterAdmin extends ArrayAdapter<Plane> {
         tvFlyToWhere = (TextView) rowView.findViewById(R.id.tvFlyToWhere);
         tvFlightnum = (TextView) rowView.findViewById(R.id.tvFlightNum);
         tvDirection = (TextView)rowView.findViewById(R.id.tvDirection);
+        tvPBStatus = (TextView)rowView.findViewById(R.id.tvStatus);
 
 
 
@@ -59,6 +63,10 @@ public class CustomAdapterAdmin extends ArrayAdapter<Plane> {
         tvFlyToWhere.setText(currentPlane.getDestination());
         tvFlightnum.setText(currentPlane.getFlightNo());
         tvDirection.setText(currentPlane.getDirection());
+        tvPBStatus.setText(currentPlane.getPbStatus());
+        if (currentPlane.getDirStatus().equalsIgnoreCase("Updated")){
+            ivColour.getDrawable().setColorFilter(Color.rgb(0,183,0), PorterDuff.Mode.SRC_ATOP );
+        }
 
 //        String img = currentHolidays.getimage();
 //        int holiday = this.context.getResources().getIdentifier(img, "drawable", context.getPackageName());

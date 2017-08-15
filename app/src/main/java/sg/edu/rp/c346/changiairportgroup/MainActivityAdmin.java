@@ -1,9 +1,13 @@
 package sg.edu.rp.c346.changiairportgroup;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
@@ -22,11 +26,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,6 +49,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,13 +59,14 @@ import sg.edu.rp.c346.changiairportgroup.Chat.MainActivity;
 public class MainActivityAdmin extends AppCompatActivity {
 
     ListView lv;
-    ArrayAdapter aa, myAdapter, myAdapter1,myAdapter2,myAdapter3;
+    ArrayAdapter aa, myAdapter, myAdapter1,myAdapter2,myAdapter3,aa4;
     ArrayList<String> gates;
     private String TAG = "a";
-    Spinner Spinner, spnTerm, spnTerm1, spnGate;
+    Spinner Spinner, spnTerm, spnTerm1, spnGate,editTerminal;
     String term;
     String termKey;
     String key;
+    String selectedTerm;
     final ArrayList<String> gate = new ArrayList<>();
 
     // [START declare_auth]
@@ -230,8 +238,8 @@ public void onCreateContextMenu (ContextMenu menu, View
         v, ContextMenu.ContextMenuInfo menuInfo){
     super.onCreateContextMenu(menu, v, menuInfo);
     //Context menu
-    menu.add(Menu.NONE, 1, Menu.NONE, "Edit Gate");
-    menu.add(Menu.NONE, 2, Menu.NONE, "Delete Gate");
+//    menu.add(Menu.NONE, 1, Menu.NONE, "Edit Gate");
+    menu.add(Menu.NONE, 1, Menu.NONE, "Delete Gate");
 }
 
     @Override
@@ -241,56 +249,56 @@ public void onCreateContextMenu (ContextMenu menu, View
         long selectid = menuinfo.id; //_id from database in this case
         final int selectpos = menuinfo.position; //position in the adapter
         switch (item.getItemId()) {
+//            case 1: {
+//                android.app.AlertDialog.Builder mbuilder = new android.app.AlertDialog.Builder(MainActivityAdmin.this);
+//                LayoutInflater inflater2 =
+//                        (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//                View viewDialog2 = inflater2.inflate(R.layout.edit_gate, null);
+//                mbuilder.setTitle("Edit Gate");
+//                final EditText editGate = (EditText) viewDialog2.findViewById(R.id.editTextEditGate);
+//
+//                editGate.setText(lv.getItemAtPosition(selectpos).toString());
+//
+//                mbuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                        final Query q1 = databaseRef.child(termKey).orderByChild("gate").equalTo(lv.getItemAtPosition(selectpos).toString());
+//                        q1.addValueEventListener(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                                    String obj = ds.getKey().toString(); //same as timeKey
+////                                    Toast.makeText(MainActivityAdmin.this,"obj: "+obj,Toast.LENGTH_LONG).show();
+//                                    databaseRef.child(termKey).child(obj).child("gate").setValue(editGate.getText().toString());
+//                                    aa.notifyDataSetChanged();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(DatabaseError databaseError) {
+//
+//                            }
+//                        });
+////                            Toast.makeText(SecondActivityAirtraffic.this,mSpinner.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
+//                        dialogInterface.dismiss();
+//
+//                    }
+//                });
+//
+//                mbuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                    }
+//                });
+//
+//                mbuilder.setView(viewDialog2);
+//                android.app.AlertDialog dialog = mbuilder.create();
+//                dialog.show();
+//            }
+//            break;
+
             case 1: {
-                android.app.AlertDialog.Builder mbuilder = new android.app.AlertDialog.Builder(MainActivityAdmin.this);
-                LayoutInflater inflater2 =
-                        (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View viewDialog2 = inflater2.inflate(R.layout.edit_gate, null);
-                mbuilder.setTitle("Edit Gate");
-                final EditText editGate = (EditText) viewDialog2.findViewById(R.id.editTextEditGate);
-
-                editGate.setText(lv.getItemAtPosition(selectpos).toString());
-
-                mbuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        final Query q1 = databaseRef.child(termKey).orderByChild("gate").equalTo(lv.getItemAtPosition(selectpos).toString());
-                        q1.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                    String obj = ds.getKey().toString(); //same as timeKey
-//                                    Toast.makeText(MainActivityAdmin.this,"obj: "+obj,Toast.LENGTH_LONG).show();
-                                    databaseRef.child(termKey).child(obj).child("gate").setValue(editGate.getText().toString());
-                                    aa.notifyDataSetChanged();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-//                            Toast.makeText(SecondActivityAirtraffic.this,mSpinner.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
-                        dialogInterface.dismiss();
-
-                    }
-                });
-
-                mbuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                });
-
-                mbuilder.setView(viewDialog2);
-                android.app.AlertDialog dialog = mbuilder.create();
-                dialog.show();
-            }
-            break;
-
-            case 2: {
 //                Toast.makeText(getBaseContext(),gates.get(selectpos).toString(),Toast.LENGTH_LONG).show();
 
                 final Query q1 = databaseRef.child(termKey).orderByChild("gate").equalTo(lv.getItemAtPosition(selectpos).toString());
@@ -408,7 +416,7 @@ public void onCreateContextMenu (ContextMenu menu, View
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 String newTermKey = dataSnapshot.getKey().toString();
                                 String gate = etGate.getText().toString();
-                                databaseRef.child(newTermKey).push().child("gate").setValue(gate);
+                                databaseRef.child(newTermKey).child(gate).child("gate").setValue(gate);
                                 gates.add(gate);
                                 aa.notifyDataSetChanged();
                             }
@@ -463,7 +471,7 @@ public void onCreateContextMenu (ContextMenu menu, View
 
                         //Extract the Text entered by the user
                         String newterminal = etTerminal.getText().toString();
-                        databaseRef.push().child("terminal").setValue(newterminal);
+                        databaseRef.child(newterminal).child("terminal").setValue(newterminal);
 //                        gates.add(gate);
                         myAdapter.notifyDataSetChanged();
                     }
@@ -585,7 +593,63 @@ public void onCreateContextMenu (ContextMenu menu, View
                     }
                 });
 
+                etDate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Calendar c = Calendar.getInstance();
+                        int year = c.get(Calendar.YEAR);
+                        int month = c.get(Calendar.MONTH);
+                        int day = c.get(Calendar.DAY_OF_MONTH);
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivityAdmin.this, new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                String sMonth = "00";
+                                String sDay = "00";
+                                int Month = (month+1);
+                                if (Month < 10)
+                                    sMonth = "0" + month;
+                                else
+                                    sMonth = String.valueOf(Month);
 
+                                if (day < 10)
+                                    sDay = "0"+day;
+                                else
+                                    sDay = String.valueOf(day);
+
+                                etDate.setText(sDay+"-"+sMonth+"-"+year);
+                            }
+                        }, year, month, day);
+                        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                        datePickerDialog.show();
+                    }
+                });
+
+                etTime.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Calendar mcurrentTime = Calendar.getInstance();
+                        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                        int minute = mcurrentTime.get(Calendar.MINUTE);
+                        TimePickerDialog mTimePicker = new TimePickerDialog(MainActivityAdmin.this, new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                                timePicker.setIs24HourView(true);
+//                                String sHour = "00";
+//                                // converting hour to tow digit if its between 0 to 9. (e.g. 7 to 07)
+//                                if (selectedHour < 10)
+//                                    sHour = "0" + selectedHour;
+//                                else
+//                                    sHour = String.valueOf(selectedHour);
+
+                                String output = String.format("%02d%02d", selectedHour, selectedMinute);
+                                etTime.setText(output);
+                            }
+                        }, hour, minute, true);//Yes 24 hour time
+                        mTimePicker.setTitle("Select Time");
+
+                        mTimePicker.show();
+                    }
+                });
 
 
 
@@ -613,11 +677,13 @@ public void onCreateContextMenu (ContextMenu menu, View
                                 String FlightNo = etFlightNo.getText().toString();
                                 String Date = etDate.getText().toString();
                                 Long Time = Long.parseLong(etTime.getText().toString());
-                                Plane plane1 = new Plane(LicensePlate,Time,Destination,FlightNo,Direction,Airline);
+                                String output = String.format("%04d", Time);
 
-                                String uID = databaseRef.child(key).child(newgateK).push().getKey().toString();
-                                databaseRef.child(key).child(newgateK).child(uID).child("date").setValue(Date);
-                                databaseRef.child(key).child(newgateK).child(uID).child(Time.toString()).setValue(plane1);
+                                Plane plane1 = new Plane(LicensePlate,output,Destination,FlightNo,Direction,Airline,"Not Updated","Not Updated");
+
+//                                String uID = databaseRef.child(key).child(newgateK).push().getKey().toString();
+                                databaseRef.child(key).child(newgateK).child(Date).child("date").setValue(Date);
+                                databaseRef.child(key).child(newgateK).child(Date).child(output).setValue(plane1);
 
                             }
 
@@ -657,32 +723,91 @@ public void onCreateContextMenu (ContextMenu menu, View
 
                 return true;
 
-//            case R.id.SearchId:
-//                SearchView searchView = (SearchView)item.getActionView();
-//
-//                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//                    @Override
-//                    public boolean onQueryTextSubmit(String query) {
-//                        return true;
-//                    }
-//
-//                    @Override
-//                    public boolean onQueryTextChange(String newText) {
-//                        aa.getFilter().filter(newText);
-//                        return true;
-//                    }
-//                });
-//                return true;
-
             case R.id.addUser:
                 Intent i = new Intent(MainActivityAdmin.this, RegisterActivity.class);
                 startActivity(i);
                 return true;
 
             case R.id.editTerm:
-                Intent intent1 = new Intent(MainActivityAdmin.this,EditActivity.class);
-                intent1.putExtra("termKey",term);
-                startActivity(intent1);
+                LayoutInflater inflater3 =
+                        (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View viewDialog3 = inflater3.inflate(R.layout.activity_edit, null);
+
+                editTerminal = (Spinner)viewDialog3.findViewById(R.id.editTextEditTerminal);
+
+
+                databaseRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        final ArrayList<String> terminals = new ArrayList<>();
+
+
+                        for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+                            String obj = areaSnapshot.child("terminal").getValue(String.class);
+//                    Toast.makeText(getBaseContext(), obj, Toast.LENGTH_SHORT).show();
+                            terminals.add(obj);
+                        }
+                        aa4 = new ArrayAdapter<String>(MainActivityAdmin.this,
+                                android.R.layout.simple_spinner_item, terminals);
+                        aa4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        editTerminal.setAdapter(aa4);
+
+                        editTerminal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                selectedTerm = (String) parent.getItemAtPosition(position);
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
+                AlertDialog.Builder myBuilder3 = new AlertDialog.Builder(MainActivityAdmin.this);
+
+                //Set the view of the dialog
+                myBuilder3.setView(viewDialog3);
+                myBuilder3.setTitle("Delete Terminal");
+
+                myBuilder3.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        databaseRef.orderByChild("terminal").equalTo(selectedTerm).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                    String a = ds.getKey().toString();
+//                            Toast.makeText(getBaseContext(),"query"+a,Toast.LENGTH_LONG).show();
+                                    databaseRef.child(a).removeValue();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
+
+                });
+
+                myBuilder3.setNegativeButton("Cancel",null);
+                AlertDialog myDialog3 = myBuilder3.create();
+                myDialog3.show();
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

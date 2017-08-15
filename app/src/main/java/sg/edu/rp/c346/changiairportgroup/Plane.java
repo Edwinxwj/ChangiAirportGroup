@@ -6,24 +6,53 @@ package sg.edu.rp.c346.changiairportgroup;
 
 public class Plane {
     private String licensePlate;
-    private Long time;
+    private String time;
     private String destination;
     private String flightNo;
     private String direction;
     private String airline;
+    private String dirStatus;
+    private String pbStatus;
 
     public Plane() {
 
     }
 
-    public Plane(String licensePlate, Long time, String destination, String flightNo, String direction, String airline) {
+    public String getDirStatus() {
+        return dirStatus;
+    }
+
+    public void setDirStatus(String dirStatus) {
+        this.dirStatus = dirStatus;
+    }
+
+    public String getPbStatus() {
+        return pbStatus;
+    }
+
+    public void setPbStatus(String pbStatus) {
+        this.pbStatus = pbStatus;
+    }
+
+    public Plane(String licensePlate, String time, String destination, String flightNo, String direction, String airline, String dirStatus, String pbStatus) {
         this.licensePlate = licensePlate;
         this.time = time;
         this.destination = destination;
         this.flightNo = flightNo;
         this.direction = direction;
         this.airline = airline;
+        this.dirStatus = dirStatus;
+        this.pbStatus = pbStatus;
     }
+
+//    public Plane(String licensePlate, Long time, String destination, String flightNo, String direction, String airline) {
+//        this.licensePlate = licensePlate;
+//        this.time = time;
+//        this.destination = destination;
+//        this.flightNo = flightNo;
+//        this.direction = direction;
+//        this.airline = airline;
+//    }
 
 
     public String getLicensePlate() {
@@ -50,11 +79,11 @@ public class Plane {
         this.airline = airline;
     }
 
-    public Long getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Long time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

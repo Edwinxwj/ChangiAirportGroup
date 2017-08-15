@@ -108,7 +108,7 @@ public class SecondActivityAdmin extends AppCompatActivity {
                     String obj = areaSnapshot.child("date").getValue(String.class);
 //                    Toast.makeText(getBaseContext(), "date:" + obj, Toast.LENGTH_SHORT).show();
                     if (obj != null) {
-                            date.add(obj);
+                        date.add(obj);
                     }
                 }
 
@@ -128,6 +128,7 @@ public class SecondActivityAdmin extends AppCompatActivity {
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                planes.clear();
                                 dateKey = dataSnapshot.getKey().toString();
 //                                Toast.makeText(getBaseContext(), "datekey: " + dateKey, Toast.LENGTH_SHORT).show();
                                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
@@ -283,8 +284,9 @@ public class SecondActivityAdmin extends AppCompatActivity {
                                 String Date = etDate.getText().toString();
                                 String Direction = tvDirection.getText().toString();
                                 Long Time = Long.parseLong(etTime.getText().toString());
+                                String output = String.format("%04d", Time);
 
-                                Plane plane1 = new Plane(LicensePlate,Time,Destination,FlightNo, Direction,Airline);
+                                Plane plane1 = new Plane(LicensePlate,output,Destination,FlightNo, Direction,Airline,currentPlane.getDirStatus(),currentPlane.getPbStatus());
 
                                 databaseRef.child(termKey).child(gateKey).child(dateKey).child(obj).setValue(plane1);
                                 databaseRef.child(termKey).child(gateKey).child(dateKey).child("date").setValue(Date);
