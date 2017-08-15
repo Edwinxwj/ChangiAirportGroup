@@ -329,6 +329,22 @@ public void onCreateContextMenu (ContextMenu menu, View
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.add, menu);
+        MenuItem item = menu.findItem(R.id.SearchId);
+        SearchView searchView = (SearchView)item.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                aa.getFilter().filter(newText);
+                return true;
+            }
+        });
+
         return true;
     }
 
@@ -587,6 +603,7 @@ public void onCreateContextMenu (ContextMenu menu, View
                         queryAdd.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
                                 String newgateK = dataSnapshot.getKey().toString();
 //                               Toast.makeText(getBaseContext(),"new gateK:" +newgateK,Toast.LENGTH_SHORT).show();
                                 String Destination = etDestination.getText().toString();
@@ -640,22 +657,22 @@ public void onCreateContextMenu (ContextMenu menu, View
 
                 return true;
 
-            case R.id.SearchId:
-                SearchView searchView = (SearchView)item.getActionView();
-
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        return true;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-                        aa.getFilter().filter(newText);
-                        return true;
-                    }
-                });
-                return true;
+//            case R.id.SearchId:
+//                SearchView searchView = (SearchView)item.getActionView();
+//
+//                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//                    @Override
+//                    public boolean onQueryTextSubmit(String query) {
+//                        return true;
+//                    }
+//
+//                    @Override
+//                    public boolean onQueryTextChange(String newText) {
+//                        aa.getFilter().filter(newText);
+//                        return true;
+//                    }
+//                });
+//                return true;
 
             case R.id.addUser:
                 Intent i = new Intent(MainActivityAdmin.this, RegisterActivity.class);
