@@ -60,7 +60,7 @@ public class CustomAdapterAirtraffic extends ArrayAdapter<Plane> {
 
 
 
-        tvTiming.setText(currentPlane.getTime().toString());
+        tvTiming.setText(currentPlane.getTime());
         tvLicensePlate.setText(currentPlane.getLicensePlate());
         tvAirline.setText(currentPlane.getAirline());
         tvFlyToWhere.setText(currentPlane.getDestination());
@@ -69,6 +69,9 @@ public class CustomAdapterAirtraffic extends ArrayAdapter<Plane> {
         tvPBStatus.setText(currentPlane.getPbStatus());
         if (currentPlane.getDirStatus().equals("Updated")){
             ivColour.getDrawable().setColorFilter(Color.rgb(0,183,0), PorterDuff.Mode.SRC_ATOP );
+        }else{
+            ivColour.getDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP );
+
         }
 //        String img = currentHolidays.getimage();
 //        int holiday = this.context.getResources().getIdentifier(img, "drawable", context.getPackageName());
