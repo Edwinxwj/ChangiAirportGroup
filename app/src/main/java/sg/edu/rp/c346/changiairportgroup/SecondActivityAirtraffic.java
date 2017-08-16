@@ -108,7 +108,7 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                                planes.clear();
+                                planes.clear();
                                 dateKey = dataSnapshot.getKey().toString();
 //                                Toast.makeText(getBaseContext(), "datekey: " + dateKey, Toast.LENGTH_SHORT).show();
                                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
