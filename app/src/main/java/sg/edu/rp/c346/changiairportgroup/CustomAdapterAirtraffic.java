@@ -59,7 +59,6 @@ public class CustomAdapterAirtraffic extends ArrayAdapter<Plane> {
         Plane currentPlane = plans.get(position);
 
 
-
         tvTiming.setText(currentPlane.getTime());
         tvLicensePlate.setText(currentPlane.getLicensePlate());
         tvAirline.setText(currentPlane.getAirline());

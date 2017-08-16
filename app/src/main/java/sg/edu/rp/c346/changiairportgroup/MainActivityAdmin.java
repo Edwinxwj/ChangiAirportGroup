@@ -150,6 +150,7 @@ public class MainActivityAdmin extends AppCompatActivity {
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                gates.clear();
                                 termKey = dataSnapshot.getKey().toString();
                                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                                     String gateNum = areaSnapshot.child("gate").getValue(String.class);
@@ -605,9 +606,9 @@ public void onCreateContextMenu (ContextMenu menu, View
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                                 String sMonth = "00";
                                 String sDay = "00";
-                                int Month = (month+1);
+                                int Month = month+1;
                                 if (Month < 10)
-                                    sMonth = "0" + month;
+                                    sMonth = "0" + Month;
                                 else
                                     sMonth = String.valueOf(Month);
 

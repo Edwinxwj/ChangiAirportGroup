@@ -45,7 +45,7 @@ public class SecondActivityAdmin extends AppCompatActivity {
     Spinner spnDate, spnGate, spnTerm1;
     ArrayAdapter aa,myAdapter2,myAdapter3;
     ArrayList<Plane> planes;
-    String selected,gates;
+    String selected,gates, obj;
     String term,termKey, gateKey, dateKey, timeKey;
     final ArrayList<String> gate = new ArrayList<>();
 
@@ -128,7 +128,6 @@ public class SecondActivityAdmin extends AppCompatActivity {
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                planes.clear();
                                 dateKey = dataSnapshot.getKey().toString();
 //                                Toast.makeText(getBaseContext(), "datekey: " + dateKey, Toast.LENGTH_SHORT).show();
                                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
@@ -275,7 +274,13 @@ public class SecondActivityAdmin extends AppCompatActivity {
                         q1.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                String obj = dataSnapshot.getKey().toString(); //same as timeKey
+                                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                                    obj = ds.getKey().toString(); //same as timeKey
+//                                  Toast.makeText(getBaseContext(), "tK:" + obj, Toast.LENGTH_SHORT).show();
+////                Toast.makeText(getBaseContext(), "gateKey:" + gateKey, Toast.LENGTH_SHORT).show();
+////                Toast.makeText(getBaseContext(), "gateKey:" + gateKey, Toast.LENGTH_SHORT).show();
+
+                                }
 //                                Toast.makeText(SecondActivityAdmin.this,"obj: "+obj,Toast.LENGTH_LONG).show();
                                 String Destination = etDestination.getText().toString();
                                 String Airline = etAirline.getText().toString();
