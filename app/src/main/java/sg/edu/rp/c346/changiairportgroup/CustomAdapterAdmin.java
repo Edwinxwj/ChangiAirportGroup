@@ -57,7 +57,7 @@ public class CustomAdapterAdmin extends ArrayAdapter<Plane> {
         ivColour = (ImageView) rowView.findViewById(R.id.ivColour);
         Plane currentPlane = plans.get(position);
 
-        tvTiming.setText(currentPlane.getTime().toString());
+        tvTiming.setText(currentPlane.getTime());
         tvLicensePlate.setText(currentPlane.getLicensePlate());
         tvAirline.setText(currentPlane.getAirline());
         tvFlyToWhere.setText(currentPlane.getDestination());
