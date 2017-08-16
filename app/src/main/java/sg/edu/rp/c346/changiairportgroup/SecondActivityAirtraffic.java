@@ -43,7 +43,7 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
     ArrayList<Plane> planes;
     DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("terminals");
 
-    String selected;
+    String selected,obj;
     String term,termKey, gateKey, timeKey, dateKey;
 
 
@@ -118,7 +118,6 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                                         Plane newPlane = areaSnapshot.getValue(Plane.class);
                                         if (newPlane != null) {
                                             planes.add(newPlane);
-                                            aa.notifyDataSetChanged();
                                         }
                                     }
                                     aa.notifyDataSetChanged();
@@ -130,7 +129,7 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                             @Override
                             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                                 planes.clear();
-                                dateKey = dataSnapshot.getKey().toString();
+//                                dateKey = dataSnapshot.getKey().toString();
 //                                Toast.makeText(getBaseContext(), "datekey: " + dateKey, Toast.LENGTH_SHORT).show();
                                 for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
                                     if (areaSnapshot.hasChildren()) {
@@ -138,7 +137,6 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
                                         Plane newPlane = areaSnapshot.getValue(Plane.class);
                                         if (newPlane != null) {
                                             planes.add(newPlane);
-                                            aa.notifyDataSetChanged();
                                         }
                                     }
                                 }
@@ -237,21 +235,26 @@ public class SecondActivityAirtraffic extends AppCompatActivity {
 
                 mbuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(final DialogInterface dialogInterface, int i) {
                         if (!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Choose a Direction")) {
                             final Query q1 = databaseRef.child(termKey).child(gateKey).child(dateKey).orderByChild("licensePlate").equalTo(currentPlane.getLicensePlate());
                             q1.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     for(DataSnapshot ds: dataSnapshot.getChildren()){
-                                        String obj = ds.getKey().toString(); //same as timeKey
+                                        obj = ds.getKey().toString(); //same as timeKey
 //                                  Toast.makeText(getBaseContext(), "tK:" + obj, Toast.LENGTH_SHORT).show();
 ////                Toast.makeText(getBaseContext(), "gateKey:" + gateKey, Toast.LENGTH_SHORT).show();
 ////                Toast.makeText(getBaseContext(), "gateKey:" + gateKey, Toast.LENGTH_SHORT).show();
 
-
+                                    }
+                                    if(currentPlane.getDirStatus().equalsIgnoreCase("Updated")){
+                                        Toast.makeText(getBaseContext(), "Direction has already been updated", Toast.LENGTH_SHORT).show();
+                                        dialogInterface.dismiss();
+                                    }else {
                                         databaseRef.child(termKey).child(gateKey).child(dateKey).child(obj).child("direction").setValue(mSpinner.getSelectedItem().toString());
                                         databaseRef.child(termKey).child(gateKey).child(dateKey).child(obj).child("dirStatus").setValue("Updated");
+
                                         aa.notifyDataSetChanged();
                                     }
 
