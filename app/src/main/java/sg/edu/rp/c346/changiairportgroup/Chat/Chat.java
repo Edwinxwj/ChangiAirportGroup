@@ -2,6 +2,7 @@ package sg.edu.rp.c346.changiairportgroup.Chat;
 
 import sg.edu.rp.c346.changiairportgroup.LoginActivity;
 import sg.edu.rp.c346.changiairportgroup.R;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -60,7 +61,7 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Chat extends AppCompatActivity implements
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "Common";
     public static final String MESSAGES_CHILD = "messages";
@@ -105,7 +106,7 @@ public class Chat extends AppCompatActivity implements
             messageImageView = (ImageView) v.findViewById(R.id.messageImageView);
             messengerTextView = (TextView) v.findViewById(R.id.messengerTextView);
             messengerImageView = (CircleImageView) v.findViewById(R.id.messengerImageView);
-            textViewTime =  (TextView) v.findViewById(R.id.timeTextView);
+            textViewTime = (TextView) v.findViewById(R.id.timeTextView);
         }
     }
 
@@ -126,7 +127,6 @@ public class Chat extends AppCompatActivity implements
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mUsername = ANONYMOUS;
-
 
 
         // Initialize Firebase Auth
@@ -154,7 +154,7 @@ public class Chat extends AppCompatActivity implements
         mFirebaseDatabaseReference.child("Users").child(userid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.hasChild(itemKey)) {
+                if (!dataSnapshot.hasChild(itemKey)) {
                     Map map = new HashMap();
                     map.put("Chat/" + userid + "/" + itemKey, "created");
                     map.put("Chat/" + itemKey + "/" + userid, "created");
@@ -196,9 +196,10 @@ public class Chat extends AppCompatActivity implements
                                               FriendlyMessage friendlyMessage, int position) {
                 mProgressBar.setVisibility(ProgressBar.INVISIBLE);
                 if (friendlyMessage.getText() != null) {
-                    viewHolder.messageTextView.setText(friendlyMessage.getText());
+
+                    viewHolder.messageTextView.setText(username + ": " + friendlyMessage.getText());
                     viewHolder.textViewTime.setText(friendlyMessage.getTimeStamp());
-                    viewHolder.messengerTextView.setText("You");
+                    viewHolder.messengerTextView.setText(username);
                     viewHolder.messageTextView.setVisibility(TextView.VISIBLE);
                     viewHolder.messengerTextView.setVisibility(TextView.VISIBLE);
                     viewHolder.messageImageView.setVisibility(ImageView.GONE);
@@ -324,7 +325,7 @@ public class Chat extends AppCompatActivity implements
                         mPhotoUrl, null, null, getCurrentTimeStamp().toString().trim());
                 String messageText = mMessageEditText.getText().toString();
 
-                if(!messageText.equals("")){
+                if (!messageText.equals("")) {
                     String ref = "messages/" + userid + "/" + itemKey;
                     String newRef = "messages/" + itemKey + "/" + userid;
 
@@ -349,7 +350,7 @@ public class Chat extends AppCompatActivity implements
         });
     }
 
-    public static String getCurrentTimeStamp(){
+    public static String getCurrentTimeStamp() {
         try {
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

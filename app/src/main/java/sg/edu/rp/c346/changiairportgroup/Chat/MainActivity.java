@@ -155,9 +155,9 @@ public class MainActivity extends AppCompatActivity implements
                 case 0:
                     PrivateChats privateChats = new PrivateChats();
                     return privateChats;
-                case 1:
-                    Common common = new Common();
-                    return common;
+//                case 1:
+//                    Common common = new Common();
+//                    return common;
             }
             return null;
         }
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 1;
         }
 
         @Override
@@ -173,8 +173,8 @@ public class MainActivity extends AppCompatActivity implements
             switch (position) {
                 case 0:
                     return "Message";
-                case 1:
-                    return "Common";
+//                case 1:
+//                    return "Common";
             }
             return null;
         }
