@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private DatabaseReference mDatabaseUsers;
 
+    // For Action bar
     private Toolbar aToolbar;
 
     @Override
@@ -64,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // For action bar
         aToolbar = (Toolbar) findViewById(R.id.login_page_toolbar);
         setSupportActionBar(aToolbar);
         getSupportActionBar().setTitle("Login Page");

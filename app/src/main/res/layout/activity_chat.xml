@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="sg.edu.rp.c346.changiairportgroup.Chat.Chat">
 
+    <!-- This is for the action bar -->
     <include layout="@layout/app_bar_layout" android:id="@+id/chat_page_toolbar" />
 
 
